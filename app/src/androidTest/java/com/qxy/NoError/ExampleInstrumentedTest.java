@@ -1,4 +1,4 @@
-package com.qxy.noerror;
+package com.qxy.NoError;
 
 import android.content.Context;
 
