@@ -23,7 +23,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.NoError">
         <activity
-            android:name=".view.UserInfoActivity"
+            android:name=".view.VideoLeaderboardActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
