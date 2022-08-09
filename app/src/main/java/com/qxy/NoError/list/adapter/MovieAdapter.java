@@ -1,5 +1,6 @@
 package com.qxy.NoError.list.adapter;
 
+import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.qxy.NoError.R;
 import com.qxy.NoError.list.bean.Movie;
 
+import java.util.HashMap;
 import java.util.List;
 
 import cn.hutool.core.util.StrUtil;
@@ -24,6 +26,8 @@ import cn.hutool.core.util.StrUtil;
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHolder> {
 
     private List<Movie> movieList;
+
+    private HashMap<String, Bitmap> bitmaps;
 
     public MovieAdapter() {
     }
@@ -46,17 +50,22 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
         holder.tvMovieName.setText(movie.name);
         holder.tvMovieHot.setText(String.valueOf(movie.hot));
         StringBuilder stringBuilder = new StringBuilder();
-        for (String str :
-                movie.tags) {
-            stringBuilder.append(str).append(',');
+        if (movie.tags != null) {
+            for (String str :
+                    movie.tags) {
+                stringBuilder.append(str).append(',');
+            }
         }
         holder.tvMovieType.setText(stringBuilder);
-        holder.tvReleaseTime.setText(movie.releaseDate.toString());
+        holder.tvReleaseTime.setText(movie.releaseDate);
+        if (bitmaps != null && bitmaps.size() > position) {
+            holder.movieIcon.setImageBitmap(bitmaps.get(movie.poster));
+        }
     }
 
     @Override
     public int getItemCount() {
-        return movieList.size();
+        return movieList == null ? 0 : movieList.size();
     }
 
     static class MovieViewHolder extends RecyclerView.ViewHolder {
@@ -77,5 +86,9 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
 
     public void setMovieList(List<Movie> movieList) {
         this.movieList = movieList;
+    }
+
+    public void setBitmaps(HashMap<String, Bitmap> bitmaps) {
+        this.bitmaps = bitmaps;
     }
 }

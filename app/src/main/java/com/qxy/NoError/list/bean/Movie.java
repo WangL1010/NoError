@@ -5,16 +5,17 @@ import java.time.LocalDate;
 public class Movie {
 
     public String[] actors;
+    public String[] areas;
     public String[] directors;
     public Long discussionHot;
     public Long hot;
     public String id;
-    public Long influenceId;
-    public String manyanId;
+    public Long influenceHot;
+    public String maoyanId;
     public String name;
     public String nameEn;
     public String poster;
-    public LocalDate releaseDate;
+    public String releaseDate;
     public Long searchHot;
     public String[] tags;
     public Long topicHot;
