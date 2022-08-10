@@ -97,6 +97,10 @@ public class NetUtils {
         }).build();
     }
 
+    /**
+     * 刷新client_token
+     * @param finishCliTokenCallBack 用于处理完成后的回调函数
+     */
     public static void refreshClientToken(FinishCliTokenCallBack finishCliTokenCallBack) {
 
         HttpUrl.Builder urlBuilder = Objects.requireNonNull(HttpUrl.parse("https://open.douyin.com/oauth/client_token/")).newBuilder();
