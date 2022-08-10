@@ -31,4 +31,7 @@
     <string name="tv_movie_icon">电影海报</string>
     <string name="tv_movie_hot">1293.1万</string>
     <string name="_tv_movie_hot">热度：</string>
+    <string name="text_movie">电影</string>
+    <string name="tv_play">电视剧</string>
+    <string name="variety">综艺</string>
 </resources>

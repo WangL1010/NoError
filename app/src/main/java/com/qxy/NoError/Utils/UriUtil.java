@@ -1,4 +1,4 @@
-package com.qxy.NoError;
+package com.qxy.NoError.Utils;
 
 
 import android.content.ContentResolver;

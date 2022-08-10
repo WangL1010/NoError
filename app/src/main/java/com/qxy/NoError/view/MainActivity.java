@@ -1,4 +1,4 @@
-package com.qxy.NoError;
+package com.qxy.NoError.view;
 
 import android.Manifest;
 import android.app.Activity;
@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -32,6 +33,12 @@ import com.bytedance.sdk.open.douyin.ShareToContact;
 import com.bytedance.sdk.open.douyin.api.DouYinOpenApi;
 import com.bytedance.sdk.open.douyin.model.ContactHtmlObject;
 import com.bytedance.sdk.open.douyin.model.OpenRecord;
+import com.qxy.NoError.R;
+import com.qxy.NoError.api.RetrofitApi;
+import com.qxy.NoError.api.RetrofitManager;
+import com.qxy.NoError.Utils.UriUtil;
+import com.qxy.NoError.model.UserInfo;
+import com.qxy.NoError.model.UserInfo2Body;
 
 
 import java.io.File;
@@ -39,10 +46,18 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.nio.channels.FileChannel;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
 
 public class MainActivity extends AppCompatActivity {
 
     public static final String CODE_KEY = "code";
+    private static final String TAG = "MainActivity";
     public static Boolean isBoe = false;
 
     DouYinOpenApi douYinOpenApi;
@@ -55,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
 
     Button mShareToDouyin;
 
+    Retrofit mRetrofit;
 
     EditText mMediaPathList;
 
@@ -86,6 +102,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             // 设置状态栏透明
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
@@ -95,6 +112,25 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.go_to_auth).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mRetrofit= RetrofitManager.getInstance().getRetrofit();
+                RetrofitApi api =mRetrofit.create(RetrofitApi.class);
+                Map<String,String> map=new HashMap<>();
+                map.put("Content-Type","application/json");
+                map.put("access-token","act.12d9381d72ed01b1b3a13f6f57d044eftawpeAohWab6TTDeZrAn6TdGZy8d");
+                UserInfo2Body body=new UserInfo2Body("act.12d9381d72ed01b1b3a13f6f57d044eftawpeAohWab6TTDeZrAn6TdGZy8d","_000c7mD_XtFTMXlg6BVheAccAxm0IUhUPU7");
+
+                Call<UserInfo> task = api.getUserInfo(map, body);
+                task.enqueue(new Callback<UserInfo>() {
+                    @Override
+                    public void onResponse(Call<UserInfo> call, Response<UserInfo> response) {
+                        Log.d(TAG,response.body().toString());
+                    }
+
+                    @Override
+                    public void onFailure(Call<UserInfo> call, Throwable t) {
+                        Log.d(TAG,t.toString());
+                    }
+                });
                 // 如果本地未安装抖音或者抖音的版本过低，会直接自动调用 web页面 进行授权
                 sendAuth();
             }

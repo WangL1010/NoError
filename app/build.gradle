@@ -3,6 +3,33 @@ plugins {
 }
 
 android {
+    signingConfigs {
+
+        // 读取local.properties文件
+        Properties properties = new Properties()
+        InputStream inputStream = project.rootProject.file('local.properties').newDataInputStream()
+        properties.load(inputStream)
+
+        // 读取签名文件
+        def keyKeyStoreFile = file(properties.getProperty('keyStoreFile'))
+        // 读取签名文件别名、密码等信息
+        def keyKeyStorePassword = properties.getProperty('keyStorePassword')
+        def keyKeyAlias = properties.getProperty('keyAlias')
+        def keyKeyAliasPassword = properties.getProperty('keyAliasPassword')
+
+        debug {
+            storeFile keyKeyStoreFile
+            storePassword keyKeyStorePassword
+            keyAlias keyKeyAlias
+            keyPassword keyKeyAliasPassword
+        }
+        release {
+            storeFile keyKeyStoreFile
+            storePassword keyKeyStorePassword
+            keyAlias keyKeyAlias
+            keyPassword keyKeyAliasPassword
+        }
+    }
     compileSdk 32
 
     defaultConfig {
@@ -19,6 +46,10 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+        }
+        debug {
+            signingConfig signingConfigs.debug
         }
     }
     compileOptions {
@@ -36,6 +67,18 @@ dependencies {
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    //Gson 数据解析器依赖库
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+
+    implementation 'com.jakewharton:butterknife:10.2.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.1'
+
+    // ViewModel
+    implementation "androidx.lifecycle:lifecycle-viewmodel:2.6.0-alpha01"
+
+    implementation "androidx.viewpager2:viewpager2:1.0.0"
 
     implementation 'com.bytedance.ies.ugc.aweme:opensdk-china-external:0.1.9.0'
     implementation 'com.bytedance.ies.ugc.aweme:opensdk-common:0.1.9.0'
