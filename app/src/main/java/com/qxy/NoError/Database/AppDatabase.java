@@ -5,14 +5,12 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
 import com.qxy.NoError.MyApplication;
-import com.qxy.NoError.list.bean.Movie;
-import com.qxy.NoError.list.dao.MovieDao;
-import com.qxy.NoError.list.dao.VarietyDao;
+import com.qxy.NoError.list.bean.ListData;
 
 /**
  * 定义数据库
  */
-@Database(entities = {Movie.class},version = 1)
+@Database(entities = {ListData.class},version = 1)
 public abstract class AppDatabase extends RoomDatabase {
     private static AppDatabase appDatabase;
 
@@ -23,7 +21,5 @@ public abstract class AppDatabase extends RoomDatabase {
         }
         return appDatabase;
     }
-    public abstract MovieDao getMovieDao();
 
-    public abstract VarietyDao getVarietyDao();
 }

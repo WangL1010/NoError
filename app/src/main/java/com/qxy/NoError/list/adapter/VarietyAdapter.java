@@ -22,14 +22,14 @@ import java.util.List;
  *
  * @author 徐鑫
  */
-public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHolder> {
+public class VarietyAdapter extends RecyclerView.Adapter<VarietyAdapter.MovieViewHolder> {
 
     private List<ListData> listData;
 
-    public MovieAdapter() {
+    public VarietyAdapter() {
     }
 
-    public MovieAdapter(List<ListData> listData) {
+    public VarietyAdapter(List<ListData> listData) {
         this.listData = listData;
     }
 
@@ -47,18 +47,12 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
         holder.tvMovieName.setText(listData.name);
         holder.tvMovieHot.setText(String.valueOf(listData.hot));
         StringBuilder stringBuilder = new StringBuilder();
-        if (listData.tags != null) {
-            for (String str :
-                    listData.tags) {
-                stringBuilder.append(str).append(',');
-            }
-        }
-        holder.tvMovieType.setText(stringBuilder);
-        holder.tvReleaseTime.setText(listData.releaseDate);
         Glide.with(holder.movieIcon)
                 .load(listData.poster)
                 .placeholder(R.drawable.ic_list)
                 .into(holder.movieIcon);
+        holder.tvMovieType.setText(stringBuilder);
+        holder.tvReleaseTime.setText(listData.releaseDate);
     }
 
     @Override
@@ -85,4 +79,5 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
     public void setMovieList(List<ListData> listData) {
         this.listData = listData;
     }
+
 }

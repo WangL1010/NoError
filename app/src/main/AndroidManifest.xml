@@ -28,8 +28,10 @@
             android:launchMode="singleTask"
             android:taskAffinity="com.qxy.noerror" />
 
-<!--        <activity android:name=".TestActivity"-->
-<!--            android:exported="false"/>-->
+
+        <activity android:name=".MainActivity"
+            android:exported="false"/>
+
 
         <activity android:name=".user.UserInfoActivity"
             android:exported="false"/>

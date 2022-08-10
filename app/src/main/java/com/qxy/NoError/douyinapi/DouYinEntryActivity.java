@@ -15,6 +15,7 @@ import com.bytedance.sdk.open.aweme.share.Share;
 import com.bytedance.sdk.open.douyin.DouYinOpenApiFactory;
 import com.bytedance.sdk.open.douyin.api.DouYinOpenApi;
 import com.qxy.NoError.MainActivity;
+import com.qxy.NoError.MyApplication;
 import com.qxy.NoError.TestActivity;
 
 /**
@@ -57,6 +58,8 @@ public class DouYinEntryActivity extends Activity implements IApiEventHandler {
                         Toast.LENGTH_LONG).show();
                 Log.d(TAG,"authCode=="+response.authCode);
 
+                //将auth_code存入全局变量，用于请求用户数据
+                MyApplication.getInstance().put(MyApplication.AUTH_CODE, response.authCode);
                 //授权成功，跳转到测试界面
                 intent = new Intent(this, TestActivity.class);
                 startActivity(intent);
