@@ -1,24 +1,27 @@
 package com.qxy.NoError.list.bean;
 
 /**
- * 综艺数据类
+ * 统一的榜单数据
  * @author 徐鑫
  */
-public class Variety {
+public class ListData {
+    /**
+     * 电影和电视剧用
+     */
+    public String[] actors;
+    public String[] areas;
     public String[] directors;
     public Long discussionHot;
     public Long hot;
     public String id;
     public Long influenceHot;
-    public String maoYanId;
-
+    public String maoyanId;
     public String name;
     public String nameEn;
     public String poster;
-    public String releaseData;
-    public String searchHot;
+    public String releaseDate;
+    public Long searchHot;
+    public String[] tags;
     public Long topicHot;
     public Long type;
-
-
 }

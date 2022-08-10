@@ -54,7 +54,9 @@ public class NetUtils {
 
         //给请求添加请求头
         OkHttpClient okHttpClient = getOkHttpClient(MyApplication.ACCESS_TOKEN
-                , clientToken == null ? "123" : clientToken
+                , clientToken == null
+                        ? "clt.0861a6srqe5d"
+                        : clientToken
                 , "Content-Type"
                 , "application/json");
 
