@@ -7,14 +7,16 @@ import android.util.Log;
 
 import androidx.annotation.RequiresApi;
 
+import com.google.gson.Gson;
+import com.qxy.NoError.Database.AppDatabase;
 import com.qxy.NoError.list.bean.Movie;
+import com.qxy.NoError.list.dao.MovieDao;
 import com.qxy.NoError.list.net.IListServer;
 import com.qxy.NoError.list.net.ResponseData;
 import com.qxy.NoError.utils.NetUtils;
 
 import java.io.IOException;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -40,6 +42,11 @@ import okhttp3.ResponseBody;
 public class MovieModel {
 
     private static final String TAG = "MovieModel";
+    //创建数据库
+    MovieDao mMovieDao;
+    public MovieModel(){
+        mMovieDao=AppDatabase.getDatabase().getMovieDao();
+    }
 
     public void getMovieList(CallBack2DealData callBack) {
         IListServer iListServer = NetUtils.createRetrofit(IListServer.class);
@@ -59,6 +66,15 @@ public class MovieModel {
                         callBack.dealData(LocalDate.parse(movieResponseData.data.activeTime)
                                 , movieResponseData.data.description
                                 , movieResponseData.data.list);
+                        List<Movie> movies=movieResponseData.data.list;
+                        //对数据库中的Movie表进行更新
+                        mMovieDao.deleteAll();
+                        for (Movie movie : movies) {
+                            mMovieDao.insert(movie);
+                        }
+                        List<Movie> a=mMovieDao.queryAllMovies();
+                        Log.d(TAG, "onNext: 数据库中的数据"+new Gson().toJson(a));
+
                     }
 
                     @Override

@@ -1,15 +1,30 @@
 package com.qxy.NoError.list.bean;
 
-import java.time.LocalDate;
+import androidx.annotation.NonNull;
+import androidx.room.Database;
+import androidx.room.Entity;
+import androidx.room.TypeConverter;
+import androidx.room.TypeConverters;
 
+import com.qxy.NoError.Database.StringConverter;
+
+import java.util.List;
+
+
+
+
+@Entity(tableName = "movie_table",primaryKeys = {"id"})
+@TypeConverters(StringConverter.class)
 public class Movie {
 
-    public String[] actors;
-    public String[] areas;
-    public String[] directors;
+    @NonNull
+    public String id;
+
+    public List<String> actors;
+    public List<String> areas;
+    public List<String> directors;
     public Long discussionHot;
     public Long hot;
-    public String id;
     public Long influenceHot;
     public String maoyanId;
     public String name;
@@ -17,7 +32,7 @@ public class Movie {
     public String poster;
     public String releaseDate;
     public Long searchHot;
-    public String[] tags;
+    public List<String> tags;
     public Long topicHot;
     public Long type;
 

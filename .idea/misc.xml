@@ -3,20 +3,14 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Develop/Code/android_project/NoError/app/src/main/res/layout/activity_main.xml" value="0.11626139817629179" />
-        <entry key="..\:/Develop/Code/android_project/NoError/app/src/main/res/layout/activity_movie.xml" value="0.22826086956521738" />
-        <entry key="..\:/Develop/Code/android_project/NoError/app/src/main/res/layout/activity_teleplay.xml" value="0.2006340579710145" />
-        <entry key="..\:/Develop/Code/android_project/NoError/app/src/main/res/layout/activity_test.xml" value="0.22826086956521738" />
-        <entry key="..\:/Develop/Code/android_project/NoError/app/src/main/res/layout/activity_video_fragment.xml" value="0.23505434782608695" />
-        <entry key="..\:/Develop/Code/android_project/NoError/app/src/main/res/layout/fragment_cinema.xml" value="0.12335359675785208" />
-        <entry key="..\:/Develop/Code/android_project/NoError/app/src/main/res/layout/fragment_cinema_list.xml" value="0.2006340579710145" />
-        <entry key="..\:/Develop/Code/android_project/NoError/app/src/main/res/layout/fragment_list.xml" value="0.2006340579710145" />
-        <entry key="..\:/Develop/Code/android_project/NoError/app/src/main/res/layout/fragment_movie.xml" value="0.2223731884057971" />
-        <entry key="..\:/Develop/Code/android_project/NoError/app/src/main/res/layout/fragment_teleplay.xml" value="0.23505434782608695" />
-        <entry key="..\:/Develop/Code/android_project/NoError/app/src/main/res/layout/fragment_tv_play.xml" value="0.23505434782608695" />
-        <entry key="..\:/Develop/Code/android_project/NoError/app/src/main/res/layout/fragment_variety.xml" value="0.23505434782608695" />
-        <entry key="..\:/Develop/Code/android_project/NoError/app/src/main/res/layout/item_movie.xml" value="0.35251798561151076" />
-        <entry key="..\:/androidstudio/work/NoError/app/src/main/res/layout/activity_main.xml" value="0.4" />
+        <entry key="..\:/androidstudio/work/NoError/app/src/main/res/layout/activity_main.xml" value="0.264" />
+        <entry key="..\:/androidstudio/work/NoError/app/src/main/res/layout/activity_test.xml" value="0.25364583333333335" />
+        <entry key="..\:/androidstudio/work/NoError/app/src/main/res/layout/activity_video_fragment.xml" value="0.25364583333333335" />
+        <entry key="..\:/androidstudio/work/NoError/app/src/main/res/layout/fragment_movie.xml" value="0.190234375" />
+        <entry key="..\:/androidstudio/work/NoError/app/src/main/res/layout/fragment_tv_play.xml" value="0.25364583333333335" />
+        <entry key="..\:/androidstudio/work/NoError/app/src/main/res/layout/fragment_variety.xml" value="0.25364583333333335" />
+        <entry key="..\:/androidstudio/work/NoError/app/src/main/res/layout/item_movie.xml" value="0.1" />
+        <entry key="..\:/androidstudio/work/NoError/app/src/main/res/menu/my_navigation_items.xml" value="0.25364583333333335" />
       </map>
     </option>
   </component>

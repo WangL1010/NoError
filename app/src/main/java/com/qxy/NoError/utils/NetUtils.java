@@ -34,7 +34,7 @@ public class NetUtils {
                     public Response intercept(@NonNull Chain chain) throws IOException {
                         Request request = chain.request()
                                 .newBuilder()
-                                .addHeader("access-token", "clt.ef1bb6c5725e7bef8f54da9f31ef5660xHNjOj9Za3t0UohNOYBogP0pAvNS")
+                                .addHeader("access-token", "clt.70e41d29cc6d18c1a22b0640c8cdc9a53T7nobxdVMzixEiBAkf4JUAhfLO6")
                                 .addHeader("Content-Type", "application/json")
                                 .build();
                         return chain.proceed(request);
