@@ -1,17 +1,15 @@
 package com.qxy.NoError.list;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
-
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TableLayout;
 
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
@@ -21,9 +19,9 @@ import com.qxy.NoError.list.fragment.TeleplayFragment;
 import com.qxy.NoError.list.fragment.VarietyFragment;
 
 /**
- * A simple {@link Fragment} subclass.
- * Use the {@link ListFragment#newInstance} factory method to
- * create an instance of this fragment.
+ * 管理三个榜单的fragment
+ *
+ * @author 徐鑫
  */
 public class ListFragment extends Fragment {
 
@@ -34,8 +32,7 @@ public class ListFragment extends Fragment {
         // Required empty public constructor
     }
     public static ListFragment newInstance() {
-        ListFragment fragment = new ListFragment();
-        return fragment;
+        return new ListFragment();
     }
 
     @Override
@@ -52,6 +49,7 @@ public class ListFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+
         viewPager2 = view.findViewById(R.id.vp2List);
 
         viewPager2.setAdapter(new FragmentStateAdapter(this) {

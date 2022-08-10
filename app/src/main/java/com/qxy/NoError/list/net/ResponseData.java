@@ -1,5 +1,6 @@
 package com.qxy.NoError.list.net;
 
+import java.lang.reflect.Field;
 import java.util.List;
 
 /**
@@ -8,17 +9,23 @@ import java.util.List;
  */
 public class ResponseData<T> {
 
+    public static final Long TOKEN_OVERDUE_CODE = 2190008L;
+
     public Data<T> data;
     public Extra extra;
 
     public static class Data<T> {
         public String activeTime;
         public String description;
-        public String errorCode;
+        public Long errorCode;
         public List<T> list;
     }
     public static class Extra {
         public String logid;
-        public long now;
+        public String description;
+        public Long errorCode;
+        public Long now;
+        public String subDescription;
+        public Long subErrorCode;
     }
 }

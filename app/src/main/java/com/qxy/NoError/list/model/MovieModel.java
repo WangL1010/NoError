@@ -14,7 +14,6 @@ import com.qxy.NoError.utils.NetUtils;
 
 import java.io.IOException;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -55,10 +54,17 @@ public class MovieModel {
                     @RequiresApi(api = Build.VERSION_CODES.O)
                     @Override
                     public void onNext(@NonNull ResponseData<Movie> movieResponseData) {
-                        Log.d(TAG, "onNext: 请求成功，数据如下\n" + JSONUtil.toJsonStr(movieResponseData));
-                        callBack.dealData(LocalDate.parse(movieResponseData.data.activeTime)
-                                , movieResponseData.data.description
-                                , movieResponseData.data.list);
+                        if (movieResponseData.data.errorCode.equals(ResponseData.TOKEN_OVERDUE_CODE)) {
+                            //token已过期
+                            NetUtils.refreshClientToken(() -> getMovieList(callBack));
+                        } else if (movieResponseData.data.errorCode == 0) {
+                            Log.d(TAG, "onNext: 请求成功，数据如下\n" + JSONUtil.toJsonStr(movieResponseData));
+                            callBack.dealData(LocalDate.parse(movieResponseData.data.activeTime)
+                                    , movieResponseData.data.description
+                                    , movieResponseData.data.list);
+                        } else {
+                            Log.d(TAG, "onNext: 请求失败" + movieResponseData.data.description);
+                        }
                     }
 
                     @Override
@@ -73,6 +79,12 @@ public class MovieModel {
                 });
     }
 
+    /**
+     * 批量请求url下的海报
+     *
+     * @param paths 请求url
+     * @return key为 url，value为 bitmap
+     */
     public HashMap<String, Bitmap> getBitmapsFromPaths(List<String> paths) {
         HashMap<String, Bitmap> bitmapHash = new HashMap<>(paths.size());
         for (String path :
@@ -82,6 +94,12 @@ public class MovieModel {
         return bitmapHash;
     }
 
+    /**
+     * 从单个路径中获取海报信息
+     *
+     * @param path     请求路径
+     * @param dealData 处理获取到的海报的回调函数
+     */
     private void getBitmapFromPath(String path, CallBack2DealBitmaps dealData) {
         if (StrUtil.isEmpty(path)) {
             dealData.dealData(null);
@@ -92,11 +110,12 @@ public class MovieModel {
         call.enqueue(new Callback() {
             @Override
             public void onFailure(@androidx.annotation.NonNull Call call, @androidx.annotation.NonNull IOException e) {
-
+                Log.d(TAG, "onFailure: 请求海报失败，原因" + e.getMessage());
             }
 
             @Override
             public void onResponse(@androidx.annotation.NonNull Call call, @androidx.annotation.NonNull Response response) throws IOException {
+                Log.d(TAG, "onResponse: 请求海报成功");
                 ResponseBody body = response.body();
                 if (body == null) {
                     dealData.dealData(null);
