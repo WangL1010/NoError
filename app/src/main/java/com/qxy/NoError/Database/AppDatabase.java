@@ -6,6 +6,7 @@ import androidx.room.RoomDatabase;
 
 import com.qxy.NoError.MyApplication;
 import com.qxy.NoError.list.bean.ListData;
+import com.qxy.NoError.list.dao.ListDataDao;
 
 /**
  * 定义数据库
@@ -16,10 +17,13 @@ public abstract class AppDatabase extends RoomDatabase {
 
     public static AppDatabase getDatabase() {
         if (appDatabase == null) {
-            appDatabase = Room.databaseBuilder(MyApplication.getAppContext(), AppDatabase.class, "database-name").allowMainThreadQueries()
+            appDatabase = Room.databaseBuilder(MyApplication.getAppContext(), AppDatabase.class, "database-name")
+                    .allowMainThreadQueries()
                     .build();
         }
         return appDatabase;
     }
+
+    public abstract ListDataDao getListDataDao();
 
 }
