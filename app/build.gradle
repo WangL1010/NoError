@@ -3,33 +3,6 @@ plugins {
 }
 
 android {
-    signingConfigs {
-
-        // 读取local.properties文件
-        Properties properties = new Properties()
-        InputStream inputStream = project.rootProject.file('local.properties').newDataInputStream()
-        properties.load(inputStream)
-
-        // 读取签名文件
-        def keyKeyStoreFile = file(properties.getProperty('keyStoreFile'))
-        // 读取签名文件别名、密码等信息
-        def keyKeyStorePassword = properties.getProperty('keyStorePassword')
-        def keyKeyAlias = properties.getProperty('keyAlias')
-        def keyKeyAliasPassword = properties.getProperty('keyAliasPassword')
-
-        debug {
-            storeFile keyKeyStoreFile
-            storePassword keyKeyStorePassword
-            keyAlias keyKeyAlias
-            keyPassword keyKeyAliasPassword
-        }
-        release {
-            storeFile keyKeyStoreFile
-            storePassword keyKeyStorePassword
-            keyAlias keyKeyAlias
-            keyPassword keyKeyAliasPassword
-        }
-    }
     compileSdk 32
 
     defaultConfig {
@@ -46,10 +19,6 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.release
-        }
-        debug {
-            signingConfig signingConfigs.debug
         }
     }
     compileOptions {

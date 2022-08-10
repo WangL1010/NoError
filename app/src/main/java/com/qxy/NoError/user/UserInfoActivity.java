@@ -1,19 +1,16 @@
-package com.qxy.NoError.view;
+package com.qxy.NoError.user;
 
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.qxy.NoError.R;
-import com.qxy.NoError.model.UserInfo;
-import com.qxy.NoError.viewModel.UserInfoViewModel;
+import com.qxy.NoError.user.bean.UserInfo;
+import com.qxy.NoError.user.vm.UserInfoViewModel;
 
 public class UserInfoActivity extends AppCompatActivity {
     private UserInfoViewModel viewModel;

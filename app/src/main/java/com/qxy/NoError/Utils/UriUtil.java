@@ -1,4 +1,4 @@
-package com.qxy.NoError.Utils;
+package com.qxy.NoError.utils;
 
 
 import android.content.ContentResolver;
@@ -12,14 +12,16 @@ import android.text.TextUtils;
 public class UriUtil {
 
     public static String convertUriToPath(Context context, Uri uri) {
-        if (uri == null)
+        if (uri == null) {
             return null;
+        }
         String schema = uri.getScheme();
         if (TextUtils.isEmpty(schema) || ContentResolver.SCHEME_FILE.equals(schema)) {
             return uri.getPath();
         }
-        if ("http".equals(schema))
+        if ("http".equals(schema)) {
             return uri.toString();
+        }
         if (ContentResolver.SCHEME_CONTENT.equals(schema)) {
             String[] projection = new String[]{MediaStore.MediaColumns.DATA};
             Cursor cursor = null;

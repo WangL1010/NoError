@@ -1,14 +1,12 @@
-package com.qxy.NoError.repository;
+package com.qxy.NoError.user.repository;
 
 import android.util.Log;
 
-import androidx.lifecycle.MutableLiveData;
-
-import com.qxy.NoError.api.RetrofitApi;
-import com.qxy.NoError.api.RetrofitManager;
-import com.qxy.NoError.model.UserInfo;
-import com.qxy.NoError.model.UserInfo2Body;
-import com.qxy.NoError.viewModel.IUserInfoCallback;
+import com.qxy.NoError.user.net.RetrofitApi;
+import com.qxy.NoError.user.net.RetrofitManager;
+import com.qxy.NoError.user.bean.UserInfo;
+import com.qxy.NoError.user.bean.UserInfo2Body;
+import com.qxy.NoError.user.net.IUserInfoCallback;
 
 import java.util.Map;
 

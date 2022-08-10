@@ -1,4 +1,4 @@
-package com.qxy.NoError.view;
+package com.qxy.NoError;
 
 import android.Manifest;
 import android.app.Activity;
@@ -28,18 +28,15 @@ import com.bytedance.sdk.open.aweme.base.MixObject;
 import com.bytedance.sdk.open.aweme.base.VideoObject;
 import com.bytedance.sdk.open.aweme.share.Share;
 import com.bytedance.sdk.open.douyin.DouYinOpenApiFactory;
-
 import com.bytedance.sdk.open.douyin.ShareToContact;
 import com.bytedance.sdk.open.douyin.api.DouYinOpenApi;
 import com.bytedance.sdk.open.douyin.model.ContactHtmlObject;
 import com.bytedance.sdk.open.douyin.model.OpenRecord;
-import com.qxy.NoError.R;
-import com.qxy.NoError.api.RetrofitApi;
-import com.qxy.NoError.api.RetrofitManager;
-import com.qxy.NoError.Utils.UriUtil;
-import com.qxy.NoError.model.UserInfo;
-import com.qxy.NoError.model.UserInfo2Body;
-
+import com.qxy.NoError.user.net.RetrofitApi;
+import com.qxy.NoError.user.net.RetrofitManager;
+import com.qxy.NoError.user.bean.UserInfo;
+import com.qxy.NoError.user.bean.UserInfo2Body;
+import com.qxy.NoError.utils.UriUtil;
 
 import java.io.File;
 import java.io.FileInputStream;

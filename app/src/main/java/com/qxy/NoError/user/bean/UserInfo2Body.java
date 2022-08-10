@@ -1,4 +1,4 @@
-package com.qxy.NoError.model;
+package com.qxy.NoError.user.bean;
 
 /**
  * 获取用户信息的api所需POST请求的body

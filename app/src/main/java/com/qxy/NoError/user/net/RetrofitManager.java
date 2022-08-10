@@ -1,6 +1,7 @@
-package com.qxy.NoError.api;
+package com.qxy.NoError.user.net;
 
-import com.qxy.NoError.Utils.Constants;
+
+import com.qxy.NoError.utils.Constants;
 
 import java.util.concurrent.TimeUnit;
 

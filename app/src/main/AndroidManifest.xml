@@ -21,21 +21,26 @@
         android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.NoError">
+        android:theme="@style/Theme.MaterialComponents.Light.NoActionBar">
         <activity
-            android:name=".view.VideoLeaderboardActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name="com.qxy.NoError.douyinapi.DouYinEntryActivity"
+            android:name=".douyinapi.DouYinEntryActivity"
             android:exported="true"
             android:launchMode="singleTask"
             android:taskAffinity="com.qxy.noerror" />
+
+        <activity android:name=".TestActivity"
+            android:exported="false"/>
+
+        <activity android:name=".user.UserInfoActivity"
+            android:exported="false"/>
+
+        <activity android:name=".MainActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

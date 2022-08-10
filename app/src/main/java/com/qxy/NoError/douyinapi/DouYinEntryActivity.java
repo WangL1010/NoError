@@ -14,7 +14,8 @@ import com.bytedance.sdk.open.aweme.common.model.BaseResp;
 import com.bytedance.sdk.open.aweme.share.Share;
 import com.bytedance.sdk.open.douyin.DouYinOpenApiFactory;
 import com.bytedance.sdk.open.douyin.api.DouYinOpenApi;
-import com.qxy.NoError.view.MainActivity;
+import com.qxy.NoError.MainActivity;
+import com.qxy.NoError.TestActivity;
 
 /**
  * 主要功能：接受授权返回结果的activity
@@ -55,6 +56,10 @@ public class DouYinEntryActivity extends Activity implements IApiEventHandler {
                 Toast.makeText(this, "授权成功，获得权限：" + response.grantedPermissions,
                         Toast.LENGTH_LONG).show();
                 Log.d(TAG,"authCode=="+response.authCode);
+
+                //授权成功，跳转到测试界面
+                intent = new Intent(this, TestActivity.class);
+                startActivity(intent);
             }
         }
 

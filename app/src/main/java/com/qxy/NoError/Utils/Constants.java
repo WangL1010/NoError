@@ -1,4 +1,4 @@
-package com.qxy.NoError.Utils;
+package com.qxy.NoError.utils;
 
 public class Constants {
     //base url

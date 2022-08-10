@@ -1,4 +1,4 @@
-package com.qxy.NoError.model;
+package com.qxy.NoError.user.bean;
 
 /**
  * 用户的公开信息bean

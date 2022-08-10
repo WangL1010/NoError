@@ -1,6 +1,6 @@
-package com.qxy.NoError.viewModel;
+package com.qxy.NoError.user.net;
 
-import com.qxy.NoError.model.UserInfo;
+import com.qxy.NoError.user.bean.UserInfo;
 
 /**
  * 用户信息回调
