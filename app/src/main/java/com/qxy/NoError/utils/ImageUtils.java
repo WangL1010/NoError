@@ -8,8 +8,6 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-import cn.hutool.bloomfilter.bitMap.BitMap;
-
 /**
  * 图片处理的工具类
  * @author 徐鑫

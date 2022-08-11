@@ -88,6 +88,5 @@ public class ListFragment extends Fragment {
                     tab.setText("综艺榜单");
             }
         })).attach();
-
     }
 }

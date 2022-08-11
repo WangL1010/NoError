@@ -139,6 +139,7 @@ public class MainActivity extends AppCompatActivity {
                 ActivityCompat.requestPermissions(MainActivity.this, mPermissionList, 100);
             }
         });
+
         findViewById(R.id.require_mobile).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -224,6 +225,7 @@ public class MainActivity extends AppCompatActivity {
                 share(currentShareType);
             }
         });
+
         String useFileProviderText = this.getString(R.string.share_user_file_provider);
         Button useFileProviderBt = findViewById(R.id.use_file_provider);
         useFileProviderBt.setText(useFileProviderText+useFileProvider);

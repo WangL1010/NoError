@@ -1,6 +1,5 @@
 package com.qxy.NoError.utils;
 
-
 import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;

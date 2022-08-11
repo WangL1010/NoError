@@ -40,6 +40,7 @@ public class NetUtils {
                         return chain.proceed(request);
                     }
                 }).build();
+
         Retrofit build = new Retrofit.Builder()
                 .baseUrl(IP_PRE)
                 .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
