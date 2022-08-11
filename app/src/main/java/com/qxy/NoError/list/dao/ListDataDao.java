@@ -8,6 +8,9 @@ import com.qxy.NoError.list.bean.ListData;
 
 import java.util.List;
 
+/**
+ * 对表listData_table进行数据操作
+ */
 @Dao
 public interface ListDataDao {
 

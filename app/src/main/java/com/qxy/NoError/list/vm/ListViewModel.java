@@ -33,6 +33,7 @@ public class ListViewModel extends ViewModel {
             getDate().setValue(localDate);
             getLiveData().setValue(movieList);
         });
+
     }
 
     public MutableLiveData<LocalDate> getDate() {

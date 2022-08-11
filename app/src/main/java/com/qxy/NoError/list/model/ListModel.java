@@ -5,7 +5,9 @@ import android.util.Log;
 
 import androidx.annotation.RequiresApi;
 
+import com.qxy.NoError.Database.AppDatabase;
 import com.qxy.NoError.list.bean.ListData;
+import com.qxy.NoError.list.dao.ListDataDao;
 import com.qxy.NoError.list.net.IListServer;
 import com.qxy.NoError.list.net.ResponseData;
 import com.qxy.NoError.utils.NetUtils;
@@ -28,6 +30,10 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
  */
 public class ListModel {
     private static final String TAG = "ListModel";
+
+    //获取listDataDao对数据库进行操作
+    private ListDataDao listDataDao=AppDatabase.getDatabase().getListDataDao();
+
 
     public void getListData(Integer type,CallBack2DealData callBack) {
         getListData(type, 0, callBack);
@@ -56,6 +62,12 @@ public class ListModel {
                             callBack.dealData(LocalDate.parse(movieResponseData.data.activeTime)
                                     , movieResponseData.data.description
                                     , movieResponseData.data.list);
+
+                            //把请求到的数据更新到数据库
+                            listDataDao.deleteAll();
+                            for (ListData listData : movieResponseData.data.list) {
+                                listDataDao.insert(listData);
+                            }
                         } else {
                             Log.d(TAG, "onNext: 请求失败" + movieResponseData.data.description);
                         }
