@@ -20,5 +20,7 @@ public class Movie {
     public String[] tags;
     public Long topicHot;
     public Long type;
+    //部分数据有上映区域，部分没有（位于actor和directoe数据中间）
+    public String releaseArea;
 
 }

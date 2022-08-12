@@ -47,41 +47,57 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
     @Override
     public void onBindViewHolder(@NonNull MovieViewHolder holder, int position) {
         Movie movie = movieList.get(position);
+
         holder.tvMovieName.setText(movie.name);
         holder.tvMovieHot.setText(String.valueOf(movie.hot));
+
         StringBuilder stringBuilder = new StringBuilder();
-        if (movie.tags != null) {
-            for (String str :
-                    movie.tags) {
+        if (movie.directors != null) {
+            for (String str : movie.directors) {
                 stringBuilder.append(str).append(',');
             }
         }
-        holder.tvMovieType.setText(stringBuilder);
+        holder.tvMovieDirtector.setText(stringBuilder);
+
+        StringBuilder stringBuilder_2 = new StringBuilder();
+        if (movie.actors != null) {
+            for (String str : movie.actors) {
+                stringBuilder.append(str).append(',');
+            }
+        }
+        holder.tvMovieActor.setText(stringBuilder_2);
+
         holder.tvReleaseTime.setText(movie.releaseDate);
+        holder.tvReleaseArea.setText(movie.releaseArea == null ? "中国大陆" : movie.releaseArea);
+
         if (bitmaps != null && bitmaps.size() > position) {
             holder.movieIcon.setImageBitmap(bitmaps.get(movie.poster));
+        }
+    }
+
+
+    static class MovieViewHolder extends RecyclerView.ViewHolder {
+
+        ImageView movieIcon;
+        TextView tvMovieName, tvMovieDirtector, tvMovieActor, tvReleaseArea,tvReleaseTime, tvMovieHot;
+
+        public MovieViewHolder(@NonNull View itemView) {
+            super(itemView);
+
+            tvMovieName = itemView.findViewById(R.id.movie_name);
+            tvMovieDirtector = itemView.findViewById(R.id.movie_director);
+            tvMovieActor = itemView.findViewById(R.id.movie_actor);
+            tvReleaseArea = itemView.findViewById(R.id.movie_release_area);
+            tvReleaseTime = itemView.findViewById(R.id.movie_release_time);
+            tvMovieHot = itemView.findViewById(R.id.tv_movie_hot);
+
+            movieIcon = itemView.findViewById(R.id.movie_icon);
         }
     }
 
     @Override
     public int getItemCount() {
         return movieList == null ? 0 : movieList.size();
-    }
-
-    static class MovieViewHolder extends RecyclerView.ViewHolder {
-
-        ImageView movieIcon;
-        TextView tvMovieName, tvDoubanScore, tvMovieType, tvReleaseTime, tvMovieHot;
-
-        public MovieViewHolder(@NonNull View itemView) {
-            super(itemView);
-            tvMovieName = itemView.findViewById(R.id.tv_movie_name);
-            tvDoubanScore = itemView.findViewById(R.id.tv_douban_score);
-            tvMovieType = itemView.findViewById(R.id.tv_movie_type);
-            tvReleaseTime = itemView.findViewById(R.id.tv_release_time);
-            tvMovieHot = itemView.findViewById(R.id.tv_movie_hot);
-            movieIcon = itemView.findViewById(R.id.iv_movie_icon);
-        }
     }
 
     public void setMovieList(List<Movie> movieList) {

@@ -28,6 +28,7 @@ public class MovieViewModel extends ViewModel {
     private MutableLiveData<List<Movie>> movieList;
     private MutableLiveData<LocalDate> date;
     private MutableLiveData<HashMap<String, Bitmap>> bitmapHash;
+
     MovieModel movieModel = new MovieModel();
 
     public MovieViewModel() {

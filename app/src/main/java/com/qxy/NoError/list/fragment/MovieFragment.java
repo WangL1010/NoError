@@ -1,12 +1,12 @@
 package com.qxy.NoError.list.fragment;
 
-import android.graphics.Bitmap;
+
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
+
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,12 +17,7 @@ import android.view.ViewGroup;
 
 import com.qxy.NoError.R;
 import com.qxy.NoError.list.adapter.MovieAdapter;
-import com.qxy.NoError.list.bean.Movie;
 import com.qxy.NoError.list.vm.MovieViewModel;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 /**
  * 电影榜单
