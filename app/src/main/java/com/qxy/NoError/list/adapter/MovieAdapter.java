@@ -51,14 +51,34 @@ public class MovieAdapter extends MyListAdapter<MovieAdapter.MovieViewHolder> {
         holder.tvMovieName.setText(listData.name);
         holder.tvMovieHot.setText(String.valueOf(listData.hot));
         StringBuilder stringBuilder = new StringBuilder();
-        if (listData.tags != null) {
+        //暂时先完成电影榜单
+//        if (listData.tags != null) {
+//            for (String str :
+//                    listData.tags) {
+//                stringBuilder.append(str).append(',');
+//            }
+//        }
+//        holder.tvMovieType.setText(stringBuilder);
+
+        if (listData.directors != null) {
             for (String str :
-                    listData.tags) {
+                    listData.directors) {
                 stringBuilder.append(str).append(',');
             }
         }
-        holder.tvMovieType.setText(stringBuilder);
+        holder.tvMovieDirtector.setText(stringBuilder);
+
+        StringBuilder stringBuilder_actors = new StringBuilder();
+        if (listData.actors != null) {
+            for (String str :
+                    listData.actors) {
+                stringBuilder_actors.append(str).append(',');
+            }
+        }
+        holder.tvMovieActor.setText(stringBuilder);
+        holder.tvReleaseArea.setText(listData.releaseArea);
         holder.tvReleaseTime.setText(listData.releaseDate);
+
         Glide.with(holder.movieIcon)
                 .load(listData.poster)
                 .placeholder(R.drawable.ic_list)
@@ -73,16 +93,18 @@ public class MovieAdapter extends MyListAdapter<MovieAdapter.MovieViewHolder> {
     public static class MovieViewHolder extends RecyclerView.ViewHolder {
 
         ImageView movieIcon;
-        TextView tvMovieName, tvDoubanScore, tvMovieType, tvReleaseTime, tvMovieHot;
+        TextView tvMovieName, tvMovieDirtector, tvMovieActor, tvReleaseArea,tvReleaseTime, tvMovieHot;
 
         public MovieViewHolder(@NonNull View itemView) {
             super(itemView);
-            tvMovieName = itemView.findViewById(R.id.tv_movie_name);
-            tvDoubanScore = itemView.findViewById(R.id.tv_douban_score);
-            tvMovieType = itemView.findViewById(R.id.tv_movie_type);
-            tvReleaseTime = itemView.findViewById(R.id.tv_movie_release_time);
+            tvMovieName = itemView.findViewById(R.id.movie_name);
+            tvMovieDirtector = itemView.findViewById(R.id.movie_director);
+            tvMovieActor = itemView.findViewById(R.id.movie_actor);
+            tvReleaseArea = itemView.findViewById(R.id.movie_release_area);
+            tvReleaseTime = itemView.findViewById(R.id.movie_release_time);
             tvMovieHot = itemView.findViewById(R.id.tv_movie_hot);
-            movieIcon = itemView.findViewById(R.id.iv_movie_icon);
+
+            movieIcon = itemView.findViewById(R.id.movie_icon);
         }
     }
 }
