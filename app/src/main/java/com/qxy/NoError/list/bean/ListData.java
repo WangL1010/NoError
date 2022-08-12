@@ -41,4 +41,7 @@ public class ListData {
     public List<String> tags;
     public Long topicHot;
     public Long type;
+
+    //部分影片有上映区域的数据，位于Actors和Director中间
+    public String releaseArea;
 }

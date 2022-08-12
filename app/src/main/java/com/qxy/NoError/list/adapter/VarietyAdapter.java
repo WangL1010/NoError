@@ -67,12 +67,12 @@ public class VarietyAdapter extends RecyclerView.Adapter<VarietyAdapter.MovieVie
 
         public MovieViewHolder(@NonNull View itemView) {
             super(itemView);
-            tvMovieName = itemView.findViewById(R.id.tv_movie_name);
-            tvDoubanScore = itemView.findViewById(R.id.tv_douban_score);
-            tvMovieType = itemView.findViewById(R.id.tv_movie_type);
-            tvReleaseTime = itemView.findViewById(R.id.tv_movie_release_time);
-            tvMovieHot = itemView.findViewById(R.id.tv_movie_hot);
-            movieIcon = itemView.findViewById(R.id.iv_movie_icon);
+//            tvMovieName = itemView.findViewById(R.id.tv_movie_name);
+//            tvDoubanScore = itemView.findViewById(R.id.tv_douban_score);
+//            tvMovieType = itemView.findViewById(R.id.tv_movie_type);
+//            tvReleaseTime = itemView.findViewById(R.id.tv_movie_release_time);
+//            tvMovieHot = itemView.findViewById(R.id.tv_movie_hot);
+//            movieIcon = itemView.findViewById(R.id.iv_movie_icon);
         }
     }
 
