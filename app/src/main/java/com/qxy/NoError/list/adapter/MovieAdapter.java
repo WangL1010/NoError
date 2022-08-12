@@ -1,6 +1,5 @@
 package com.qxy.NoError.list.adapter;
 
-import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +13,6 @@ import com.bumptech.glide.Glide;
 import com.qxy.NoError.R;
 import com.qxy.NoError.list.bean.ListData;
 
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -22,15 +20,21 @@ import java.util.List;
  *
  * @author 徐鑫
  */
-public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHolder> {
+public class MovieAdapter extends MyListAdapter<MovieAdapter.MovieViewHolder> {
 
-    private List<ListData> listData;
+    private volatile static MovieAdapter instance;
 
-    public MovieAdapter() {
-    }
+    private MovieAdapter() {}
 
-    public MovieAdapter(List<ListData> listData) {
-        this.listData = listData;
+    public static MovieAdapter getInstance() {
+        if (instance == null) {
+            synchronized (MovieAdapter.class) {
+                if (instance == null) {
+                    instance = new MovieAdapter();
+                }
+            }
+        }
+        return instance;
     }
 
     @NonNull
@@ -43,7 +47,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
 
     @Override
     public void onBindViewHolder(@NonNull MovieViewHolder holder, int position) {
-        ListData listData = this.listData.get(position);
+        ListData listData = this.getListData().get(position);
         holder.tvMovieName.setText(listData.name);
         holder.tvMovieHot.setText(String.valueOf(listData.hot));
         StringBuilder stringBuilder = new StringBuilder();
@@ -63,10 +67,10 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
 
     @Override
     public int getItemCount() {
-        return listData == null ? 0 : listData.size();
+        return getListData() == null ? 0 : getListData().size();
     }
 
-    static class MovieViewHolder extends RecyclerView.ViewHolder {
+    public static class MovieViewHolder extends RecyclerView.ViewHolder {
 
         ImageView movieIcon;
         TextView tvMovieName, tvDoubanScore, tvMovieType, tvReleaseTime, tvMovieHot;
@@ -80,9 +84,5 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
             tvMovieHot = itemView.findViewById(R.id.tv_movie_hot);
             movieIcon = itemView.findViewById(R.id.iv_movie_icon);
         }
-    }
-
-    public void setMovieList(List<ListData> listData) {
-        this.listData = listData;
     }
 }

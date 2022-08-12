@@ -3,10 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".list.fragment.MovieFragment">
+    tools:context=".user.UserFragment">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_movie_list"
+    <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:text="用户信息界面"
+        android:textSize="60sp" />
+
 </FrameLayout>

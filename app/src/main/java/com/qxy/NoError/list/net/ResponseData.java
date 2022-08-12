@@ -1,10 +1,8 @@
 package com.qxy.NoError.list.net;
 
 import androidx.annotation.NonNull;
-import androidx.room.Entity;
 import androidx.room.Ignore;
 
-import java.lang.reflect.Field;
 import java.util.List;
 
 /**

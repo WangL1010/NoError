@@ -7,7 +7,8 @@ import android.util.Log;
 import android.widget.Toast;
 
 /**
- * @author:zhanglei 2021/12/15
+ * 接收抖音发布的广播
+ * @author 王龙
  */
 public class StayInDyReceiver extends BroadcastReceiver {
 

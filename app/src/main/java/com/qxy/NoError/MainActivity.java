@@ -32,10 +32,10 @@ import com.bytedance.sdk.open.douyin.ShareToContact;
 import com.bytedance.sdk.open.douyin.api.DouYinOpenApi;
 import com.bytedance.sdk.open.douyin.model.ContactHtmlObject;
 import com.bytedance.sdk.open.douyin.model.OpenRecord;
-import com.qxy.NoError.user.net.RetrofitApi;
-import com.qxy.NoError.user.net.RetrofitManager;
 import com.qxy.NoError.user.bean.UserInfo;
 import com.qxy.NoError.user.bean.UserInfo2Body;
+import com.qxy.NoError.user.net.RetrofitApi;
+import com.qxy.NoError.user.net.RetrofitManager;
 import com.qxy.NoError.utils.UriUtil;
 
 import java.io.File;

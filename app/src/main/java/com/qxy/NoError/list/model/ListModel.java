@@ -31,11 +31,12 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 public class ListModel {
     private static final String TAG = "ListModel";
 
-    //获取listDataDao对数据库进行操作
-    private ListDataDao listDataDao=AppDatabase.getDatabase().getListDataDao();
+    /**
+     * 获取listDataDao对数据库进行操作
+     */
+    private final ListDataDao listDataDao = AppDatabase.getDatabase().getListDataDao();
 
-
-    public void getListData(Integer type,CallBack2DealData callBack) {
+    public void getListData(Integer type, CallBack2DealData callBack) {
         getListData(type, 0, callBack);
     }
 
@@ -59,37 +60,40 @@ public class ListModel {
                             NetUtils.refreshClientToken(() -> getListData(type, version, callBack));
                         } else if (movieResponseData.data.errorCode == 0) {
                             Log.d(TAG, "onNext: 请求成功，数据如下\n" + JSONUtil.toJsonStr(movieResponseData));
-                            callBack.dealData(LocalDate.parse(movieResponseData.data.activeTime)
-                                    , movieResponseData.data.description
+                            callBack.success(LocalDate.parse(movieResponseData.data.activeTime)
                                     , movieResponseData.data.list);
 
-                            /**
-                             * 向数据库中更新type字段对应的数据
-                             */
-                                listDataDao.deleteByTypeVersion(type,version);
-                                for (ListData listData : movieResponseData.data.list) {
+                            // 向数据库中更新type字段对应的数据
+                            listDataDao.deleteByTypeVersion(type, version);
+                            for (ListData listData : movieResponseData.data.list) {
+                                try {
+                                    // 数据库中存在相同的数据会抛异常
                                     listDataDao.insert(listData);
+                                } catch (Exception e) {
+                                    //e.printStackTrace();
                                 }
+                            }
                         } else {
                             Log.d(TAG, "onNext: 请求失败" + movieResponseData.data.description);
-                            /**
-                             * 请求失败返回数据库的数据
-                             */
+                            // 请求失败返回数据库的数据
                             List<ListData> data = listDataDao.getDataByTypeVersion(type, version);
-                            callBack.dealData(LocalDate.now(),movieResponseData.data.description,data);
+                            callBack.success(LocalDate.now(), data);
+
+                            //处理错误信息
+                            callBack.fail(movieResponseData.data.description);
                         }
                     }
 
                     @Override
                     public void onError(@NonNull Throwable e) {
                         Log.d(TAG, "onError: 请求出错，错误信息：" + e.getMessage() + "造成原因：" + e.getCause());
-                        /**
-                         * 请求失败返回数据库的数据
-                         */
+
+                        //请求失败返回数据库的数据
                         List<ListData> data = listDataDao.getDataByTypeVersion(type, version);
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                            callBack.dealData(LocalDate.now(),e.toString(),data);
+                            callBack.success(LocalDate.now(), data);
                         }
+                        callBack.fail("网络异常");
                     }
 
                     @Override
@@ -106,11 +110,17 @@ public class ListModel {
         /**
          * 处理数据
          *
-         * @param localDate   排行榜时间
-         * @param movieList   排行榜数据
-         * @param description 请求数据失败的描述信息，请求数据成功没有描述
+         * @param localDate 排行榜时间
+         * @param listData  排行榜数据
          */
-        void dealData(LocalDate localDate, String description, List<ListData> movieList);
+        void success(LocalDate localDate, List<ListData> listData);
+
+        /**
+         * 处理错误
+         *
+         * @param message 错误信息
+         */
+        void fail(String message);
     }
 
 }

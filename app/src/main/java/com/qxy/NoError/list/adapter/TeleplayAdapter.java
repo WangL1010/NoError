@@ -1,6 +1,5 @@
 package com.qxy.NoError.list.adapter;
 
-import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,16 +13,28 @@ import com.bumptech.glide.Glide;
 import com.qxy.NoError.R;
 import com.qxy.NoError.list.bean.ListData;
 
-import java.util.HashMap;
 import java.util.List;
 
 /**
  * 电视剧榜单的适配器
  * @author 徐鑫
  */
-public class TeleplayAdapter extends RecyclerView.Adapter<TeleplayAdapter.TeleplayViewHolder> {
+public class TeleplayAdapter extends MyListAdapter<TeleplayAdapter.TeleplayViewHolder> {
 
-    private List<ListData> listData;
+    private static volatile TeleplayAdapter instance;
+
+    private TeleplayAdapter() {}
+
+    public static TeleplayAdapter getInstance() {
+        if (instance == null) {
+            synchronized (TeleplayAdapter.class) {
+                if (instance == null) {
+                    instance = new TeleplayAdapter();
+                }
+            }
+        }
+        return instance;
+    }
 
     @NonNull
     @Override
@@ -72,16 +83,5 @@ public class TeleplayAdapter extends RecyclerView.Adapter<TeleplayAdapter.Telepl
             tvReleaseTime = itemView.findViewById(R.id.tv_teleplay_release_time);
             ivIcon = itemView.findViewById(R.id.iv_teleplay_icon);
         }
-    }
-
-    public TeleplayAdapter(List<ListData> listData) {
-        this.listData = listData;
-    }
-
-    public TeleplayAdapter() {
-    }
-
-    public void setListData(List<ListData> listData) {
-        this.listData = listData;
     }
 }

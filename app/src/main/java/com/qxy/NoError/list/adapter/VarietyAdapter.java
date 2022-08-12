@@ -1,6 +1,5 @@
 package com.qxy.NoError.list.adapter;
 
-import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +13,6 @@ import com.bumptech.glide.Glide;
 import com.qxy.NoError.R;
 import com.qxy.NoError.list.bean.ListData;
 
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -22,15 +20,21 @@ import java.util.List;
  *
  * @author 徐鑫
  */
-public class VarietyAdapter extends RecyclerView.Adapter<VarietyAdapter.MovieViewHolder> {
+public class VarietyAdapter extends MyListAdapter<VarietyAdapter.MovieViewHolder> {
 
-    private List<ListData> listData;
+    private static volatile VarietyAdapter instance;
 
-    public VarietyAdapter() {
-    }
+    private VarietyAdapter() {}
 
-    public VarietyAdapter(List<ListData> listData) {
-        this.listData = listData;
+    public static VarietyAdapter getInstance() {
+        if (instance == null) {
+            synchronized (VarietyAdapter.class) {
+                if (instance == null) {
+                    instance = new VarietyAdapter();
+                }
+            }
+        }
+        return instance;
     }
 
     @NonNull
@@ -75,9 +79,4 @@ public class VarietyAdapter extends RecyclerView.Adapter<VarietyAdapter.MovieVie
             movieIcon = itemView.findViewById(R.id.iv_movie_icon);
         }
     }
-
-    public void setMovieList(List<ListData> listData) {
-        this.listData = listData;
-    }
-
 }

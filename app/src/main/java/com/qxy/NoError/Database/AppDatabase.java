@@ -19,13 +19,19 @@ public abstract class AppDatabase extends RoomDatabase {
 
     public static AppDatabase getDatabase() {
         if (appDatabase == null) {
-            appDatabase = Room.databaseBuilder(MyApplication.getAppContext(), AppDatabase.class, "database-name")
-                    .allowMainThreadQueries()
+            appDatabase = Room.databaseBuilder(MyApplication.getAppContext(),
+                            AppDatabase.class,
+                            "app_database")
+                    .allowMainThreadQueries() //不要允许主线程查询吧
                     .build();
         }
         return appDatabase;
     }
 
+    /**
+     * 获取list dao对象
+     * @return list dao对象
+     */
     public abstract ListDataDao getListDataDao();
 
 }
