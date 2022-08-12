@@ -63,19 +63,33 @@ public class ListModel {
                                     , movieResponseData.data.description
                                     , movieResponseData.data.list);
 
-                            //把请求到的数据更新到数据库
-                            listDataDao.deleteAll();
-                            for (ListData listData : movieResponseData.data.list) {
-                                listDataDao.insert(listData);
-                            }
+                            /**
+                             * 向数据库中更新type字段对应的数据
+                             */
+                                listDataDao.deleteByTypeVersion(type,version);
+                                for (ListData listData : movieResponseData.data.list) {
+                                    listDataDao.insert(listData);
+                                }
                         } else {
                             Log.d(TAG, "onNext: 请求失败" + movieResponseData.data.description);
+                            /**
+                             * 请求失败返回数据库的数据
+                             */
+                            List<ListData> data = listDataDao.getDataByTypeVersion(type, version);
+                            callBack.dealData(LocalDate.now(),movieResponseData.data.description,data);
                         }
                     }
 
                     @Override
                     public void onError(@NonNull Throwable e) {
                         Log.d(TAG, "onError: 请求出错，错误信息：" + e.getMessage() + "造成原因：" + e.getCause());
+                        /**
+                         * 请求失败返回数据库的数据
+                         */
+                        List<ListData> data = listDataDao.getDataByTypeVersion(type, version);
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                            callBack.dealData(LocalDate.now(),e.toString(),data);
+                        }
                     }
 
                     @Override
