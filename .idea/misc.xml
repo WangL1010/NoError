@@ -17,16 +17,18 @@
         <entry key="..\:/Develop/Code/android_project/NoError/app/src/main/res/layout/fragment_variety.xml" value="0.23505434782608695" />
         <entry key="..\:/Develop/Code/android_project/NoError/app/src/main/res/layout/item_movie.xml" value="0.35251798561151076" />
         <entry key="..\:/Develop/Code/android_project/NoError/app/src/main/res/layout/item_teleplay.xml" value="0.536" />
-        <entry key="..\:/WorkingTool/NoError-master/app/src/main/res/layout/activity_main.xml" value="0.12708333333333333" />
-        <entry key="..\:/WorkingTool/project/NoError/app/src/main/res/layout/activity_main.xml" value="0.27395833333333336" />
         <entry key="..\:/androidstudio/work/NoError/app/src/main/res/layout/activity_main.xml" value="0.4" />
+        <entry key="..\:/androidstudio/work/NoError/app/src/main/res/layout/activity_test.xml" value="0.13949275362318841" />
         <entry key="..\:/androidstudio/work/NoError/app/src/main/res/layout/fragment_list.xml" value="0.1703125" />
         <entry key="..\:/androidstudio/work/NoError/app/src/main/res/layout/fragment_movie.xml" value="0.13949275362318841" />
+        <entry key="..\:/androidstudio/work/NoError/app/src/main/res/layout/fragment_teleplay.xml" value="0.15364583333333334" />
+        <entry key="..\:/androidstudio/work/NoError/app/src/main/res/layout/fragment_variety.xml" value="0.15364583333333334" />
+        <entry key="..\:/androidstudio/work/NoError/app/src/main/res/layout/item_movie.xml" value="0.15364583333333334" />
         <entry key="..\:/androidstudio/work/NoError/app/src/main/res/layout/item_teleplay.xml" value="0.13949275362318841" />
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">
