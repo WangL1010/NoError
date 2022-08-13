@@ -7,13 +7,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.qxy.NoError.R;
 import com.qxy.NoError.list.bean.ListData;
-
-import java.util.List;
+import com.qxy.NoError.utils.StrUtil;
 
 /**
  * 电影榜单的适配器
@@ -40,43 +40,43 @@ public class MovieAdapter extends MyListAdapter<MovieAdapter.MovieViewHolder> {
     @NonNull
     @Override
     public MovieViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        View itemView = layoutInflater.inflate(R.layout.item_movie, parent, false);
-        return new MovieViewHolder(itemView);
+        MovieViewHolder holder;
+        if (viewType == HEADER_VIEW_TYPE) {
+            holder = new MovieViewHolder(
+                    LayoutInflater.from(parent.getContext()).inflate(
+                            R.layout.layout_list_head,
+                            parent,
+                            false
+                    )
+            );
+            holder.tvVersion.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                }
+            });
+        } else {
+            LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
+            View itemView = layoutInflater.inflate(R.layout.item_movie, parent, false);
+            holder = new MovieViewHolder(itemView);
+        }
+        return holder;
     }
 
     @Override
     public void onBindViewHolder(@NonNull MovieViewHolder holder, int position) {
-        ListData listData = this.getListData().get(position);
+        if (position == 0) {
+            return;
+        }
+        ListData listData = getItem(position);
+
+        holder.tvRank.setText(StrUtil.formatRank(position, 3, "TOP "));
         holder.tvMovieName.setText(listData.name);
-        holder.tvMovieHot.setText(String.valueOf(listData.hot));
-        StringBuilder stringBuilder = new StringBuilder();
-        //暂时先完成电影榜单
-//        if (listData.tags != null) {
-//            for (String str :
-//                    listData.tags) {
-//                stringBuilder.append(str).append(',');
-//            }
-//        }
-//        holder.tvMovieType.setText(stringBuilder);
+        holder.tvMovieHot.setText(StrUtil.formatFromInt(listData.hot, 4, "万"));
+        holder.tvMovieDirtector.setText(StrUtil.formatStr(listData.directors, ",", 2));
 
-        if (listData.directors != null) {
-            for (String str :
-                    listData.directors) {
-                stringBuilder.append(str).append(',');
-            }
-        }
-        holder.tvMovieDirtector.setText(stringBuilder);
-
-        StringBuilder stringBuilder_actors = new StringBuilder();
-        if (listData.actors != null) {
-            for (String str :
-                    listData.actors) {
-                stringBuilder_actors.append(str).append(',');
-            }
-        }
-        holder.tvMovieActor.setText(stringBuilder);
-        holder.tvReleaseArea.setText(listData.releaseArea);
+        holder.tvMovieActor.setText(StrUtil.formatStr(listData.actors, ",", 2));
+        holder.tvReleaseArea.setText(StrUtil.formatStr(listData.areas, ",", 2));
         holder.tvReleaseTime.setText(listData.releaseDate);
 
         Glide.with(holder.movieIcon)
@@ -85,15 +85,12 @@ public class MovieAdapter extends MyListAdapter<MovieAdapter.MovieViewHolder> {
                 .into(holder.movieIcon);
     }
 
-    @Override
-    public int getItemCount() {
-        return getListData() == null ? 0 : getListData().size();
-    }
-
     public static class MovieViewHolder extends RecyclerView.ViewHolder {
 
         ImageView movieIcon;
-        TextView tvMovieName, tvMovieDirtector, tvMovieActor, tvReleaseArea,tvReleaseTime, tvMovieHot;
+        TextView tvMovieName, tvMovieDirtector, tvMovieActor,
+                tvReleaseArea, tvReleaseTime, tvMovieHot, tvRank,
+                tvVersion;
 
         public MovieViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -103,8 +100,9 @@ public class MovieAdapter extends MyListAdapter<MovieAdapter.MovieViewHolder> {
             tvReleaseArea = itemView.findViewById(R.id.movie_release_area);
             tvReleaseTime = itemView.findViewById(R.id.movie_release_time);
             tvMovieHot = itemView.findViewById(R.id.tv_movie_hot);
-
+            tvRank = itemView.findViewById(R.id.tvRank);
             movieIcon = itemView.findViewById(R.id.movie_icon);
+            tvVersion = itemView.findViewById(R.id.tvVersion);
         }
     }
 }

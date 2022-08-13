@@ -10,7 +10,7 @@ public class Constants {
      */
     public static final String BASE_URL="https://open.douyin.com/";
 
-    public static final String CLIENT_KEY = "awlap3mzldj5efy3";
-    public static final String CLIENT_SECRET = "b4a0eb5f2ea0d859aea0781bf1a759b7";
+    public static final String CLIENT_KEY = "awoivy4o8l4own3v";
+    public static final String CLIENT_SECRET = "0cc1918b5c314bccf606935e9cc52ef6";
 
 }

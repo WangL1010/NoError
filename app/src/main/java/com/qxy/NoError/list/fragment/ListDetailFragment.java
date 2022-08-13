@@ -10,10 +10,12 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.qxy.NoError.databinding.FragmentListDetailBinding;
 import com.qxy.NoError.list.adapter.MyListAdapter;
+import com.qxy.NoError.list.bean.ListData;
 import com.qxy.NoError.list.vm.ListViewModel;
 
 /**
@@ -67,7 +69,7 @@ public class ListDetailFragment<T extends RecyclerView.ViewHolder> extends Fragm
         listViewModel.requestDataFromNet(this.dataType);
 
         listViewModel.getListData().observe(getViewLifecycleOwner(), dataList -> {
-            adapter.setListData(dataList);
+            adapter.submitList(dataList);
             binding.rvList.setAdapter(adapter);
         });
 

@@ -49,7 +49,7 @@
                         app:layout_constraintGuide_percent="0.13" />
 
                     <ImageView
-                        android:id="@+id/movie_icon"
+                        android:id="@+id/variety_icon"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:contentDescription="@string/image"
@@ -70,11 +70,11 @@
                         android:background="@android:color/holo_orange_light"
                         app:layout_constraintBottom_toTopOf="@+id/guideline2"
                         app:layout_constraintEnd_toStartOf="@+id/guideline4"
-                        app:layout_constraintStart_toStartOf="@+id/movie_icon"
-                        app:layout_constraintTop_toTopOf="@+id/movie_icon" />
+                        app:layout_constraintStart_toStartOf="@+id/variety_icon"
+                        app:layout_constraintTop_toTopOf="@+id/variety_icon" />
 
                     <TextView
-                        android:id="@+id/tvRank"
+                        android:id="@+id/tv_variety_rank"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="2dp"
@@ -91,11 +91,11 @@
 
             <!--电影名称-->
             <TextView
-                android:id="@+id/movie_name"
+                android:id="@+id/tv_variety_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/tv_movie_name"
-                android:textSize="@dimen/movieTextSizeBig"
+                android:textSize="@dimen/varietyTextSizeBig"
                 android:textStyle="bold"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="10dp"
@@ -106,100 +106,25 @@
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintVertical_bias="0.0" />
 
-            <!--电影导演-->
             <TextView
-                android:id="@+id/_movie_director"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="12dp"
-                android:text="@string/_tv_director"
-                android:textSize="@dimen/movieTextSizeSmall"
-                app:layout_constraintStart_toEndOf="@+id/Card"
-                app:layout_constraintTop_toBottomOf="@+id/movie_name" />
-
-            <TextView
-                android:id="@+id/movie_director"
+                android:id="@+id/tv_variety_director"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:text="@string/tv_director"
-                android:textSize="@dimen/movieTextSizeSmall"
-                app:layout_constraintBottom_toBottomOf="@+id/_movie_director"
-                app:layout_constraintStart_toEndOf="@+id/_movie_director"
-                app:layout_constraintTop_toTopOf="@+id/_movie_director" />
+                android:textSize="@dimen/varietyTextSizeSmall"
+                app:layout_constraintBottom_toBottomOf="@+id/_tv_variety_director"
+                app:layout_constraintStart_toEndOf="@+id/_tv_variety_director"
+                app:layout_constraintTop_toTopOf="@+id/_tv_variety_director" />
 
-            <!--电影演员-->
             <TextView
-                android:id="@+id/_movie_actor"
+                android:id="@+id/_tv_variety_director"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="5dp"
-                android:text="@string/_tv_actor"
-                android:textSize="@dimen/movieTextSizeSmall"
-                app:layout_constraintStart_toEndOf="@+id/Card"
-                app:layout_constraintTop_toBottomOf="@+id/_movie_director" />
-
-            <TextView
-                android:id="@+id/movie_actor"
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:text="@string/tv_actor"
-                android:textSize="@dimen/movieTextSizeSmall"
-                app:layout_constraintBottom_toBottomOf="@+id/_movie_actor"
-                app:layout_constraintStart_toEndOf="@+id/_movie_actor"
-                app:layout_constraintTop_toTopOf="@+id/_movie_actor" />
-
-            <!--上映区域-->
-            <TextView
-                android:id="@+id/tv_movie_release_area"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="5dp"
-                android:text="@string/_tv_area"
-                android:textSize="@dimen/movieTextSizeSmall"
-                app:layout_constraintStart_toEndOf="@+id/Card"
-                app:layout_constraintTop_toBottomOf="@+id/_movie_actor" />
-
-            <TextView
-                android:id="@+id/movie_release_area"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/tv_area"
-                android:textSize="@dimen/movieTextSizeSmall"
-                app:layout_constraintBottom_toBottomOf="@+id/tv_movie_release_area"
-                app:layout_constraintStart_toEndOf="@+id/tv_movie_release_area"
-                app:layout_constraintTop_toTopOf="@+id/tv_movie_release_area" />
-
-
-            <!--上映时间-->
-            <TextView
-                android:id="@+id/tv_movie_release_time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="5dp"
-                android:text="@string/_tv_release_time"
-                android:textSize="@dimen/movieTextSizeSmall"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toEndOf="@+id/Card"
-                app:layout_constraintTop_toBottomOf="@+id/tv_movie_release_area"
-                app:layout_constraintVertical_bias="0.0" />
-
-            <TextView
-                android:id="@+id/movie_release_time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/tv_release_time"
-                android:textSize="@dimen/movieTextSizeSmall"
-                app:layout_constraintBottom_toBottomOf="@+id/tv_movie_release_time"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toEndOf="@+id/tv_movie_release_time"
-                app:layout_constraintTop_toTopOf="@+id/tv_movie_release_time" />
+                android:layout_marginTop="16dp"
+                android:text="@string/_tv_director"
+                android:textSize="@dimen/varietyTextSizeSmall"
+                app:layout_constraintStart_toStartOf="@+id/tv_variety_en_name"
+                app:layout_constraintTop_toBottomOf="@+id/tv_variety_en_name" />
 
             <View
                 android:id="@+id/line"
@@ -217,26 +142,36 @@
                 android:layout_height="25dp"
                 android:layout_marginStart="2dp"
                 android:contentDescription="@string/_tv_movie_hot"
-                app:layout_constraintBottom_toBottomOf="@+id/tv_movie_hot"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_variety_hot"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toEndOf="@+id/line"
-                app:layout_constraintTop_toTopOf="@+id/tv_movie_hot"
+                app:layout_constraintTop_toTopOf="@+id/tv_variety_hot"
                 app:srcCompat="@drawable/fire" />
 
             <TextView
-                android:id="@+id/tv_movie_hot"
+                android:id="@+id/tv_variety_hot"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="10dp"
                 android:text="@string/tv_movie_hot"
                 android:textColor="#DD2C00"
-                android:textSize="@dimen/movieTextSizeBig"
+                android:textSize="@dimen/varietyTextSizeBig"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toEndOf="@+id/movie_hot"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_variety_en_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/tv_en_name"
+                android:textSize="@dimen/varietyTextSizeSmall"
+                app:layout_constraintStart_toStartOf="@+id/tv_variety_name"
+                app:layout_constraintTop_toBottomOf="@+id/tv_variety_name" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>

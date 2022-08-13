@@ -85,7 +85,4 @@ public class ListData {
      * 类型数据：1-电影，2-电视剧，3-综艺
      */
     public Long type;
-
-    //部分影片有上映区域的数据，位于Actors和Director中间
-    public String releaseArea;
 }
