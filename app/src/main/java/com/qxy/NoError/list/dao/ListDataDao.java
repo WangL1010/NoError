@@ -8,6 +8,8 @@ import com.qxy.NoError.list.bean.ListData;
 
 import java.util.List;
 
+import io.reactivex.rxjava3.core.Flowable;
+
 /**
  * 对表listData_table进行数据操作
  */
@@ -35,11 +37,13 @@ public interface ListDataDao {
     void deleteByTypeVersion(Integer type,Integer version);
 
     //根据type查找数据
+    //一次性查询,使用Maybe
     @Query("SELECT * FROM listData_table WHERE type=:type")
-    List<ListData> getDataByType(Integer type);
+    Flowable<List<ListData>> getDataByType(Integer type);
 
 
     //根据type和version查找数据
+    //一次性查询,使用Maybe
     @Query("SELECT * FROM listData_table WHERE type=:type and version=:version")
-    List<ListData> getDataByTypeVersion(Integer type,Integer version);
+    Flowable<List<ListData>> getDataByTypeVersion(Integer type,Integer version);
 }

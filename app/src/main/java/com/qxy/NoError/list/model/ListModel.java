@@ -12,15 +12,22 @@ import com.qxy.NoError.list.net.IListServer;
 import com.qxy.NoError.list.net.ResponseData;
 import com.qxy.NoError.utils.NetUtils;
 
+import org.reactivestreams.Subscription;
+
 import java.time.LocalDate;
 import java.util.List;
 
 import cn.hutool.json.JSONUtil;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.annotations.NonNull;
+import io.reactivex.rxjava3.core.Flowable;
+import io.reactivex.rxjava3.core.FlowableSubscriber;
+import io.reactivex.rxjava3.core.Maybe;
+import io.reactivex.rxjava3.core.MaybeObserver;
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.core.Observer;
 import io.reactivex.rxjava3.disposables.Disposable;
+import io.reactivex.rxjava3.functions.Consumer;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 /**
@@ -32,7 +39,11 @@ public class ListModel {
     private static final String TAG = "ListModel";
 
     //获取listDataDao对数据库进行操作
-    private ListDataDao listDataDao=AppDatabase.getDatabase().getListDataDao();
+    private ListDataDao listDataDao;
+
+    public ListModel(){
+        listDataDao=AppDatabase.getDatabase().getListDataDao();
+    }
 
 
     public void getListData(Integer type,CallBack2DealData callBack) {
@@ -47,7 +58,7 @@ public class ListModel {
                 .subscribe(new Observer<ResponseData<ListData>>() {
                     @Override
                     public void onSubscribe(@NonNull Disposable d) {
-
+                        Log.d(TAG, "onSubscribe: ");
                     }
 
                     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -75,8 +86,7 @@ public class ListModel {
                             /**
                              * 请求失败返回数据库的数据
                              */
-                            List<ListData> data = listDataDao.getDataByTypeVersion(type, version);
-                            callBack.dealData(LocalDate.now(),movieResponseData.data.description,data);
+                            getListDataFromDatabase(type, version, callBack);
                         }
                     }
 
@@ -86,15 +96,31 @@ public class ListModel {
                         /**
                          * 请求失败返回数据库的数据
                          */
-                        List<ListData> data = listDataDao.getDataByTypeVersion(type, version);
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                            callBack.dealData(LocalDate.now(),e.toString(),data);
-                        }
+                        getListDataFromDatabase(type, version, callBack);
                     }
 
                     @Override
                     public void onComplete() {
+                        Log.d(TAG, "onComplete: ");
+                    }
+                });
+    }
 
+    /**
+     * 从数据库中查找数据
+     * @param type
+     * @param version
+     * @param callBack
+     */
+    public void getListDataFromDatabase(Integer type, Integer version, CallBack2DealData callBack){
+        Flowable<List<ListData>> flowable = listDataDao.getDataByTypeVersion(type, version);
+        flowable.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<List<ListData>>() {
+                    @Override
+                    public void accept(List<ListData> listData) throws Throwable {
+                        callBack.dealData(LocalDate.now(),"从数据库请求数据",listData);
+                        Log.d(TAG, "accept: ");
                     }
                 });
     }
