@@ -1,13 +1,13 @@
-package com.qxy.NoError.user.bean;
+package com.qxy.NoError.user.net;
 
 /**
- * 获取用户信息的api所需POST请求的body
+ * 请求参数，Body请求
  */
-public class UserInfo2Body {
+public class ResBody {
     private String access_token;
     private String open_id;
 
-    public UserInfo2Body(String access_token, String open_id) {
+    public ResBody(String access_token, String open_id) {
         this.access_token = access_token;
         this.open_id = open_id;
     }

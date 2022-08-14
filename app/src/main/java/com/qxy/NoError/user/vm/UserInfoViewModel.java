@@ -3,48 +3,23 @@ package com.qxy.NoError.user.vm;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.qxy.NoError.user.net.RetrofitApi;
-import com.qxy.NoError.user.net.RetrofitManager;
-import com.qxy.NoError.user.bean.UserInfo;
-import com.qxy.NoError.user.bean.UserInfo2Body;
-import com.qxy.NoError.user.net.IUserInfoCallback;
-import com.qxy.NoError.user.repository.UserInfoRepository;
+import com.qxy.NoError.user.bean.UserOpenInfo;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import retrofit2.Retrofit;
-
-public class UserInfoViewModel extends ViewModel implements IUserInfoCallback {
-    private UserInfoRepository repository;
-    private MutableLiveData<UserInfo> liveData;
+public class UserInfoViewModel extends ViewModel  {
+    private MutableLiveData<UserOpenInfo> liveData;
 
     public static final String TAG="UserInfoViewModel";
 
     public UserInfoViewModel() {
-        repository=new UserInfoRepository();
-        liveData=new MutableLiveData<>();
-        repository.registerCallback(this);
-        Retrofit mRetrofit = RetrofitManager.getInstance().getRetrofit();
-        RetrofitApi api =mRetrofit.create(RetrofitApi.class);
-        Map<String,String> map=new HashMap<>();
-        map.put("Content-Type","application/json");
-        map.put("access-token","act.12d9381d72ed01b1b3a13f6f57d044eftawpeAohWab6TTDeZrAn6TdGZy8d");
-        UserInfo2Body body=new UserInfo2Body("act.12d9381d72ed01b1b3a13f6f57d044eftawpeAohWab6TTDeZrAn6TdGZy8d","_000c7mD_XtFTMXlg6BVheAccAxm0IUhUPU7");
-        repository.getUserInfo(map,body);
+
     }
 
 
 
 
-    public MutableLiveData<UserInfo> getLiveData(){
+    public MutableLiveData<UserOpenInfo> getLiveData(){
         return liveData;
     }
-    /**
-     *加载用户信息
-     */
-    @Override
-    public void loadUserInfo(UserInfo userInfo) {
-        liveData.postValue(userInfo);
-    }
+
+
 }
