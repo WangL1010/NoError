@@ -17,7 +17,7 @@ import com.qxy.NoError.list.bean.ListData;
 import com.qxy.NoError.utils.StrUtil;
 
 /**
- * 电影榜单的适配器
+ * 综艺榜单的适配器
  *
  * @author 徐鑫
  */

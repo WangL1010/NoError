@@ -171,6 +171,11 @@ public class ListModel {
     }
 
 
+    /**
+     * 获取榜单版本信息
+     * @param type 榜单的类型 {@link ListData#type ListData.type}
+     * @param callBackDealVersion 操作完成后的回调数据
+     */
     public void getVersionData(int type, CallBackDealVersion callBackDealVersion) {
         final int pageSize = 20;
         IListServer retrofit = NetUtils.createRetrofit(IListServer.class);
@@ -202,8 +207,16 @@ public class ListModel {
     }
 
     public interface CallBackDealVersion {
+        /**
+         * 请求 版本数据成功后的回调函数
+         * @param versions 请求成功获取的版本数据
+         */
         void success(List<Version> versions);
 
+        /**
+         * 请求 版本数据失败后的回调函数
+         * @param message 请求失败信息
+         */
         void fail(String message);
     }
 }
