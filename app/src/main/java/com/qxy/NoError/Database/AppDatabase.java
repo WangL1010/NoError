@@ -7,7 +7,7 @@ import androidx.room.TypeConverters;
 
 import com.qxy.NoError.MyApplication;
 import com.qxy.NoError.list.bean.ListData;
-import com.qxy.NoError.list.dao.IListDataDao;
+import com.qxy.NoError.list.dao.ListDataDao;
 
 /**
  * 定义数据库
@@ -15,26 +15,33 @@ import com.qxy.NoError.list.dao.IListDataDao;
 @TypeConverters(objectConverter.class)
 @Database(entities = {ListData.class},version = 1,exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
-    private volatile static AppDatabase instance;
+    private static AppDatabase instance;
+
+    private static String dbPath = "database-name";
 
     public static AppDatabase getInstance() {
-        if (instance == null) {
-            synchronized (AppDatabase.class) {
-                if (instance == null) {
-                    instance = Room.databaseBuilder(MyApplication.getAppContext(),
-                                    AppDatabase.class,
-                                    "app_database")
+        /**
+         * 判断设备是否挂载SD卡，如果挂载，数据库位置为
+         * dbPath=“/storage/emulated/0/noerror/database-name”
+         */
+        String state = Environment.getExternalStorageState();
+        if (state.equals(Environment.MEDIA_MOUNTED)){
+            dbPath=Environment.getExternalStorageDirectory().getPath()+ File.separator+"noerror"+File.separator+dbPath;
+        }
+        /**
+         * 获取database单例
+         */
+        if (appDatabase==null){
+            synchronized (AppDatabase.class){
+                if (appDatabase == null) {
+                    appDatabase = Room.databaseBuilder(MyApplication.getAppContext(), AppDatabase.class, dbPath)
                             //.allowMainThreadQueries() //不要允许主线程查询吧
                             .build();
                 }
             }
-        }
         return instance;
     }
 
-    /**
-     * 获取list dao对象
-     * @return list dao对象
-     */
-    public abstract IListDataDao getListDataDao();
+    public abstract ListDataDao getListDataDao();
+
 }
