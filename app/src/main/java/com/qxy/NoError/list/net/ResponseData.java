@@ -23,6 +23,12 @@ public class ResponseData<T> {
         public String description;
         public Long errorCode;
         public List<T> list;
+
+        /**
+         * 榜单历史版本用的数据
+         */
+        public Integer cursor;
+        public Boolean hasMore;
     }
     public static class Extra {
         @NonNull

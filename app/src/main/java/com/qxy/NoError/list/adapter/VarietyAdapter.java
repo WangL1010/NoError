@@ -7,6 +7,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.util.StringUtil;
 
@@ -50,10 +51,11 @@ public class VarietyAdapter extends MyListAdapter<VarietyAdapter.MovieViewHolder
                             false
                     )
             );
+            holder.tvVersion.setText(getVersionMsg());
             holder.tvVersion.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    Navigation.findNavController(v).navigate(R.id.versionFragment);
                 }
             });
         } else {

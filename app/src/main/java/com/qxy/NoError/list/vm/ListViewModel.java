@@ -4,10 +4,11 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.qxy.NoError.list.bean.ListData;
+import com.qxy.NoError.list.bean.Version;
 import com.qxy.NoError.list.model.ListModel;
 import com.qxy.NoError.utils.ToastUtils;
 
-import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -21,15 +22,14 @@ public class ListViewModel extends ViewModel {
      * 榜单数据
      */
     private MutableLiveData<List<ListData>> listData;
-    /**
-     * 上映时间
-     */
-    private LocalDate date;
 
     /**
      * 对外可观察的对象，用于确定是否从网络中请求数据成功
      */
     private MutableLiveData<Boolean> success;
+    private MutableLiveData<List<Version>> versionLiveData;
+    private MutableLiveData<Version> selectVersion;
+
     ListModel listModel = new ListModel();
 
     public void requestDataFromNet(Integer type) {
@@ -44,8 +44,7 @@ public class ListViewModel extends ViewModel {
     public void requestDataFromNet(Integer type, Integer version) {
         listModel.getListData(type, version, new ListModel.CallBack2DealData() {
             @Override
-            public void success(LocalDate localDate, List<ListData> listData) {
-                ListViewModel.this.date = localDate;
+            public void success(List<ListData> listData) {
                 getListData().setValue(listData);
                 getSuccess().setValue(true);
             }
@@ -56,7 +55,6 @@ public class ListViewModel extends ViewModel {
                 getSuccess().setValue(false);
             }
         });
-
     }
 
     /**
@@ -65,11 +63,35 @@ public class ListViewModel extends ViewModel {
      * @param version 数据版本{@link ListData#version ListData.type}
      */
     public void getDataFromDataBase(Integer type, Integer version) {
+        listModel.getDataFromDataBase(type, version, new ListModel.CallBack2DealData() {
+            @Override
+            public void success(List<ListData> listData) {
+                getListData().setValue(listData);
+                getSuccess().setValue(true);
+            }
 
+            @Override
+            public void fail(String message) {
+                ToastUtils.show(message);
+                getSuccess().setValue(false);
+            }
+        });
     }
 
-    public LocalDate getDate() {
-        return date;
+    public void requireVersionData(int type) {
+        listModel.getVersionData(type, new ListModel.CallBackDealVersion() {
+            @Override
+            public void success(List<Version> versions) {
+                List<Version> value = getVersionLiveData().getValue();
+                value.addAll(versions);
+                getVersionLiveData().setValue(value);
+            }
+
+            @Override
+            public void fail(String message) {
+                ToastUtils.show(message);
+            }
+        });
     }
 
     public MutableLiveData<Boolean> getSuccess() {
@@ -84,5 +106,19 @@ public class ListViewModel extends ViewModel {
             this.listData = new MutableLiveData<>();
         }
         return listData;
+    }
+
+    public MutableLiveData<List<Version>> getVersionLiveData() {
+        if (versionLiveData == null) {
+            versionLiveData = new MutableLiveData<>(new ArrayList<>());
+        }
+        return versionLiveData;
+    }
+
+    public MutableLiveData<Version> getSelectVersion() {
+        if (selectVersion == null) {
+            selectVersion = new MutableLiveData<>();
+        }
+        return selectVersion;
     }
 }

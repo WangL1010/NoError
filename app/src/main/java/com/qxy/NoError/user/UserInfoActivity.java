@@ -20,7 +20,7 @@ public class UserInfoActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_test);
         bt=findViewById(R.id.go_to_auth);
         viewModel=new ViewModelProvider(this).get(UserInfoViewModel.class);
         viewModel.getLiveData().observe(this, new Observer<UserInfo>() {

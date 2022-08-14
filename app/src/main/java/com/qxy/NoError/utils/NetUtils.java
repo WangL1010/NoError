@@ -45,19 +45,19 @@ public class NetUtils {
      * todo 每一次调用都需要创建一个okhttp客户端，是否可以优化？
      */
     public static <T> T createRetrofit(Class<T> tClass) {
+        return createRetrofit(tClass, MyApplication.getInstance().get(MyApplication.CLIENT_TOKEN));
+    }
+
+    public static <T> T createRetrofit(Class<T> tClass, String accessToken) {
+
         ObjectMapper mapper = new ObjectMapper();
         //将下划线转成驼峰式
         mapper.setPropertyNamingStrategy(PropertyNamingStrategies.SNAKE_CASE);
-        MyApplication instance = MyApplication.getInstance();
-        String clientToken = instance.get(MyApplication.CLIENT_TOKEN);
 
         //给请求添加请求头
         OkHttpClient okHttpClient = getOkHttpClient(MyApplication.ACCESS_TOKEN
-                , clientToken == null
-                        ? "vVDvCqJa"
-                        : clientToken
-                , "Content-Type"
-                , "application/json");
+                , accessToken == null ? "lt.cf2d50517f6d954d50f78b06d77fec1a8zmYD2RKBP0Uvlfl9zHSRVRApRYd" : accessToken
+        );
 
         Retrofit build = new Retrofit.Builder()
                 .baseUrl(IP_PRE)

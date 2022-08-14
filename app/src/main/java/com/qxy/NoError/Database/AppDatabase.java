@@ -7,7 +7,7 @@ import androidx.room.TypeConverters;
 
 import com.qxy.NoError.MyApplication;
 import com.qxy.NoError.list.bean.ListData;
-import com.qxy.NoError.list.dao.ListDataDao;
+import com.qxy.NoError.list.dao.IListDataDao;
 
 /**
  * 定义数据库
@@ -15,23 +15,26 @@ import com.qxy.NoError.list.dao.ListDataDao;
 @TypeConverters(objectConverter.class)
 @Database(entities = {ListData.class},version = 1,exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
-    private static AppDatabase appDatabase;
+    private volatile static AppDatabase instance;
 
-    public static AppDatabase getDatabase() {
-        if (appDatabase == null) {
-            appDatabase = Room.databaseBuilder(MyApplication.getAppContext(),
-                            AppDatabase.class,
-                            "app_database")
-                    .allowMainThreadQueries() //不要允许主线程查询吧
-                    .build();
+    public static AppDatabase getInstance() {
+        if (instance == null) {
+            synchronized (AppDatabase.class) {
+                if (instance == null) {
+                    instance = Room.databaseBuilder(MyApplication.getAppContext(),
+                                    AppDatabase.class,
+                                    "app_database")
+                            //.allowMainThreadQueries() //不要允许主线程查询吧
+                            .build();
+                }
+            }
         }
-        return appDatabase;
+        return instance;
     }
 
     /**
      * 获取list dao对象
      * @return list dao对象
      */
-    public abstract ListDataDao getListDataDao();
-
+    public abstract IListDataDao getListDataDao();
 }

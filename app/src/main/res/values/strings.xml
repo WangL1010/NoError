@@ -51,6 +51,10 @@
     <string name="tv_en_name">英文名称</string>
     <string name="_tv_args">类型：</string>
     <string name="tv_args">剧情、爱情</string>
+    <string name="tv_version">第140期</string>
+    <string name="tv_start_time">22.08.01</string>
+    <string name="tv_mark">---</string>
+    <string name="tv_end_time">22.08.08</string>
 
     <dimen name="teleplayTextSizeSmall">12sp</dimen>
     <dimen name="teleplayTextSizeBig">14sp</dimen>

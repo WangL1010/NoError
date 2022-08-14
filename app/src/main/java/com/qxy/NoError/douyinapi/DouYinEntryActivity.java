@@ -14,9 +14,9 @@ import com.bytedance.sdk.open.aweme.common.model.BaseResp;
 import com.bytedance.sdk.open.aweme.share.Share;
 import com.bytedance.sdk.open.douyin.DouYinOpenApiFactory;
 import com.bytedance.sdk.open.douyin.api.DouYinOpenApi;
-import com.qxy.NoError.MainActivity;
-import com.qxy.NoError.MyApplication;
 import com.qxy.NoError.TestActivity;
+import com.qxy.NoError.MyApplication;
+import com.qxy.NoError.MainActivity;
 
 /**
  * 主要功能：接受授权返回结果的activity
@@ -47,7 +47,7 @@ public class DouYinEntryActivity extends Activity implements IApiEventHandler {
             Share.Response response = (Share.Response) resp;
             Toast.makeText(this, " code：" + response.errorCode + " 文案：" + response.errorMsg, Toast.LENGTH_SHORT).show();
 
-            Intent intent = new Intent(this, MainActivity.class);
+            Intent intent = new Intent(this, TestActivity.class);
             startActivity(intent);
         } else if (resp.getType() == CommonConstants.ModeType.SEND_AUTH_RESPONSE) {
             Authorization.Response response = (Authorization.Response) resp;
@@ -61,7 +61,7 @@ public class DouYinEntryActivity extends Activity implements IApiEventHandler {
                 //将auth_code存入全局变量，用于请求用户数据
                 MyApplication.getInstance().put(MyApplication.AUTH_CODE, response.authCode);
                 //授权成功，跳转到测试界面
-                intent = new Intent(this, TestActivity.class);
+                intent = new Intent(this, MainActivity.class);
                 startActivity(intent);
             }
         }
