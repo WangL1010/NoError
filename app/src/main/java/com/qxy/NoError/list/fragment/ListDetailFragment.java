@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -17,6 +18,7 @@ import com.qxy.NoError.databinding.FragmentListDetailBinding;
 import com.qxy.NoError.list.adapter.MyListAdapter;
 import com.qxy.NoError.list.bean.Version;
 import com.qxy.NoError.list.vm.ListViewModel;
+import com.qxy.NoError.performance.IFrameCallBack;
 import com.qxy.NoError.utils.ToastUtils;
 
 /**
@@ -66,6 +68,31 @@ public class ListDetailFragment<T extends RecyclerView.ViewHolder> extends Fragm
         binding.rvList.setAdapter(adapter);
         binding.rvList.setLayoutManager(new LinearLayoutManager(requireContext()));
 
+        //绑定监视器
+        float refreshRate;
+        try {
+            refreshRate = getActivity().getWindowManager().getDefaultDisplay().getRefreshRate();
+        }catch (NullPointerException e){
+            e.printStackTrace();
+            refreshRate = 60;
+        }
+
+        IFrameCallBack mFrameCallBack = new IFrameCallBack(refreshRate);
+        binding.rvList.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                switch (newState) {
+                    //在开始滑动时启动
+                    case RecyclerView.SCROLL_STATE_DRAGGING:
+                        mFrameCallBack.start();
+//不知道什么时候停止比较合适、、、、
+//                    //在滑动即将时停止
+//                    case RecyclerView.SCROLL_STATE_SETTLING:
+//                        IFrameCallBack.getInstance().stop();
+                }
+            }
+        });
         //获取选择版本的viewModel，作用域为activity，以便共享
 //        VersionViewModel versionViewModel = new ViewModelProvider(requireActivity())
 //                .get(String.valueOf(this.dataType), VersionViewModel.class);
