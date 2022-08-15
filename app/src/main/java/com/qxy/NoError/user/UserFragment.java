@@ -12,7 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.qxy.NoError.R;
+
 import com.qxy.NoError.databinding.FragmentUserBinding;
 import com.qxy.NoError.user.vm.UserViewModel;
 
@@ -42,3 +42,4 @@ public class UserFragment extends Fragment {
         mViewModel = new ViewModelProvider(this).get(UserViewModel.class);
     }
 }
+

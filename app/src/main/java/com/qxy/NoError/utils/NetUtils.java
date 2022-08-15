@@ -48,16 +48,26 @@ public class NetUtils {
         return createRetrofit(tClass, MyApplication.getInstance().get(MyApplication.CLIENT_TOKEN));
     }
 
-    public static <T> T createRetrofit(Class<T> tClass, String accessToken) {
-
+    public static <T> T createRetrofit(Class<T> tClass,String token) {
         ObjectMapper mapper = new ObjectMapper();
         //将下划线转成驼峰式
         mapper.setPropertyNamingStrategy(PropertyNamingStrategies.SNAKE_CASE);
+        MyApplication instance = MyApplication.getInstance();
+        String accessToken = null;
+        //判断token时access_token还是client_token,并赋给accessToken相应的值
+        if(token.equals(MyApplication.ACCESS_TOKEN)){
+            accessToken  = instance.get(MyApplication.ACCESS_TOKEN);
+        }else if (token.equals(MyApplication.CLIENT_TOKEN)){
+            accessToken=instance.get(MyApplication.CLIENT_TOKEN);
+        }
 
         //给请求添加请求头
         OkHttpClient okHttpClient = getOkHttpClient(MyApplication.ACCESS_TOKEN
-                , accessToken == null ? "lt.cf2d50517f6d954d50f78b06d77fec1a8zmYD2RKBP0Uvlfl9zHSRVRApRYd" : accessToken
-        );
+                , accessToken == null
+                        ? Constants.ACCESS_TOKEN
+                        : accessToken
+                , "Content-Type"
+                , Constants.CONTENT_TYPE_JSON);
 
         Retrofit build = new Retrofit.Builder()
                 .baseUrl(IP_PRE)
@@ -69,6 +79,7 @@ public class NetUtils {
                 .build();
         return build.create(tClass);
     }
+
 
     /**
      * 创建一个okhttp客户端
@@ -148,6 +159,63 @@ public class NetUtils {
             }
         });
     }
+
+    /**
+     * 获取access_token
+     * @param finishCliTokenCallBack
+     */
+    public static void getAccessToken(FinishCliTokenCallBack finishCliTokenCallBack) {
+
+        HttpUrl.Builder urlBuilder = Objects.requireNonNull(HttpUrl.parse("https://open.douyin.com/oauth/access_token/")).newBuilder();
+        HttpUrl url = urlBuilder.addQueryParameter("client_key", Constants.CLIENT_KEY)
+                .addQueryParameter("client_secret", Constants.CLIENT_SECRET)
+                .addQueryParameter("code",MyApplication.getInstance().get("auth_code"))
+                .addQueryParameter("grant_type", "authorization_code").build();
+
+        Request request = new Request.Builder()
+                .url(url)
+                .addHeader("Content-Type", "application/x-www-form-urlencoded")
+                .get()
+                .build();
+
+        Call call = getOkHttpClient().newCall(request);
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                Log.d(TAG, "onFailure: 重新获取AccessToken失败！错误信息：" + e.getMessage() + "造成原因：" + e.getCause());
+            }
+
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                Log.d(TAG, "onResponse: 获取AccessToken的请求码" + response.code());
+                if (response.code() != 200) {
+                    return;
+                }
+                ResponseBody responseBody = response.body();
+                if (responseBody == null) {
+                    return;
+                }
+                String dataStr = responseBody.string();
+                Log.d(TAG, "onResponse: 重新获取AccessToken成功, 获取到的数据为：" + dataStr);
+                if (StrUtil.isEmpty(dataStr)) {
+                    return;
+                }
+                JSONObject jsonObject = JSONUtil.parseObj(dataStr);
+                JSONObject data = jsonObject.getJSONObject("data");
+                if (data.getInt("error_code") == 0) {
+                    String accessToken = data.getStr("access_token");
+                    String openId = data.getStr("open_id");
+                    //把open_id和access_token存入全局变量
+                    MyApplication.getInstance().put(MyApplication.OPEN_ID, openId);
+                    MyApplication.getInstance().put(MyApplication.ACCESS_TOKEN, accessToken);
+                    //通过回调机制，通知完成获取token
+                    finishCliTokenCallBack.dealData();
+                }
+            }
+        });
+    }
+
+
 
     /**
      * 用于通知获取client-token完成

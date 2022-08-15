@@ -32,10 +32,6 @@ import com.bytedance.sdk.open.douyin.ShareToContact;
 import com.bytedance.sdk.open.douyin.api.DouYinOpenApi;
 import com.bytedance.sdk.open.douyin.model.ContactHtmlObject;
 import com.bytedance.sdk.open.douyin.model.OpenRecord;
-import com.qxy.NoError.user.bean.UserInfo;
-import com.qxy.NoError.user.bean.UserInfo2Body;
-import com.qxy.NoError.user.net.RetrofitApi;
-import com.qxy.NoError.user.net.RetrofitManager;
 import com.qxy.NoError.utils.UriUtil;
 
 import java.io.File;
@@ -43,12 +39,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.nio.channels.FileChannel;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 import retrofit2.Retrofit;
 
 public class TestActivity extends AppCompatActivity {
@@ -109,25 +100,6 @@ public class TestActivity extends AppCompatActivity {
         findViewById(R.id.go_to_auth).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mRetrofit= RetrofitManager.getInstance().getRetrofit();
-                RetrofitApi api =mRetrofit.create(RetrofitApi.class);
-                Map<String,String> map=new HashMap<>();
-                map.put("Content-Type","application/json");
-                map.put("access-token","act.12d9381d72ed01b1b3a13f6f57d044eftawpeAohWab6TTDeZrAn6TdGZy8d");
-                UserInfo2Body body=new UserInfo2Body("act.12d9381d72ed01b1b3a13f6f57d044eftawpeAohWab6TTDeZrAn6TdGZy8d","_000c7mD_XtFTMXlg6BVheAccAxm0IUhUPU7");
-
-                Call<UserInfo> task = api.getUserInfo(map, body);
-                task.enqueue(new Callback<UserInfo>() {
-                    @Override
-                    public void onResponse(Call<UserInfo> call, Response<UserInfo> response) {
-                        Log.d(TAG,response.body().toString());
-                    }
-
-                    @Override
-                    public void onFailure(Call<UserInfo> call, Throwable t) {
-                        Log.d(TAG,t.toString());
-                    }
-                });
                 // 如果本地未安装抖音或者抖音的版本过低，会直接自动调用 web页面 进行授权
                 sendAuth();
             }

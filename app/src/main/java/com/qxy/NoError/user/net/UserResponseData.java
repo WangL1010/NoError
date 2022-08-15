@@ -1,7 +1,6 @@
-package com.qxy.NoError.list.net;
+package com.qxy.NoError.user.net;
 
 import androidx.annotation.NonNull;
-import androidx.room.Ignore;
 
 import java.util.List;
 
@@ -10,27 +9,24 @@ import java.util.List;
  * @author 徐鑫
  */
 
-public class ResponseData<T> {
+public class UserResponseData<T> {
 
-
-    public static final Long TOKEN_OVERDUE_CODE = 2190008L;
 
     public Data<T> data;
     public Extra extra;
 
     public static class Data<T> {
-        public String activeTime;
-        public String description;
-        public Long errorCode;
-        public List<T> list;
 
-        /**
-         * 榜单历史版本用的数据
-         */
+        public List<T> list;
+        public Integer total;
         public Integer cursor;
-        public Boolean hasMore;
+        public Integer error_code;
+        public String description;
+        public Boolean has_more;
+
     }
     public static class Extra {
+
         public String logid;
         public String description;
         public Long errorCode;

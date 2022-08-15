@@ -7,8 +7,9 @@ import androidx.constraintlayout.motion.widget.MotionLayout;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
+
 import com.qxy.NoError.databinding.ActivityMainBinding;
-import com.qxy.NoError.databinding.ActivityTestBinding;
+
 
 import java.util.HashMap;
 import java.util.Map;

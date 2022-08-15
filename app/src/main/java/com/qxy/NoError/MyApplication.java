@@ -25,6 +25,7 @@ public class MyApplication extends Application {
     public static final String AUTH_CODE = "auth_code";
     public static final String ACCESS_TOKEN = "access-token";
     public static final String CLIENT_TOKEN = "client-token";
+    public static final String OPEN_ID="open_id";
 
     public static MyApplication instance;
 
