@@ -45,64 +45,16 @@ public class NetUtils {
      * todo 每一次调用都需要创建一个okhttp客户端，是否可以优化？
      */
     public static <T> T createRetrofit(Class<T> tClass) {
-        ObjectMapper mapper = new ObjectMapper();
-        //将下划线转成驼峰式
-        mapper.setPropertyNamingStrategy(PropertyNamingStrategies.SNAKE_CASE);
-        MyApplication instance = MyApplication.getInstance();
-        String clientToken = instance.get(MyApplication.CLIENT_TOKEN);
-
-        //给请求添加请求头
-        OkHttpClient okHttpClient = getOkHttpClient(MyApplication.ACCESS_TOKEN
-                , clientToken == null
-                        ? "clt.0861a6srqe5d"
-                        : clientToken
-                , "Content-Type"
-                , "application/json");
-
-        Retrofit build = new Retrofit.Builder()
-                .baseUrl(IP_PRE)
-                //使用RxJava
-                .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
-                //使用jackson解析，并且将_格式数据转化为驼峰式
-                .addConverterFactory(JacksonConverterFactory.create(mapper))
-                .client(okHttpClient)
-                .build();
-        return build.create(tClass);
+        return createRetrofit(tClass, MyApplication.getInstance().get(MyApplication.CLIENT_TOKEN));
     }
 
-
-    public static <T> T createRetrofit(Class<T> tClass,String contentType) {
-        ObjectMapper mapper = new ObjectMapper();
-        //将下划线转成驼峰式
-        mapper.setPropertyNamingStrategy(PropertyNamingStrategies.SNAKE_CASE);
-        MyApplication instance = MyApplication.getInstance();
-        String accessToken  = instance.get(MyApplication.ACCESS_TOKEN);
-
-        //给请求添加请求头
-        OkHttpClient okHttpClient = getOkHttpClient(MyApplication.ACCESS_TOKEN
-                , accessToken == null
-                        ? Constants.ACCESS_TOKEN
-                        : accessToken
-                , "Content-Type"
-                , contentType);
-
-        Retrofit build = new Retrofit.Builder()
-                .baseUrl(IP_PRE)
-                //使用RxJava
-                .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
-                //使用jackson解析，并且将_格式数据转化为驼峰式
-                .addConverterFactory(JacksonConverterFactory.create(mapper))
-                .client(okHttpClient)
-                .build();
-        return build.create(tClass);
-    }
-
-    public static <T> T createRetrofit(Class<T> tClass,String contentType,String token) {
+    public static <T> T createRetrofit(Class<T> tClass,String token) {
         ObjectMapper mapper = new ObjectMapper();
         //将下划线转成驼峰式
         mapper.setPropertyNamingStrategy(PropertyNamingStrategies.SNAKE_CASE);
         MyApplication instance = MyApplication.getInstance();
         String accessToken = null;
+        //判断token时access_token还是client_token,并赋给accessToken相应的值
         if(token.equals(MyApplication.ACCESS_TOKEN)){
             accessToken  = instance.get(MyApplication.ACCESS_TOKEN);
         }else if (token.equals(MyApplication.CLIENT_TOKEN)){
@@ -110,12 +62,12 @@ public class NetUtils {
         }
 
         //给请求添加请求头
-        OkHttpClient okHttpClient = getOkHttpClient(token
+        OkHttpClient okHttpClient = getOkHttpClient(MyApplication.ACCESS_TOKEN
                 , accessToken == null
                         ? Constants.ACCESS_TOKEN
                         : accessToken
                 , "Content-Type"
-                , contentType);
+                , Constants.CONTENT_TYPE_JSON);
 
         Retrofit build = new Retrofit.Builder()
                 .baseUrl(IP_PRE)
@@ -209,10 +161,10 @@ public class NetUtils {
     }
 
     /**
-     * 获取
+     * 获取access_token
      * @param finishCliTokenCallBack
      */
-    public static void refreshAccessToken(FinishCliTokenCallBack finishCliTokenCallBack) {
+    public static void getAccessToken(FinishCliTokenCallBack finishCliTokenCallBack) {
 
         HttpUrl.Builder urlBuilder = Objects.requireNonNull(HttpUrl.parse("https://open.douyin.com/oauth/access_token/")).newBuilder();
         HttpUrl url = urlBuilder.addQueryParameter("client_key", Constants.CLIENT_KEY)

@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_margin="2dp">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="16dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -20,100 +20,253 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/_tv_teleplay_hot"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/_tv_movie_hot"
+            <!--海报图片-->
+            <!--ImageView增加圆角需要外套一层CardView-->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/Card"
+                android:layout_width="100dp"
+                android:layout_height="150dp"
+                app:cardCornerRadius="4dp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="@+id/guideline3"
-                app:layout_constraintTop_toBottomOf="@+id/_tv_release_time"
-                app:layout_constraintVertical_bias="0.0" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <androidx.constraintlayout.widget.Guideline
+                        android:id="@+id/guideline4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        app:layout_constraintGuide_percent="0.31" />
+
+                    <androidx.constraintlayout.widget.Guideline
+                        android:id="@+id/guideline2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        app:layout_constraintGuide_percent="0.13" />
+
+                    <ImageView
+                        android:id="@+id/teleplay_icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:contentDescription="@string/image"
+                        android:radius="10dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.0"
+                        app:srcCompat="@drawable/ic_pic"
+                        tools:ignore="ImageContrastCheck" />
+
+                    <View
+                        android:id="@+id/view"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:background="@android:color/holo_orange_light"
+                        app:layout_constraintBottom_toTopOf="@+id/guideline2"
+                        app:layout_constraintEnd_toStartOf="@+id/guideline4"
+                        app:layout_constraintStart_toStartOf="@+id/teleplay_icon"
+                        app:layout_constraintTop_toTopOf="@+id/teleplay_icon" />
+
+                    <TextView
+                        android:id="@+id/tv_teleplay_rank"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Top 1"
+                        android:textColor="#E41515"
+                        android:textSize="11sp"
+                        app:layout_constraintBottom_toBottomOf="@+id/view"
+                        app:layout_constraintEnd_toEndOf="@+id/view"
+                        app:layout_constraintStart_toStartOf="@+id/view"
+                        app:layout_constraintTop_toTopOf="@+id/view" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <!--电影名称-->
             <TextView
                 android:id="@+id/tv_teleplay_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
                 android:text="@string/tv_movie_name"
-                android:textSize="16sp"
+                android:textSize="@dimen/teleplayTextSizeBig"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="@+id/guideline3"
+                app:layout_constraintStart_toEndOf="@+id/Card"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.0" />
 
+            <!--电影导演-->
+            <TextView
+                android:id="@+id/_tv_teleplay_director"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/_tv_director"
+                android:textSize="@dimen/teleplayTextSizeSmall"
+                app:layout_constraintStart_toEndOf="@+id/Card"
+                app:layout_constraintTop_toBottomOf="@+id/tv_teleplay_name" />
 
-            <ImageView
-                android:id="@+id/iv_teleplay_icon"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:contentDescription="@string/tv_movie_icon"
+            <TextView
+                android:id="@+id/tv_teleplay_director"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="@string/tv_director"
+                android:textSize="@dimen/teleplayTextSizeSmall"
+                app:layout_constraintBottom_toBottomOf="@+id/_tv_teleplay_director"
+                app:layout_constraintStart_toEndOf="@+id/_tv_teleplay_director"
+                app:layout_constraintTop_toTopOf="@+id/_tv_teleplay_director" />
+
+            <!--电影演员-->
+            <TextView
+                android:id="@+id/_tv_teleplay_actor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:text="@string/_tv_actor"
+                android:textSize="@dimen/teleplayTextSizeSmall"
+                app:layout_constraintStart_toEndOf="@+id/Card"
+                app:layout_constraintTop_toBottomOf="@+id/_tv_teleplay_director" />
+
+            <TextView
+                android:id="@+id/tv_teleplay_actor"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="@string/tv_actor"
+                android:textSize="@dimen/teleplayTextSizeSmall"
+                app:layout_constraintBottom_toBottomOf="@+id/_tv_teleplay_actor"
+                app:layout_constraintStart_toEndOf="@+id/_tv_teleplay_actor"
+                app:layout_constraintTop_toTopOf="@+id/_tv_teleplay_actor" />
+
+            <!--上映区域-->
+
+            <TextView
+                android:id="@+id/_tv_teleplay_release_area"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="@string/_tv_area"
+                android:textSize="@dimen/teleplayTextSizeSmall"
+                app:layout_constraintStart_toStartOf="@+id/_tv_teleplay_tags"
+                app:layout_constraintTop_toBottomOf="@+id/_tv_teleplay_tags" />
+
+            <TextView
+                android:id="@+id/tv_teleplay_release_area"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/tv_area"
+                android:textSize="@dimen/teleplayTextSizeSmall"
+                app:layout_constraintBottom_toBottomOf="@+id/_tv_teleplay_release_area"
+                app:layout_constraintStart_toEndOf="@+id/_tv_teleplay_release_area"
+                app:layout_constraintTop_toTopOf="@+id/_tv_teleplay_release_area" />
+
+
+            <!--上映时间-->
+            <TextView
+                android:id="@+id/tv_movie_release_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="@string/_tv_release_time"
+                android:textSize="@dimen/teleplayTextSizeSmall"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/guideline3"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.0"
-                app:srcCompat="@drawable/ic_list" />
+                app:layout_constraintStart_toStartOf="@+id/_tv_teleplay_release_area"
+                app:layout_constraintTop_toBottomOf="@+id/_tv_teleplay_release_area"
+                app:layout_constraintVertical_bias="0.0" />
 
             <TextView
                 android:id="@+id/tv_teleplay_release_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/tv_release_time"
-                app:layout_constraintBottom_toBottomOf="@+id/_tv_release_time"
+                android:textSize="@dimen/teleplayTextSizeSmall"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_movie_release_time"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toEndOf="@+id/_tv_release_time"
-                app:layout_constraintTop_toTopOf="@+id/_tv_release_time" />
+                app:layout_constraintStart_toEndOf="@+id/tv_movie_release_time"
+                app:layout_constraintTop_toTopOf="@+id/tv_movie_release_time" />
 
-            <TextView
-                android:id="@+id/tv_teleplay_type"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/tv_movie_type"
-                app:layout_constraintBottom_toBottomOf="parent"
+            <View
+                android:id="@+id/line"
+                android:layout_width="1dp"
+                android:layout_height="130dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="100dp"
+                android:background="#AFABAB"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/_tv_teleplay_hot"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginStart="2dp"
+                android:contentDescription="@string/_tv_movie_hot"
+                android:textSize="@dimen/teleplayTextSizeSmall"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_teleplay_hot"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="@+id/guideline3"
-                app:layout_constraintTop_toBottomOf="@+id/tv_teleplay_name"
-                app:layout_constraintVertical_bias="0.0" />
-
-
-            <TextView
-                android:id="@+id/_tv_release_time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/_tv_release_time"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="@+id/guideline3"
-                app:layout_constraintTop_toBottomOf="@+id/tv_teleplay_type"
-                app:layout_constraintVertical_bias="0.0" />
-
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guideline3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintGuide_percent="0.25" />
+                app:layout_constraintStart_toEndOf="@+id/line"
+                app:layout_constraintTop_toTopOf="@+id/tv_teleplay_hot"
+                app:srcCompat="@drawable/fire" />
 
             <TextView
                 android:id="@+id/tv_teleplay_hot"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
                 android:text="@string/tv_movie_hot"
-                app:layout_constraintBottom_toBottomOf="@+id/_tv_teleplay_hot"
+                android:textColor="#DD2C00"
+                android:textSize="@dimen/teleplayTextSizeBig"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toEndOf="@+id/_tv_teleplay_hot"
-                app:layout_constraintTop_toTopOf="@+id/_tv_teleplay_hot" />
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_teleplay_en_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="@string/tv_en_name"
+                android:textSize="@dimen/teleplayTextSizeSmall"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_teleplay_name"
+                app:layout_constraintStart_toEndOf="@+id/tv_teleplay_name"
+                app:layout_constraintTop_toTopOf="@+id/tv_teleplay_name" />
+
+            <TextView
+                android:id="@+id/_tv_teleplay_tags"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="@string/_tv_args"
+                android:textSize="@dimen/teleplayTextSizeSmall"
+                app:layout_constraintStart_toStartOf="@+id/_tv_teleplay_actor"
+                app:layout_constraintTop_toBottomOf="@+id/_tv_teleplay_actor" />
+
+            <TextView
+                android:id="@+id/tv_teleplay_tags"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/tv_args"
+                android:textSize="@dimen/teleplayTextSizeSmall"
+                app:layout_constraintBottom_toBottomOf="@+id/_tv_teleplay_tags"
+                app:layout_constraintStart_toEndOf="@+id/_tv_teleplay_tags"
+                app:layout_constraintTop_toTopOf="@+id/_tv_teleplay_tags" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
-
 </androidx.constraintlayout.widget.ConstraintLayout>

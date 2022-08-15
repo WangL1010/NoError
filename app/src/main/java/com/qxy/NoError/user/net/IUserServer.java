@@ -1,6 +1,7 @@
 package com.qxy.NoError.user.net;
 
 import com.qxy.NoError.user.bean.FanListData;
+import com.qxy.NoError.user.bean.FollowListData;
 import com.qxy.NoError.user.bean.UserOpenInfo;
 import com.qxy.NoError.user.bean.VideoListData;
 
@@ -43,9 +44,9 @@ public interface IUserServer {
      * @return
      */
     @GET("following/list/")
-    Observable<UserResponseData<FanListData>> getFollowListData(@Query("open_id") String openId,
-                                                              @Query("cursor") Integer cursor,
-                                                              @Query("count") Integer count);
+    Observable<UserResponseData<FollowListData  >> getFollowListData(@Query("open_id") String openId,
+                                                                   @Query("cursor") Integer cursor,
+                                                                   @Query("count") Integer count);
 
     Observable<UserResponseData<VideoListData>> getVideoListData(@Query("open_id") String openId,
                                                                  @Query("cursor") Integer cursor,

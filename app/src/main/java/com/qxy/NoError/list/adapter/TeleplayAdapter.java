@@ -1,6 +1,5 @@
 package com.qxy.NoError.list.adapter;
 
-import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,80 +7,109 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.qxy.NoError.R;
 import com.qxy.NoError.list.bean.ListData;
-
-import java.util.HashMap;
-import java.util.List;
+import com.qxy.NoError.utils.StrUtil;
 
 /**
  * 电视剧榜单的适配器
  * @author 徐鑫
  */
-public class TeleplayAdapter extends RecyclerView.Adapter<TeleplayAdapter.TeleplayViewHolder> {
+public class TeleplayAdapter extends MyListAdapter<TeleplayAdapter.TeleplayViewHolder> {
 
-    private List<ListData> listData;
+    private static volatile TeleplayAdapter instance;
+
+    private TeleplayAdapter() {}
+
+
+    public static TeleplayAdapter getInstance() {
+        if (instance == null) {
+            synchronized (TeleplayAdapter.class) {
+                if (instance == null) {
+                    instance = new TeleplayAdapter();
+                }
+            }
+        }
+        return instance;
+    }
 
     @NonNull
     @Override
     public TeleplayViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        View view = layoutInflater.inflate(R.layout.item_teleplay, parent, false);
-
-        return new TeleplayViewHolder(view);
+        TeleplayViewHolder holder;
+        if (viewType == HEADER_VIEW_TYPE) {
+            holder = new TeleplayViewHolder(
+                    LayoutInflater.from(parent.getContext()).inflate(
+                            R.layout.layout_list_head,
+                            parent,
+                            false
+                    )
+            );
+            holder.tvVersion.setText(getVersionMsg());
+            holder.tvVersion.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Navigation.findNavController(v).navigate(R.id.versionFragment);
+                }
+            });
+        } else {
+            LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
+            View itemView = layoutInflater.inflate(R.layout.item_teleplay, parent, false);
+            holder = new TeleplayViewHolder(itemView);
+        }
+        return holder;
     }
 
     @Override
     public void onBindViewHolder(@NonNull TeleplayViewHolder holder, int position) {
-        ListData listData = this.listData.get(position);
+        if (position == 0) {
+            return;
+        }
+        ListData listData = getItem(position);
         Glide.with(holder.ivIcon)
                 .load(listData.poster)
                 .placeholder(R.drawable.ic_list)
                 .into(holder.ivIcon);
-        holder.tvHot.setText(String.valueOf(listData.hot));
-        holder.tvName.setText(listData.name);
-        StringBuilder stringBuilder = new StringBuilder();
-        if (listData.tags != null) {
-            for (String str :
-                    listData.tags) {
-                stringBuilder.append(str).append(',');
-            }
-        }
-        holder.tvType.setText(stringBuilder);
-        holder.tvReleaseTime.setText(listData.releaseDate);
-    }
 
-    @Override
-    public int getItemCount() {
-        return listData == null ? 0 : listData.size();
+        holder.tvRank.setText(StrUtil.formatRank(position, 3, "TOP "));
+        holder.tvName.setText(listData.name);
+        holder.tvHot.setText(StrUtil.formatFromInt(listData.hot, 4, "万"));
+        holder.tvDirector.setText(StrUtil.formatStr(listData.directors, ",", 2));
+
+        holder.tvActor.setText(StrUtil.formatStr(listData.actors, ",", 2));
+        holder.tvArea.setText(StrUtil.formatStr(listData.areas, ",", 2));
+        holder.tvReleaseTime.setText(listData.releaseDate);
+        if (listData.tags == null || listData.tags.isEmpty()) {
+            holder.tvTags.setVisibility(View.GONE);
+        } else {
+            holder.tvTags.setText(StrUtil.formatStr(listData.tags, ",", 2));
+        }
     }
 
     public static class TeleplayViewHolder extends RecyclerView.ViewHolder {
 
-        TextView tvName, tvHot, tvType, tvReleaseTime;
+        TextView tvName, tvHot, tvTags, tvReleaseTime,
+                tvVersion, tvEnName, tvArea, tvRank,
+                tvDirector, tvActor;
         ImageView ivIcon;
 
         public TeleplayViewHolder(@NonNull View itemView) {
             super(itemView);
             tvName = itemView.findViewById(R.id.tv_teleplay_name);
             tvHot = itemView.findViewById(R.id.tv_teleplay_hot);
-            tvType = itemView.findViewById(R.id.tv_teleplay_type);
+            tvEnName = itemView.findViewById(R.id.tv_teleplay_en_name);
+            tvTags = itemView.findViewById(R.id.tv_teleplay_tags);
             tvReleaseTime = itemView.findViewById(R.id.tv_teleplay_release_time);
-            ivIcon = itemView.findViewById(R.id.iv_teleplay_icon);
+            tvArea = itemView.findViewById(R.id.tv_teleplay_release_area);
+            ivIcon = itemView.findViewById(R.id.teleplay_icon);
+            tvVersion = itemView.findViewById(R.id.tvVersion);
+            tvRank = itemView.findViewById(R.id.tv_teleplay_rank);
+            tvDirector = itemView.findViewById(R.id.tv_teleplay_director);
+            tvActor = itemView.findViewById(R.id.tv_teleplay_actor);
         }
-    }
-
-    public TeleplayAdapter(List<ListData> listData) {
-        this.listData = listData;
-    }
-
-    public TeleplayAdapter() {
-    }
-
-    public void setListData(List<ListData> listData) {
-        this.listData = listData;
     }
 }

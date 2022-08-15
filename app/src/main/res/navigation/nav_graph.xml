@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/listFragment">
+
+    <fragment
+        android:id="@+id/listFragment"
+        android:name="com.qxy.NoError.list.ListFragment"
+        android:label="榜单"
+        tools:layout="@layout/fragment_list" />
+    <fragment
+        android:id="@+id/addFragment"
+        android:name="com.qxy.NoError.AddFragment"
+        android:label="拍摄"
+        tools:layout="@layout/fragment_add" />
+    <fragment
+        android:id="@+id/userFragment"
+        android:name="com.qxy.NoError.user.UserFragment"
+        android:label="我的信息"
+        tools:layout="@layout/fragment_user" />
+    <dialog
+        android:id="@+id/versionFragment"
+        android:name="com.qxy.NoError.list.fragment.VersionFragment"
+        android:label="fragment_version"
+        tools:layout="@layout/fragment_version" />
+</navigation>

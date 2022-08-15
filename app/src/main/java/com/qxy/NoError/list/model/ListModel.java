@@ -1,33 +1,25 @@
 package com.qxy.NoError.list.model;
 
-import android.os.Build;
 import android.util.Log;
-
-import androidx.annotation.RequiresApi;
 
 import com.qxy.NoError.Database.AppDatabase;
 import com.qxy.NoError.list.bean.ListData;
-import com.qxy.NoError.list.dao.ListDataDao;
+import com.qxy.NoError.list.bean.Version;
+import com.qxy.NoError.list.dao.IListDataDao;
 import com.qxy.NoError.list.net.IListServer;
 import com.qxy.NoError.list.net.ResponseData;
 import com.qxy.NoError.utils.NetUtils;
 
-import org.reactivestreams.Subscription;
-
-import java.time.LocalDate;
 import java.util.List;
 
 import cn.hutool.json.JSONUtil;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.annotations.NonNull;
-import io.reactivex.rxjava3.core.Flowable;
-import io.reactivex.rxjava3.core.FlowableSubscriber;
-import io.reactivex.rxjava3.core.Maybe;
-import io.reactivex.rxjava3.core.MaybeObserver;
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.core.Observer;
+import io.reactivex.rxjava3.core.Single;
+import io.reactivex.rxjava3.core.SingleObserver;
 import io.reactivex.rxjava3.disposables.Disposable;
-import io.reactivex.rxjava3.functions.Consumer;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 /**
@@ -38,15 +30,12 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 public class ListModel {
     private static final String TAG = "ListModel";
 
-    //获取listDataDao对数据库进行操作
-    private ListDataDao listDataDao;
+    /**
+     * 获取listDataDao对数据库进行操作
+     */
+    private final IListDataDao IListDataDao = AppDatabase.getInstance().getListDataDao();
 
-    public ListModel(){
-        listDataDao=AppDatabase.getDatabase().getListDataDao();
-    }
-
-
-    public void getListData(Integer type,CallBack2DealData callBack) {
+    public void getListData(Integer type, CallBack2DealData callBack) {
         getListData(type, 0, callBack);
     }
 
@@ -58,69 +47,43 @@ public class ListModel {
                 .subscribe(new Observer<ResponseData<ListData>>() {
                     @Override
                     public void onSubscribe(@NonNull Disposable d) {
-                        Log.d(TAG, "onSubscribe: ");
+
                     }
 
-                    @RequiresApi(api = Build.VERSION_CODES.O)
                     @Override
-                    public void onNext(@NonNull ResponseData<ListData> movieResponseData) {
-                        Log.d(TAG, "onNext: " + movieResponseData.data.errorCode);
-                        if (movieResponseData.data.errorCode.equals(ResponseData.TOKEN_OVERDUE_CODE)) {
+                    public void onNext(@NonNull ResponseData<ListData> listResponseData) {
+                        Log.d(TAG, "onNext: " + listResponseData.data.errorCode);
+                        if (listResponseData.data.errorCode.equals(ResponseData.TOKEN_OVERDUE_CODE)) {
                             //token已过期
                             NetUtils.refreshClientToken(() -> getListData(type, version, callBack));
-                        } else if (movieResponseData.data.errorCode == 0) {
-                            Log.d(TAG, "onNext: 请求成功，数据如下\n" + JSONUtil.toJsonStr(movieResponseData));
-                            callBack.dealData(LocalDate.parse(movieResponseData.data.activeTime)
-                                    , movieResponseData.data.description
-                                    , movieResponseData.data.list);
+                        } else if (listResponseData.data.errorCode == 0) {
+                            Log.d(TAG, "onNext: 请求成功，数据如下\n" + JSONUtil.toJsonStr(listResponseData));
+                            callBack.success(listResponseData.data.list);
 
-                            /**
-                             * 向数据库中更新type字段对应的数据
-                             */
-                                listDataDao.deleteByTypeVersion(type,version);
-                                for (ListData listData : movieResponseData.data.list) {
-                                    listDataDao.insert(listData);
-                                }
+                            // TODO: 2022/8/13 更新数据库
+                            updateDataBase(listResponseData.data.list, type, version);
                         } else {
-                            Log.d(TAG, "onNext: 请求失败" + movieResponseData.data.description);
-                            /**
-                             * 请求失败返回数据库的数据
-                             */
-                            getListDataFromDatabase(type, version, callBack);
+                            Log.d(TAG, "onNext: 请求失败" + listResponseData.data.description);
+                            //处理错误信息
+                            callBack.fail(listResponseData.data.description);
+
+                            // TODO: 2022/8/13 从数据库中加载
+                            getDataFromDataBase(type, version, callBack);
                         }
                     }
 
                     @Override
                     public void onError(@NonNull Throwable e) {
                         Log.d(TAG, "onError: 请求出错，错误信息：" + e.getMessage() + "造成原因：" + e.getCause());
-                        /**
-                         * 请求失败返回数据库的数据
-                         */
-                        getListDataFromDatabase(type, version, callBack);
+                        callBack.fail("网络异常");
+
+                        // TODO: 2022/8/13 从数据库中加载
+                        getDataFromDataBase(type, version, callBack);
                     }
 
                     @Override
                     public void onComplete() {
-                        Log.d(TAG, "onComplete: ");
-                    }
-                });
-    }
 
-    /**
-     * 从数据库中查找数据
-     * @param type
-     * @param version
-     * @param callBack
-     */
-    public void getListDataFromDatabase(Integer type, Integer version, CallBack2DealData callBack){
-        Flowable<List<ListData>> flowable = listDataDao.getDataByTypeVersion(type, version);
-        flowable.subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<List<ListData>>() {
-                    @Override
-                    public void accept(List<ListData> listData) throws Throwable {
-                        callBack.dealData(LocalDate.now(),"从数据库请求数据",listData);
-                        Log.d(TAG, "accept: ");
                     }
                 });
     }
@@ -132,11 +95,128 @@ public class ListModel {
         /**
          * 处理数据
          *
-         * @param localDate   排行榜时间
-         * @param movieList   排行榜数据
-         * @param description 请求数据失败的描述信息，请求数据成功没有描述
+         * @param listData 排行榜数据
          */
-        void dealData(LocalDate localDate, String description, List<ListData> movieList);
+        void success(List<ListData> listData);
+
+        /**
+         * 处理错误
+         *
+         * @param message 错误信息
+         */
+        void fail(String message);
     }
 
+
+    public void getDataFromDataBase(Integer type, Integer version, CallBack2DealData callBack) {
+        IListDataDao dao = AppDatabase.getInstance().getListDataDao();
+
+        Single<List<ListData>> single = dao.getListData(type, version);
+        single.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new SingleObserver<List<ListData>>() {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onSuccess(@NonNull List<ListData> listData) {
+                        if (listData == null || listData.isEmpty()) {
+                            callBack.fail("并未缓存数据");
+                            return;
+                        }
+                        callBack.success(listData);
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                        callBack.fail(e.getMessage());
+                    }
+                });
+    }
+
+
+    /**
+     * 更新数据库
+     *
+     * @param list
+     */
+    private void updateDataBase(List<ListData> list, Integer type, Integer version) {
+        IListDataDao dao = AppDatabase.getInstance().getListDataDao();
+
+        Single<List<ListData>> single = dao.getListData(type, version);
+        single.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new SingleObserver<List<ListData>>() {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onSuccess(@NonNull List<ListData> listData) {
+                        if (listData == null || listData.isEmpty()) {
+                            //数据库中没有数据，直接插入数据库
+                            dao.insertList(list).subscribe();
+                            return;
+                        }
+                        dao.updateListData(list).subscribe();
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                        Log.d(TAG, "onError: 查询数据库失败！！！");
+                    }
+                });
+    }
+
+
+    /**
+     * 获取榜单版本信息
+     * @param type 榜单的类型 {@link ListData#type ListData.type}
+     * @param callBackDealVersion 操作完成后的回调数据
+     */
+    public void getVersionData(int type, CallBackDealVersion callBackDealVersion) {
+        final int pageSize = 20;
+        IListServer retrofit = NetUtils.createRetrofit(IListServer.class);
+        Single<ResponseData<Version>> single = retrofit.getVersion(type, 0, pageSize);
+
+        SingleObserver<ResponseData<Version>> observer = new SingleObserver<ResponseData<Version>>() {
+            @Override
+            public void onSubscribe(@NonNull Disposable d) {
+
+            }
+
+            @Override
+            public void onSuccess(@NonNull ResponseData<Version> versionResponseData) {
+                callBackDealVersion.success(versionResponseData.data.list);
+                if (versionResponseData.data.hasMore) {
+                    Single<ResponseData<Version>> single1 = retrofit.getVersion(type, versionResponseData.data.cursor, pageSize);
+                    single1.observeOn(Schedulers.io()).subscribeOn(Schedulers.io()).subscribe(this);
+                }
+            }
+
+            @Override
+            public void onError(@NonNull Throwable e) {
+                callBackDealVersion.fail(e.getMessage());
+            }
+        };
+        single.subscribeOn(Schedulers.io())
+                .observeOn(Schedulers.io())
+                .subscribe(observer);
+    }
+
+    public interface CallBackDealVersion {
+        /**
+         * 请求 版本数据成功后的回调函数
+         * @param versions 请求成功获取的版本数据
+         */
+        void success(List<Version> versions);
+
+        /**
+         * 请求 版本数据失败后的回调函数
+         * @param message 请求失败信息
+         */
+        void fail(String message);
+    }
 }

@@ -14,9 +14,11 @@ import androidx.viewpager2.widget.ViewPager2;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.qxy.NoError.R;
-import com.qxy.NoError.list.fragment.MovieFragment;
-import com.qxy.NoError.list.fragment.TeleplayFragment;
-import com.qxy.NoError.list.fragment.VarietyFragment;
+import com.qxy.NoError.list.adapter.MovieAdapter;
+import com.qxy.NoError.list.adapter.TeleplayAdapter;
+import com.qxy.NoError.list.adapter.VarietyAdapter;
+import com.qxy.NoError.list.bean.ListData;
+import com.qxy.NoError.list.fragment.ListDetailFragment;
 
 /**
  * 管理三个榜单的fragment
@@ -58,11 +60,17 @@ public class ListFragment extends Fragment {
             public Fragment createFragment(int position) {
                 switch (position) {
                     case 0:
-                        return MovieFragment.newInstance();
+                        return new ListDetailFragment<>(1,
+                                MovieAdapter.getInstance(),
+                                ListData.MOVIE_TYPE);
                     case 1:
-                        return TeleplayFragment.newInstance();
+                        return new ListDetailFragment<>(2,
+                                TeleplayAdapter.getInstance(),
+                                ListData.TELEPLAY_TYPE);
                     default:
-                        return VarietyFragment.newInstance();
+                        return new ListDetailFragment<>(3,
+                                VarietyAdapter.getInstance(),
+                                ListData.VARIETY_TYPE);
                 }
             }
 
