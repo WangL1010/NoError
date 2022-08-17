@@ -77,7 +77,8 @@ public class ListDetailFragment<T extends RecyclerView.ViewHolder> extends Fragm
             refreshRate = 60;
         }
 
-        IFrameCallBack mFrameCallBack = new IFrameCallBack(refreshRate);
+
+        IFrameCallBack.deviceRefreshRate = refreshRate;
         binding.rvList.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
@@ -85,11 +86,10 @@ public class ListDetailFragment<T extends RecyclerView.ViewHolder> extends Fragm
                 switch (newState) {
                     //在开始滑动时启动
                     case RecyclerView.SCROLL_STATE_DRAGGING:
-                        mFrameCallBack.start();
-//不知道什么时候停止比较合适、、、、
-//                    //在滑动即将时停止
-//                    case RecyclerView.SCROLL_STATE_SETTLING:
-//                        IFrameCallBack.getInstance().stop();
+                        IFrameCallBack.getInstance().start();
+                    //在滑动停止是停止
+                    case RecyclerView.SCROLL_STATE_IDLE:
+                        IFrameCallBack.getInstance().stop();
                 }
             }
         });

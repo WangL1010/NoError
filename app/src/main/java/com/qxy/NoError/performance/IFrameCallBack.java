@@ -13,10 +13,6 @@ public class IFrameCallBack implements Choreographer.FrameCallback {
     public static IFrameCallBack mFrameCallBack;
     public static float deviceRefreshRate = 60;
 
-    public IFrameCallBack(float refreshRate) {
-        deviceRefreshRate = refreshRate;
-    }
-
     public IFrameCallBack() {
     }
 
@@ -34,14 +30,6 @@ public class IFrameCallBack implements Choreographer.FrameCallback {
         if (mFrameCallBack == null) {
             mFrameCallBack = new IFrameCallBack();
         }
-        return mFrameCallBack;
-    }
-
-    public static IFrameCallBack getInstance(float refreshRate) {
-        if (mFrameCallBack == null) {
-            mFrameCallBack = new IFrameCallBack(refreshRate);
-        }
-        deviceRefreshRate = refreshRate;
         return mFrameCallBack;
     }
 
