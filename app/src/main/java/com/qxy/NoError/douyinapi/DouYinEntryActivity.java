@@ -2,6 +2,7 @@ package com.qxy.NoError.douyinapi;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
@@ -60,6 +61,10 @@ public class DouYinEntryActivity extends Activity implements IApiEventHandler {
 
                 //将auth_code存入全局变量，用于请求用户数据
                 MyApplication.getInstance().put(MyApplication.AUTH_CODE, response.authCode);
+                //把authCode存储到SharedPreferences文件中
+                SharedPreferences.Editor edt = getSharedPreferences("data",MODE_PRIVATE).edit();
+                edt.putString("authCode",response.authCode);
+                edt.commit();
                 //授权成功，跳转到测试界面
                 intent = new Intent(this, MainActivity.class);
                 startActivity(intent);

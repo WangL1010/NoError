@@ -1,5 +1,8 @@
 package com.qxy.NoError.utils;
 
+import static android.content.Context.MODE_PRIVATE;
+
+import android.content.SharedPreferences;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -45,7 +48,7 @@ public class NetUtils {
      * todo 每一次调用都需要创建一个okhttp客户端，是否可以优化？
      */
     public static <T> T createRetrofit(Class<T> tClass) {
-        return createRetrofit(tClass, MyApplication.getInstance().get(MyApplication.CLIENT_TOKEN));
+        return createRetrofit(tClass, MyApplication.CLIENT_TOKEN);
     }
 
     public static <T> T createRetrofit(Class<T> tClass,String token) {
@@ -65,9 +68,7 @@ public class NetUtils {
         OkHttpClient okHttpClient = getOkHttpClient(MyApplication.ACCESS_TOKEN
                 , accessToken == null
                         ? Constants.ACCESS_TOKEN
-                        : accessToken
-                , "Content-Type"
-                , Constants.CONTENT_TYPE_JSON);
+                        : accessToken);
 
         Retrofit build = new Retrofit.Builder()
                 .baseUrl(IP_PRE)
@@ -182,12 +183,12 @@ public class NetUtils {
         call.enqueue(new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                Log.d(TAG, "onFailure: 重新获取AccessToken失败！错误信息：" + e.getMessage() + "造成原因：" + e.getCause());
+                Log.d(TAG, "onFailure: 重新获取啊accessToken失败！错误信息：" + e.getMessage() + "造成原因：" + e.getCause());
             }
 
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                Log.d(TAG, "onResponse: 获取AccessToken的请求码" + response.code());
+                Log.d(TAG, "onResponse: 获取accessToken的请求码" + response.code());
                 if (response.code() != 200) {
                     return;
                 }
@@ -196,7 +197,7 @@ public class NetUtils {
                     return;
                 }
                 String dataStr = responseBody.string();
-                Log.d(TAG, "onResponse: 重新获取AccessToken成功, 获取到的数据为：" + dataStr);
+                Log.d(TAG, "onResponse: 重新获取accessToken成功, 获取到的数据为：" + dataStr);
                 if (StrUtil.isEmpty(dataStr)) {
                     return;
                 }
@@ -208,6 +209,11 @@ public class NetUtils {
                     //把open_id和access_token存入全局变量
                     MyApplication.getInstance().put(MyApplication.OPEN_ID, openId);
                     MyApplication.getInstance().put(MyApplication.ACCESS_TOKEN, accessToken);
+                    //把authCode存储到SharedPreferences文件中
+                    SharedPreferences.Editor edt = MyApplication.getAppContext().getSharedPreferences("data",MODE_PRIVATE).edit();
+                    edt.putString(MyApplication.ACCESS_TOKEN,accessToken);
+                    edt.putString(MyApplication.OPEN_ID,openId);
+                    edt.commit();
                     //通过回调机制，通知完成获取token
                     finishCliTokenCallBack.dealData();
                 }

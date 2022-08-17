@@ -21,5 +21,10 @@ public class Constants {
 
     public static final String CONTENT_TYPE_JSON ="application/json";
 
+    /**
+     * 用户权限
+     */
+    public static final String SCOPE="user_info,trial.whitelist,mobile,discovery.ent,video.list,video.data,fans.list,following.list ";
+
 
 }

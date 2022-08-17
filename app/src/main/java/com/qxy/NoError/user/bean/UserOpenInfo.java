@@ -1,8 +1,11 @@
 package com.qxy.NoError.user.bean;
 
+import androidx.room.Entity;
+
 /**
  * 用户的公开信息bean
  */
+
 public class UserOpenInfo {
 
     private Data data;
@@ -31,7 +34,7 @@ public class UserOpenInfo {
                 ", message='" + message + '\'' +
                 '}';
     }
-
+    @Entity(tableName = "userOpenInfo",primaryKeys = {"",""})
     public static class Data {
         private String avatar;
         private String avatarLarger;

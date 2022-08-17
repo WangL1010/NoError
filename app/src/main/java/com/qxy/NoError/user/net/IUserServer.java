@@ -9,6 +9,7 @@ import com.qxy.NoError.user.bean.VideoListData;
 import io.reactivex.rxjava3.core.Observable;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
 import retrofit2.http.QueryMap;
@@ -22,6 +23,9 @@ public interface IUserServer {
      * @return
      */
     @POST("oauth/userinfo/")
+    @Headers({
+            "Content-Type: application/json"
+    })
     Observable<UserOpenInfo> getUserOpenInfo(@Body ResBody body);
 
     /**
@@ -32,6 +36,9 @@ public interface IUserServer {
      * @return
      */
     @GET("fans/list/")
+    @Headers({
+            "Content-Type: application/json"
+    })
     Observable<UserResponseData<FanListData>> getFansListData(@Query("open_id") String openId,
                                                               @Query("cursor") Integer cursor,
                                                               @Query("count") Integer count);
@@ -44,6 +51,9 @@ public interface IUserServer {
      * @return
      */
     @GET("following/list/")
+    @Headers({
+            "Content-Type: application/json"
+    })
     Observable<UserResponseData<FollowListData  >> getFollowListData(@Query("open_id") String openId,
                                                                    @Query("cursor") Integer cursor,
                                                                    @Query("count") Integer count);
