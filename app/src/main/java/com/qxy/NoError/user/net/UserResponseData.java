@@ -1,37 +1,8 @@
 package com.qxy.NoError.user.net;
 
-import androidx.annotation.NonNull;
+import com.qxy.NoError.user.bean.UserOpenInfo;
 
-import java.util.List;
-
-/**
- * 从网络中请求到的响应数据类
- * @author 徐鑫
- */
-
-public class UserResponseData<T> {
-
-
-    public Data<T> data;
-    public Extra extra;
-
-    public static class Data<T> {
-
-        public List<T> list;
-        public Integer total;
-        public Integer cursor;
-        public Integer error_code;
-        public String description;
-        public Boolean has_more;
-
-    }
-    public static class Extra {
-
-        public String logid;
-        public String description;
-        public Long errorCode;
-        public Long now;
-        public String subDescription;
-        public Long subErrorCode;
-    }
+public class UserResponseData {
+    public String message;
+    public UserOpenInfo data;
 }

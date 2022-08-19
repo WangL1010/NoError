@@ -18,6 +18,7 @@ import com.bytedance.sdk.open.douyin.api.DouYinOpenApi;
 import com.qxy.NoError.TestActivity;
 import com.qxy.NoError.MyApplication;
 import com.qxy.NoError.MainActivity;
+import com.qxy.NoError.utils.NetUtils;
 
 /**
  * 主要功能：接受授权返回结果的activity
@@ -65,6 +66,7 @@ public class DouYinEntryActivity extends Activity implements IApiEventHandler {
                 SharedPreferences.Editor edt = getSharedPreferences("data",MODE_PRIVATE).edit();
                 edt.putString("authCode",response.authCode);
                 edt.commit();
+                NetUtils.getAccessToken();
                 //授权成功，跳转到测试界面
                 intent = new Intent(this, MainActivity.class);
                 startActivity(intent);

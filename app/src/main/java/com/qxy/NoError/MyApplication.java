@@ -2,6 +2,7 @@ package com.qxy.NoError;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.bytedance.sdk.open.douyin.DouYinOpenApiFactory;
@@ -49,6 +50,9 @@ public class MyApplication extends Application {
         // 需要到开发者网站申请并替换
         appContext=getApplicationContext();
         Log.d(TAG, "onCreate: ");
+        SharedPreferences pref = getSharedPreferences("data",MODE_PRIVATE);
+        put(ACCESS_TOKEN,pref.getString(ACCESS_TOKEN,""));
+        put(OPEN_ID,pref.getString(OPEN_ID,""));
         DouYinOpenApiFactory.init(new DouYinOpenConfig(Constants.CLIENT_KEY));
     }
 

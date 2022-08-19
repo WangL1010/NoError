@@ -1,5 +1,6 @@
 package com.qxy.NoError.user.net;
 
+import com.qxy.NoError.MyApplication;
 import com.qxy.NoError.user.bean.FanListData;
 import com.qxy.NoError.user.bean.FollowListData;
 import com.qxy.NoError.user.bean.UserOpenInfo;
@@ -12,7 +13,6 @@ import retrofit2.http.GET;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
-import retrofit2.http.QueryMap;
 
 public interface IUserServer {
 
@@ -26,7 +26,7 @@ public interface IUserServer {
     @Headers({
             "Content-Type: application/json"
     })
-    Observable<UserOpenInfo> getUserOpenInfo(@Body ResBody body);
+    Observable<UserResponseData> getUserOpenInfo(@Body ResBody body);
 
     /**
      * 请求粉丝列表数据
@@ -39,7 +39,7 @@ public interface IUserServer {
     @Headers({
             "Content-Type: application/json"
     })
-    Observable<UserResponseData<FanListData>> getFansListData(@Query("open_id") String openId,
+    Observable<ListResponseData<FanListData>> getFansListData(@Query("open_id") String openId,
                                                               @Query("cursor") Integer cursor,
                                                               @Query("count") Integer count);
 
@@ -54,11 +54,11 @@ public interface IUserServer {
     @Headers({
             "Content-Type: application/json"
     })
-    Observable<UserResponseData<FollowListData  >> getFollowListData(@Query("open_id") String openId,
+    Observable<ListResponseData<FollowListData>> getFollowListData(@Query("open_id") String openId,
                                                                    @Query("cursor") Integer cursor,
                                                                    @Query("count") Integer count);
 
-    Observable<UserResponseData<VideoListData>> getVideoListData(@Query("open_id") String openId,
+    Observable<ListResponseData<VideoListData>> getVideoListData(@Query("open_id") String openId,
                                                                  @Query("cursor") Integer cursor,
                                                                  @Query("count") Integer count);
 }

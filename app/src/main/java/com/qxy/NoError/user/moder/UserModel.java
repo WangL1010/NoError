@@ -9,6 +9,7 @@ import com.qxy.NoError.user.bean.UserOpenInfo;
 import com.qxy.NoError.user.bean.VideoListData;
 import com.qxy.NoError.user.net.IUserServer;
 import com.qxy.NoError.user.net.ResBody;
+import com.qxy.NoError.user.net.ListResponseData;
 import com.qxy.NoError.user.net.UserResponseData;
 import com.qxy.NoError.utils.NetUtils;
 
@@ -24,7 +25,7 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 /**
  * 用户页面数据请求
  */
-public class UserModel {
+public class UserModel<T> {
     private static final String TAG = "UserModel";
 
 
@@ -35,6 +36,7 @@ public class UserModel {
 
     public void getFollowListData(Integer cursor,Integer count,CallBack2DealData callback){
         String openId= MyApplication.getInstance().get(MyApplication.OPEN_ID);
+        Log.d(TAG, "getFollowListData: openId:"+openId);
         getFollowListData(openId,cursor,count,callback);
     }
 
@@ -43,10 +45,6 @@ public class UserModel {
         getVideoListData(openId,cursor,count,callback);
     }
 
-    public void getUserOpenInfo(Integer cursor,Integer count,CallBack2DealData callback){
-        String openId= MyApplication.getInstance().get(MyApplication.OPEN_ID);
-        getUserOpenInfo(openId,cursor,count,callback);
-    }
     /**
      * 请求粉丝列表
      * @param openId 用户唯一标志
@@ -54,21 +52,21 @@ public class UserModel {
      * @param count 每页数量
      * @param callback 回调接口
      */
-    public void getFanListData(String openId,Integer cursor,Integer count,CallBack2DealData callback){
-        IUserServer iUserServer= NetUtils.createRetrofit(IUserServer.class,MyApplication.CLIENT_TOKEN);
-        Observable<UserResponseData<FanListData>> fansListData = iUserServer.getFansListData(openId, cursor, count);
+    public void getFanListData(String openId,Integer cursor,Integer count,CallBack2DealData<FanListData> callback){
+        IUserServer iUserServer= NetUtils.createRetrofit(IUserServer.class,MyApplication.ACCESS_TOKEN);
+        Observable<ListResponseData<FanListData>> fansListData = iUserServer.getFansListData(openId, cursor, count);
         fansListData.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<UserResponseData<FanListData>>() {
+                .subscribe(new Observer<ListResponseData<FanListData>>() {
                     @Override
                     public void onSubscribe(@NonNull Disposable d) {
                         Log.d(TAG, "onSubscribe: ");
                     }
 
                     @Override
-                    public void onNext(@NonNull UserResponseData<FanListData> fanListDataUserResponseData) {
-                        Log.d(TAG, "onNext: ");
-                        callback.success(fanListDataUserResponseData.data.list);
+                    public void onNext(@NonNull ListResponseData<FanListData> fanListDataListResponseData) {
+                        Log.d(TAG, "getFanListData:onNext: "+fanListDataListResponseData.data.list);
+                        callback.success(fanListDataListResponseData.data.list);
                     }
 
                     @Override
@@ -90,21 +88,22 @@ public class UserModel {
      * @param count 每页数量
      * @param callback 回调接口
      */
-    public void getFollowListData(String openId,Integer cursor,Integer count,CallBack2DealData callback){
-        IUserServer iUserServer= NetUtils.createRetrofit(IUserServer.class,MyApplication.CLIENT_TOKEN);
-        Observable<UserResponseData<FollowListData>> followListData = iUserServer.getFollowListData(openId, cursor, count);
+    public void getFollowListData(String openId,Integer cursor,Integer count,CallBack2DealData<FollowListData> callback){
+        IUserServer iUserServer= NetUtils.createRetrofit(IUserServer.class,MyApplication.ACCESS_TOKEN);
+        Observable<ListResponseData<FollowListData>> followListData = iUserServer.getFollowListData(openId, cursor, count);
         followListData.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<UserResponseData<FollowListData>>() {
+                .subscribe(new Observer<ListResponseData<FollowListData>>() {
                     @Override
                     public void onSubscribe(@NonNull Disposable d) {
                         Log.d(TAG, "onSubscribe: ");
                     }
 
                     @Override
-                    public void onNext(@NonNull UserResponseData<FollowListData> followListDataUserResponseData) {
-                        Log.d(TAG, "onNext: ");
-                        callback.success(followListDataUserResponseData.data.list);
+                    public void onNext(@NonNull ListResponseData<FollowListData> followListDataListResponseData) {
+                        Log.d(TAG, "getFollowListData:onNext: "+followListDataListResponseData.extra.description);
+                        Log.d(TAG, "getFollowListData:onNext: "+followListDataListResponseData.extra.errorCode);
+                        callback.success(followListDataListResponseData.data.list);
                     }
 
                     @Override
@@ -118,28 +117,29 @@ public class UserModel {
                     }
                 });
     }
+
     /**
-     * 请求视频列表
+     * 请求关注列表
      * @param openId 用户唯一标志
      * @param cursor 分页游标
      * @param count 每页数量
      * @param callback 回调接口
      */
-    public void getVideoListData(String openId, Integer cursor, Integer count, CallBack2DealData callback){
-        IUserServer iUserServer= NetUtils.createRetrofit(IUserServer.class, MyApplication.ACCESS_TOKEN);
-        Observable<UserResponseData<VideoListData>> videoListData = iUserServer.getVideoListData(openId, cursor, count);
+    public void getVideoListData(String openId,Integer cursor,Integer count,CallBack2DealData<VideoListData> callback){
+        IUserServer iUserServer=NetUtils.createRetrofit(IUserServer.class,MyApplication.ACCESS_TOKEN);
+        Observable<ListResponseData<VideoListData>> videoListData = iUserServer.getVideoListData(openId, cursor, count);
         videoListData.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<UserResponseData<VideoListData>>() {
+                .subscribe(new Observer<ListResponseData<VideoListData>>() {
                     @Override
                     public void onSubscribe(@NonNull Disposable d) {
                         Log.d(TAG, "onSubscribe: ");
                     }
 
                     @Override
-                    public void onNext(@NonNull UserResponseData<VideoListData> videoListDataUserResponseData) {
-                        Log.d(TAG, "onNext: ");
-                        callback.success(videoListDataUserResponseData.data.list);
+                    public void onNext(@NonNull ListResponseData<VideoListData> videoListDataListResponseData) {
+                        Log.d(TAG, "getVideoListData:onNext: "+videoListDataListResponseData.data.list);
+                        callback.success(videoListDataListResponseData.data.list);
                     }
 
                     @Override
@@ -154,28 +154,33 @@ public class UserModel {
                 });
     }
 
-    public void getUserOpenInfo(String openId, Integer cursor, Integer count, CallBack2DealData callback){
+
+    public void getUserOpenInfo(CallBack2DealData<UserOpenInfo> callback){
         IUserServer iUserServer= NetUtils.createRetrofit(IUserServer.class, MyApplication.ACCESS_TOKEN);
         MyApplication instance=MyApplication.getInstance();
         ResBody body=new ResBody(instance.get(MyApplication.ACCESS_TOKEN),instance.get(MyApplication.OPEN_ID));
-        Observable<UserOpenInfo> userOpenInfo = iUserServer.getUserOpenInfo(body);
+        Log.d(TAG, "getUserOpenInfo: "+body.toString());
+        Observable<UserResponseData> userOpenInfo = iUserServer.getUserOpenInfo(body);
         userOpenInfo.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<UserOpenInfo>() {
+                .subscribe(new Observer<UserResponseData>() {
                     @Override
                     public void onSubscribe(@NonNull Disposable d) {
                         Log.d(TAG, "onSubscribe: ");
                     }
 
                     @Override
-                    public void onNext(@NonNull UserOpenInfo userOpenInfo) {
-                        Log.d(TAG, "onNext: ");
-                        callback.success(userOpenInfo);
+                    public void onNext(@NonNull UserResponseData userResponseData) {
+                        String message = userResponseData.message;
+                        UserOpenInfo userOpenInfo1 = userResponseData.data;
+                        Log.d(TAG, "getUserOpenInfo:onNext: "+message);
+                        Log.d(TAG, "getUserOpenInfo:onNext: "+userOpenInfo1);
+                        callback.success(userOpenInfo1);
                     }
 
                     @Override
                     public void onError(@NonNull Throwable e) {
-                        Log.d(TAG, "onError: ");
+                        Log.d(TAG, "onError: "+e.toString());
                     }
 
                     @Override
@@ -183,6 +188,14 @@ public class UserModel {
                         Log.d(TAG, "onComplete: ");
                     }
                 });
+    }
+
+    /**
+     * 从数据库中获取用户公开信息
+     * @param callback
+     */
+    public void getUserOpenInfoFromDataBase(CallBack2DealData<UserOpenInfo> callback){
+
     }
 
 
@@ -204,5 +217,12 @@ public class UserModel {
          * @param t UserOpenInfo
          */
        void success(T t);
+
+        /**
+         * 处理错误
+         *
+         * @param message 错误信息
+         */
+        void fail(String message);
     }
 }

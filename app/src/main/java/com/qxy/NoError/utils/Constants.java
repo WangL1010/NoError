@@ -14,7 +14,7 @@ public class Constants {
     public static final String CLIENT_KEY = "awoivy4o8l4own3v";
     public static final String CLIENT_SECRET = "0cc1918b5c314bccf606935e9cc52ef6";
 
-    public static final String ACCESS_TOKEN = "act.12d9381d72ed01b1b3a13f6f57d044eftawpeAohWab6TTDeZrAn6TdGZy8d";
+    public static final String ACCESS_TOKEN = "act.7cdcb5e05e1d8891ee68363b19bea0caY5Em7P7iXqIhZkZjwFesidfI3kII";
     public static final String CONTENT_TYPE_URLENCODED ="application/x-www-form-urlencoded";
 
     public static final String CONTENT_TYPE_DATA ="multipart/form-data";

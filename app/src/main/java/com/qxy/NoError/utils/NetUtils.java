@@ -19,9 +19,11 @@ import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import okhttp3.Call;
 import okhttp3.Callback;
+import okhttp3.FormBody;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 import retrofit2.Retrofit;
@@ -63,7 +65,7 @@ public class NetUtils {
         }else if (token.equals(MyApplication.CLIENT_TOKEN)){
             accessToken=instance.get(MyApplication.CLIENT_TOKEN);
         }
-
+        Log.d(TAG, "createRetrofit: "+accessToken);
         //给请求添加请求头
         OkHttpClient okHttpClient = getOkHttpClient(MyApplication.ACCESS_TOKEN
                 , accessToken == null
@@ -163,20 +165,21 @@ public class NetUtils {
 
     /**
      * 获取access_token
-     * @param finishCliTokenCallBack
      */
-    public static void getAccessToken(FinishCliTokenCallBack finishCliTokenCallBack) {
+    public static void getAccessToken() {
 
-        HttpUrl.Builder urlBuilder = Objects.requireNonNull(HttpUrl.parse("https://open.douyin.com/oauth/access_token/")).newBuilder();
-        HttpUrl url = urlBuilder.addQueryParameter("client_key", Constants.CLIENT_KEY)
-                .addQueryParameter("client_secret", Constants.CLIENT_SECRET)
-                .addQueryParameter("code",MyApplication.getInstance().get("auth_code"))
-                .addQueryParameter("grant_type", "authorization_code").build();
+        HttpUrl url = Objects.requireNonNull(HttpUrl.parse("https://open.douyin.com/oauth/access_token/"));
+        FormBody.Builder builder = new FormBody.Builder();
+        builder.add("client_secret", Constants.CLIENT_SECRET);
+        builder.add("code",MyApplication.getInstance().get(MyApplication.AUTH_CODE));
+        builder.add("grant_type","authorization_code");
+        builder.add("client_key","awoivy4o8l4own3v");
+        RequestBody formBody=builder.build();
 
         Request request = new Request.Builder()
                 .url(url)
                 .addHeader("Content-Type", "application/x-www-form-urlencoded")
-                .get()
+                .post(formBody)
                 .build();
 
         Call call = getOkHttpClient().newCall(request);
@@ -214,8 +217,6 @@ public class NetUtils {
                     edt.putString(MyApplication.ACCESS_TOKEN,accessToken);
                     edt.putString(MyApplication.OPEN_ID,openId);
                     edt.commit();
-                    //通过回调机制，通知完成获取token
-                    finishCliTokenCallBack.dealData();
                 }
             }
         });

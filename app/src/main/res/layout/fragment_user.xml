@@ -1,14 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".user.UserFragment">
 
-    <TextView
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="用户信息界面"
-        android:textSize="60sp" />
+        android:layout_height="200dp">
 
-</FrameLayout>
+    </FrameLayout>
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/userTlList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="作品" />
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="关注" />
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="粉丝" />
+    </com.google.android.material.tabs.TabLayout>
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/userVp2List"
+        android:layout_width="0dp"
+        android:layout_height="0dp" />
+</LinearLayout>

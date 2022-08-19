@@ -3,6 +3,7 @@ package com.qxy.NoError;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,7 +18,7 @@ import com.bytedance.sdk.open.douyin.api.DouYinOpenApi;
 import com.qxy.NoError.databinding.ActivityMainBinding;
 
 import com.qxy.NoError.utils.Constants;
-
+import com.qxy.NoError.utils.NetUtils;
 
 
 import java.util.HashMap;
@@ -105,4 +106,5 @@ public class MainActivity extends AppCompatActivity {
         request.state = "ww";                                   // 用于保持请求和回调的状态，授权请求后原样带回给第三方。
         douYinOpenApi.authorize(request);               // 优先使用抖音app进行授权，如果抖音app因版本或者其他原因无法授权，则使用wap页授权
     }
+
 }

@@ -40,6 +40,10 @@ public class UserFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mViewModel = new ViewModelProvider(this).get(UserViewModel.class);
+        //mViewModel.getUserOpenInfo();
+        //mViewModel.getFanListData(0,10);
+        //mViewModel.getVideoListData(0,10);
+        mViewModel.getFollowListData(0,10);
     }
 }
 

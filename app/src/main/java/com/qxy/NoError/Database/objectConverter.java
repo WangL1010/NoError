@@ -4,6 +4,7 @@ import androidx.room.TypeConverter;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.qxy.NoError.user.bean.UserOpenInfo;
 
 
 import java.lang.reflect.Type;
@@ -26,6 +27,7 @@ public class objectConverter {
         Type listType = new TypeToken<List<String>>(){}.getType();
         return new Gson().fromJson(json,listType);
     }
+
 
 }
 

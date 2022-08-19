@@ -10,6 +10,8 @@ import androidx.room.TypeConverters;
 import com.qxy.NoError.MyApplication;
 import com.qxy.NoError.list.bean.ListData;
 import com.qxy.NoError.list.dao.IListDataDao;
+import com.qxy.NoError.user.bean.UserOpenInfo;
+import com.qxy.NoError.user.dao.IUserOpenInfoDao;
 
 import java.io.File;
 
@@ -17,7 +19,7 @@ import java.io.File;
  * 定义数据库
  */
 @TypeConverters(objectConverter.class)
-@Database(entities = {ListData.class},version = 1,exportSchema = false)
+@Database(entities = {ListData.class, UserOpenInfo.class},version = 1,exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
 
     private static volatile AppDatabase instance;
@@ -53,4 +55,6 @@ public abstract class AppDatabase extends RoomDatabase {
      * @return
      */
     public abstract IListDataDao getListDataDao();
+
+    public abstract IUserOpenInfoDao getUserOpenInfoDao();
 }

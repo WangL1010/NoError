@@ -41,52 +41,52 @@ public class ListModel {
     }
 
     public void getListData(Integer type, Integer version, CallBack2DealData callBack) {
-        IListServer iListServer = NetUtils.createRetrofit(IListServer.class);
-        Observable<ResponseData<ListData>> observable = iListServer.getListData(type, version);
-        observable.subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<ResponseData<ListData>>() {
-                    @Override
-                    public void onSubscribe(@NonNull Disposable d) {
-
-                    }
-
-                    @Override
-                    public void onNext(@NonNull ResponseData<ListData> listResponseData) {
-                        Log.d(TAG, "getListData,onNext: " + listResponseData.data.errorCode);
-                        if (listResponseData.data.errorCode.equals(ResponseData.TOKEN_OVERDUE_CODE)|| MyApplication.getInstance().get(MyApplication.CLIENT_TOKEN)==null) {
-                            //token已过期
-                            NetUtils.refreshClientToken(() -> getListData(type, version, callBack));
-                        } else if (listResponseData.data.errorCode == 0) {
-                            Log.d(TAG, "onNext: 请求成功，数据如下\n" + JSONUtil.toJsonStr(listResponseData));
-                            callBack.success(listResponseData.data.list);
-
-                            // TODO: 2022/8/13 更新数据库
-                            updateDataBase(listResponseData.data.list, type, version);
-                        } else {
-                            Log.d(TAG, "onNext: 请求失败" + listResponseData.data.description);
-                            //处理错误信息
-                            callBack.fail(listResponseData.data.description);
-
-                            // TODO: 2022/8/13 从数据库中加载
-                            getDataFromDataBase(type, version, callBack);
-                        }
-                    }
-
-                    @Override
-                    public void onError(@NonNull Throwable e) {
-                        Log.d(TAG, "onError: 请求出错，错误信息：" + e.getMessage() + "造成原因：" + e.getCause());
-                        callBack.fail("网络异常");
-
-                        // TODO: 2022/8/13 从数据库中加载
-                        getDataFromDataBase(type, version, callBack);
-                    }
-
-                    @Override
-                    public void onComplete() {
-
-                    }
-                });
+//        IListServer iListServer = NetUtils.createRetrofit(IListServer.class);
+//        Observable<ResponseData<ListData>> observable = iListServer.getListData(type, version);
+//        observable.subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(new Observer<ResponseData<ListData>>() {
+//                    @Override
+//                    public void onSubscribe(@NonNull Disposable d) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onNext(@NonNull ResponseData<ListData> listResponseData) {
+//                        Log.d(TAG, "getListData,onNext: " + listResponseData.data.errorCode);
+//                        if (listResponseData.data.errorCode.equals(ResponseData.TOKEN_OVERDUE_CODE)|| MyApplication.getInstance().get(MyApplication.CLIENT_TOKEN)==null) {
+//                            //token已过期
+//                            NetUtils.refreshClientToken(() -> getListData(type, version, callBack));
+//                        } else if (listResponseData.data.errorCode == 0) {
+//                            Log.d(TAG, "onNext: 请求成功，数据如下\n" + JSONUtil.toJsonStr(listResponseData));
+//                            callBack.success(listResponseData.data.list);
+//
+//                            // TODO: 2022/8/13 更新数据库
+//                            updateDataBase(listResponseData.data.list, type, version);
+//                        } else {
+//                            Log.d(TAG, "onNext: 请求失败" + listResponseData.data.description);
+//                            //处理错误信息
+//                            callBack.fail(listResponseData.data.description);
+//
+//                            // TODO: 2022/8/13 从数据库中加载
+//                            getDataFromDataBase(type, version, callBack);
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onError(@NonNull Throwable e) {
+//                        Log.d(TAG, "onError: 请求出错，错误信息：" + e.getMessage() + "造成原因：" + e.getCause());
+//                        callBack.fail("网络异常");
+//
+//                        // TODO: 2022/8/13 从数据库中加载
+//                        getDataFromDataBase(type, version, callBack);
+//                    }
+//
+//                    @Override
+//                    public void onComplete() {
+//
+//                    }
+//                });
     }
 
     /**
@@ -118,11 +118,13 @@ public class ListModel {
                 .subscribe(new SingleObserver<List<ListData>>() {
                     @Override
                     public void onSubscribe(@NonNull Disposable d) {
+                        Log.d(TAG, "getDataFromDataBase:onSubscribe"+d.toString());
 
                     }
 
                     @Override
                     public void onSuccess(@NonNull List<ListData> listData) {
+                        Log.d(TAG, "getDataFromDataBase:onSuccess: ");
                         if (listData == null || listData.isEmpty()) {
                             callBack.fail("并未缓存数据");
                             return;
@@ -132,6 +134,7 @@ public class ListModel {
 
                     @Override
                     public void onError(@NonNull Throwable e) {
+                        Log.d(TAG, "getDataFromDataBase:onError: "+e.toString());
                         callBack.fail(e.getMessage());
                     }
                 });

@@ -12,6 +12,14 @@ public class ResBody {
         this.open_id = open_id;
     }
 
+    @Override
+    public String toString() {
+        return "ResBody{" +
+                "access_token='" + access_token + '\'' +
+                ", open_id='" + open_id + '\'' +
+                '}';
+    }
+
     public String getAccess_token() {
         return access_token;
     }
