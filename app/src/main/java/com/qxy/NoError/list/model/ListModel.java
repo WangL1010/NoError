@@ -3,6 +3,7 @@ package com.qxy.NoError.list.model;
 import android.util.Log;
 
 import com.qxy.NoError.Database.AppDatabase;
+import com.qxy.NoError.MyApplication;
 import com.qxy.NoError.list.bean.ListData;
 import com.qxy.NoError.list.bean.Version;
 import com.qxy.NoError.list.dao.IListDataDao;
@@ -43,8 +44,8 @@ public class ListModel {
 
                     @Override
                     public void onNext(@NonNull ResponseData<ListData> listResponseData) {
-                        Log.d(TAG, "onNext: " + listResponseData.data.errorCode);
-                        if (listResponseData.data.errorCode.equals(ResponseData.TOKEN_OVERDUE_CODE)) {
+                        Log.d(TAG, "getListData,onNext: " + listResponseData.data.errorCode);
+                        if (listResponseData.data.errorCode.equals(ResponseData.TOKEN_OVERDUE_CODE)|| MyApplication.getInstance().get(MyApplication.CLIENT_TOKEN)==null) {
                             //token已过期
                             NetUtils.refreshClientToken(() -> getListData(type, version, callBack));
                         } else if (listResponseData.data.errorCode == 0) {

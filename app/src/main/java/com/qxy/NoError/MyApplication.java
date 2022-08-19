@@ -2,6 +2,7 @@ package com.qxy.NoError;
 
 import android.app.Application;
 import android.content.Context;
+import android.util.Log;
 
 import com.bytedance.sdk.open.douyin.DouYinOpenApiFactory;
 import com.bytedance.sdk.open.douyin.DouYinOpenConfig;
@@ -20,11 +21,13 @@ import cn.hutool.json.JSONUtil;
 public class MyApplication extends Application {
 
 
+    private static final String TAG = "MyApplication";
     public static Context appContext;
 
     public static final String AUTH_CODE = "auth_code";
     public static final String ACCESS_TOKEN = "access-token";
     public static final String CLIENT_TOKEN = "client-token";
+    public static final String OPEN_ID="open_id";
 
     public static MyApplication instance;
 
@@ -45,8 +48,11 @@ public class MyApplication extends Application {
         instance = this;
         // 需要到开发者网站申请并替换
         appContext=getApplicationContext();
+        Log.d(TAG, "onCreate: ");
         DouYinOpenApiFactory.init(new DouYinOpenConfig(Constants.CLIENT_KEY));
     }
+
+
 
     public void put(String key, String data) {
         map.put(key, data);

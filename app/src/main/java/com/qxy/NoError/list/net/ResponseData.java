@@ -12,7 +12,7 @@ import java.util.List;
 
 public class ResponseData<T> {
 
-    @Ignore
+
     public static final Long TOKEN_OVERDUE_CODE = 2190008L;
 
     public Data<T> data;
@@ -31,7 +31,6 @@ public class ResponseData<T> {
         public Boolean hasMore;
     }
     public static class Extra {
-        @NonNull
         public String logid;
         public String description;
         public Long errorCode;

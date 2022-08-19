@@ -1,14 +1,24 @@
 package com.qxy.NoError;
 
+
+import android.content.SharedPreferences;
 import android.os.Bundle;
+
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.motion.widget.MotionLayout;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
+
+import com.bytedance.sdk.open.aweme.authorize.model.Authorization;
+import com.bytedance.sdk.open.douyin.DouYinOpenApiFactory;
+import com.bytedance.sdk.open.douyin.api.DouYinOpenApi;
 import com.qxy.NoError.databinding.ActivityMainBinding;
-import com.qxy.NoError.databinding.ActivityTestBinding;
+
+import com.qxy.NoError.utils.Constants;
+
+
 
 import java.util.HashMap;
 import java.util.Map;
@@ -20,13 +30,27 @@ import java.util.Map;
  */
 public class MainActivity extends AppCompatActivity {
 
+    private static final String TAG = "MainActivity";
     private final HashMap<Integer, MotionLayout> map = new HashMap<>();
+    private DouYinOpenApi douYinOpenApi;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        douYinOpenApi = DouYinOpenApiFactory.create(this);
+        /**
+         * 从SharedPreferences文件中读取数据
+         * 判断authCode如果为空去获取
+         */
+        SharedPreferences pref = getSharedPreferences("data",MODE_PRIVATE);
+        String authCode = pref.getString("authCode","");
+        if (authCode==null||authCode.length()==0){
+            getAuthCode();
+        }
+
         ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
 
         // 主页面底部导航空间与id的映射
         // 如果需要添加底部导航控件，只需要在这里添加一个映射
@@ -68,5 +92,17 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    /**
+     * 获取authCode用来获取之后的数据
+     */
+    private void getAuthCode() {
+        Authorization.Request request = new Authorization.Request();
+        request.scope = Constants.SCOPE;                          // 用户授权时必选权限
+        request.optionalScope0 = "mobile";     // 用户授权时可选权限（默认选择）
+//        request.optionalScope0 = mOptionalScope1;    // 用户授权时可选权限（默认不选）
+        request.state = "ww";                                   // 用于保持请求和回调的状态，授权请求后原样带回给第三方。
+        douYinOpenApi.authorize(request);               // 优先使用抖音app进行授权，如果抖音app因版本或者其他原因无法授权，则使用wap页授权
     }
 }
