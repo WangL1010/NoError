@@ -28,11 +28,11 @@ public class ListDataDiff extends DiffUtil.ItemCallback<ListData> {
 
     @Override
     public boolean areItemsTheSame(@NonNull ListData oldItem, @NonNull ListData newItem) {
-        return oldItem.id.equals(newItem.id);
+        return oldItem.id.equals(newItem.id) && oldItem.version.equals(newItem.version);
     }
 
     @Override
     public boolean areContentsTheSame(@NonNull ListData oldItem, @NonNull ListData newItem) {
-        return oldItem.id.equals(newItem.id);
+        return oldItem.id.equals(newItem.id) && oldItem.version.equals(newItem.version);
     }
 }

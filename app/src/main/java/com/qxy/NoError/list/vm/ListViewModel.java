@@ -1,5 +1,7 @@
 package com.qxy.NoError.list.vm;
 
+import android.util.Log;
+
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -18,6 +20,8 @@ import java.util.List;
  */
 public class ListViewModel extends ViewModel {
 
+    private static final String TAG = "ListViewModel";
+
     /**
      * 榜单数据
      */
@@ -27,14 +31,10 @@ public class ListViewModel extends ViewModel {
      * 对外可观察的对象，用于确定是否从网络中请求数据成功
      */
     private MutableLiveData<Boolean> success;
-    private MutableLiveData<List<Version>> versionLiveData;
+    private final List<Version> versionList = new ArrayList<>();
     private MutableLiveData<Version> selectVersion;
 
     ListModel listModel = new ListModel();
-
-    public void requestDataFromNet(Integer type) {
-        requestDataFromNet(type, 0);
-    }
 
     /**
      * 从网络中请求数据
@@ -45,27 +45,13 @@ public class ListViewModel extends ViewModel {
         listModel.getListData(type, version, new ListModel.CallBack2DealData() {
             @Override
             public void success(List<ListData> listData) {
-                getListData().setValue(listData);
-                getSuccess().setValue(true);
-            }
-
-            @Override
-            public void fail(String message) {
-                ToastUtils.show(message);
-                getSuccess().setValue(false);
-            }
-        });
-    }
-
-    /**
-     * 从数据库中获取数据
-     * @param type 数据类型{@link ListData#type ListData.type}
-     * @param version 数据版本{@link ListData#version ListData.type}
-     */
-    public void getDataFromDataBase(Integer type, Integer version) {
-        listModel.getDataFromDataBase(type, version, new ListModel.CallBack2DealData() {
-            @Override
-            public void success(List<ListData> listData) {
+                if (listData == null || listData.isEmpty()) {
+                    return;
+                }
+                for (ListData data :
+                        listData) {
+                    data.version = version;
+                }
                 getListData().setValue(listData);
                 getSuccess().setValue(true);
             }
@@ -82,9 +68,10 @@ public class ListViewModel extends ViewModel {
         listModel.getVersionData(type, new ListModel.CallBackDealVersion() {
             @Override
             public void success(List<Version> versions) {
-                List<Version> value = getVersionLiveData().getValue();
-                value.addAll(versions);
-                getVersionLiveData().setValue(value);
+                if (versions != null) {
+                    Log.d(TAG, "success: ");
+                    versionList.addAll(versions);
+                }
             }
 
             @Override
@@ -108,16 +95,22 @@ public class ListViewModel extends ViewModel {
         return listData;
     }
 
-    public MutableLiveData<List<Version>> getVersionLiveData() {
-        if (versionLiveData == null) {
-            versionLiveData = new MutableLiveData<>(new ArrayList<>());
-        }
-        return versionLiveData;
+    public List<Version> getVersionList() {
+        return versionList;
     }
 
     public MutableLiveData<Version> getSelectVersion() {
         if (selectVersion == null) {
-            selectVersion = new MutableLiveData<>();
+            Version version = new Version();
+            selectVersion = new MutableLiveData<>(new Version());
+        }
+        return selectVersion;
+    }
+    public MutableLiveData<Version> getSelectVersion(int type) {
+        if (selectVersion == null) {
+            Version version = new Version();
+            version.type = type;
+            selectVersion = new MutableLiveData<>(version);
         }
         return selectVersion;
     }

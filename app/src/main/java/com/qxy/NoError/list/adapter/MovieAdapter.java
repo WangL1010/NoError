@@ -1,6 +1,7 @@
 package com.qxy.NoError.list.adapter;
 
 import android.os.Bundle;
+import android.os.strictmode.NetworkViolation;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -53,14 +55,11 @@ public class MovieAdapter extends MyListAdapter<MovieAdapter.MovieViewHolder> {
             );
 
             holder.tvVersion.setText(getVersionMsg());
-            holder.tvVersion.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    //跳转到版本选择弹窗
-                    Bundle bundle = new Bundle();
-                    bundle.putInt(VersionFragment.VERSION_TYPE, 1);
-                    Navigation.findNavController(v).navigate(R.id.versionFragment, bundle);
-                }
+            holder.tvVersion.setOnClickListener(v -> {
+                //跳转到版本选择弹窗
+                Bundle bundle = new Bundle();
+                bundle.putInt(VersionFragment.VERSION_TYPE, 1);
+                Navigation.findNavController(v).navigate(R.id.versionFragment, bundle);
             });
         } else {
             LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
@@ -73,7 +72,6 @@ public class MovieAdapter extends MyListAdapter<MovieAdapter.MovieViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull MovieViewHolder holder, int position) {
         if (position == 0) {
-
             return;
         }
         ListData listData = getItem(position);

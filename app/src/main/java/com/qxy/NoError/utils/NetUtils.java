@@ -13,6 +13,7 @@ import com.qxy.NoError.MyApplication;
 
 import java.io.IOException;
 import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONObject;
@@ -103,13 +104,16 @@ public class NetUtils {
             return builder.build();
         }
         return builder.addInterceptor(chain -> {
-            Request.Builder builder1 = chain.request().newBuilder();
-            for (int i = 0; i < heads.length - 1; i += 2) {
-                builder1.addHeader(heads[i], heads[i + 1]);
-            }
-            Request request = builder1.build();
-            return chain.proceed(request);
-        }).build();
+                    Request.Builder builder1 = chain.request().newBuilder();
+                    for (int i = 0; i < heads.length - 1; i += 2) {
+                        builder1.addHeader(heads[i], heads[i + 1]);
+                    }
+                    Request request = builder1.build();
+                    return chain.proceed(request);
+                })
+                //5秒超时
+                .connectTimeout(5000, TimeUnit.MILLISECONDS)
+                .build();
     }
 
     /**

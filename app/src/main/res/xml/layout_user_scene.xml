@@ -43,7 +43,7 @@
             motion:layout_constraintStart_toStartOf="parent" >
             <CustomAttribute
                 motion:attributeName="textColor"
-                motion:customColorValue="?attr/colorControlNormal" />
+                motion:customColorValue="@color/black" />
         </Constraint>
     </ConstraintSet>
 
@@ -58,7 +58,7 @@
             motion:layout_constraintStart_toStartOf="parent" >
             <CustomAttribute
                 motion:attributeName="textColor"
-                motion:customColorValue="@color/purple_200" />
+                motion:customColorValue="#8EDCFF" />
         </Constraint>
         <Constraint
             android:id="@+id/imageView"
@@ -73,7 +73,7 @@
                 motion:customFloatValue="1" />
             <CustomAttribute
                 motion:attributeName="colorFilter"
-                motion:customColorValue="@color/purple_200" />
+                motion:customColorValue="#8EDCFF" />
         </Constraint>
     </ConstraintSet>
 </MotionScene>
