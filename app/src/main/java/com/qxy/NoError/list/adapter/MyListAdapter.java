@@ -46,6 +46,9 @@ public abstract class MyListAdapter<T extends RecyclerView.ViewHolder> extends L
     }
 
     protected String getVersionMsg() {
+        if (mVersion.version == 0) {
+            return "最新榜单";
+        }
         return "第" + mVersion.version+ "期 " + mVersion.startTime + "--" + mVersion.endTime;
     }
 }

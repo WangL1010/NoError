@@ -30,15 +30,6 @@ import io.reactivex.rxjava3.schedulers.Schedulers;
 public class ListModel {
     private static final String TAG = "ListModel";
 
-    /**
-     * 获取listDataDao对数据库进行操作
-     */
-    private final IListDataDao IListDataDao = AppDatabase.getInstance().getListDataDao();
-
-    public void getListData(Integer type, CallBack2DealData callBack) {
-        getListData(type, 0, callBack);
-    }
-
     public void getListData(Integer type, Integer version, CallBack2DealData callBack) {
         IListServer iListServer = NetUtils.createRetrofit(IListServer.class);
         Observable<ResponseData<ListData>> observable = iListServer.getListData(type, version);
@@ -60,14 +51,14 @@ public class ListModel {
                             Log.d(TAG, "onNext: 请求成功，数据如下\n" + JSONUtil.toJsonStr(listResponseData));
                             callBack.success(listResponseData.data.list);
 
-                            // TODO: 2022/8/13 更新数据库
+                            // 2022/8/13 更新数据库
                             updateDataBase(listResponseData.data.list, type, version);
                         } else {
                             Log.d(TAG, "onNext: 请求失败" + listResponseData.data.description);
                             //处理错误信息
                             callBack.fail(listResponseData.data.description);
 
-                            // TODO: 2022/8/13 从数据库中加载
+                            // 2022/8/13 从数据库中加载
                             getDataFromDataBase(type, version, callBack);
                         }
                     }
@@ -144,6 +135,10 @@ public class ListModel {
      */
     private void updateDataBase(List<ListData> list, Integer type, Integer version) {
         IListDataDao dao = AppDatabase.getInstance().getListDataDao();
+        for (ListData data :
+                list) {
+            data.version = version;
+        }
 
         Single<List<ListData>> single = dao.getListData(type, version);
         single.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
@@ -157,15 +152,15 @@ public class ListModel {
                     public void onSuccess(@NonNull List<ListData> listData) {
                         if (listData == null || listData.isEmpty()) {
                             //数据库中没有数据，直接插入数据库
-                            dao.insertList(list).subscribe();
+                            dao.insertList(list).subscribeOn(Schedulers.io()).subscribe();
                             return;
                         }
-                        dao.updateListData(list).subscribe();
+                        dao.updateListData(list).subscribeOn(Schedulers.io()).subscribe();
                     }
 
                     @Override
                     public void onError(@NonNull Throwable e) {
-                        Log.d(TAG, "onError: 查询数据库失败！！！");
+                        Log.d(TAG, "onError: 查询数据库失败！！！" + e.getMessage());
                     }
                 });
     }
@@ -179,7 +174,7 @@ public class ListModel {
     public void getVersionData(int type, CallBackDealVersion callBackDealVersion) {
         final int pageSize = 20;
         IListServer retrofit = NetUtils.createRetrofit(IListServer.class);
-        Single<ResponseData<Version>> single = retrofit.getVersion(type, 0, pageSize);
+        Single<ResponseData<Version>> single = retrofit.getVersion(type, 1, pageSize);
 
         SingleObserver<ResponseData<Version>> observer = new SingleObserver<ResponseData<Version>>() {
             @Override
@@ -189,10 +184,19 @@ public class ListModel {
 
             @Override
             public void onSuccess(@NonNull ResponseData<Version> versionResponseData) {
-                callBackDealVersion.success(versionResponseData.data.list);
-                if (versionResponseData.data.hasMore) {
-                    Single<ResponseData<Version>> single1 = retrofit.getVersion(type, versionResponseData.data.cursor, pageSize);
-                    single1.observeOn(Schedulers.io()).subscribeOn(Schedulers.io()).subscribe(this);
+                if (versionResponseData.data.errorCode == 0) {
+                    callBackDealVersion.success(versionResponseData.data.list);
+                    Log.d(TAG, "onSuccess: ");
+                    if (versionResponseData.data.hasMore) {
+                        Single<ResponseData<Version>> single1 = retrofit.getVersion(type, versionResponseData.data.cursor, pageSize);
+                        single1.observeOn(AndroidSchedulers.mainThread())
+                                .subscribeOn(Schedulers.io())
+                                .subscribe(this);
+                    }
+                } else if (versionResponseData.data.errorCode.equals(ResponseData.TOKEN_OVERDUE_CODE)){
+                    NetUtils.refreshClientToken(() -> getVersionData(type, callBackDealVersion));
+                } else {
+                    callBackDealVersion.fail(versionResponseData.data.description);
                 }
             }
 
@@ -202,7 +206,7 @@ public class ListModel {
             }
         };
         single.subscribeOn(Schedulers.io())
-                .observeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(observer);
     }
 

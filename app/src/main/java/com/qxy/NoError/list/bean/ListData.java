@@ -11,7 +11,7 @@ import java.util.List;
  *
  * @author 徐鑫
  */
-@Entity(tableName = "listData_table", primaryKeys = {"id"})
+@Entity(tableName = "listData_table", primaryKeys = {"id", "version"})
 public class ListData {
 
     public static final int MOVIE_TYPE = 1;
@@ -24,7 +24,8 @@ public class ListData {
     /**
      * 榜单期数，一周一期
      */
-    public Integer version;
+    @NonNull
+    public Integer version = 0;
     /**
      * 演员
      */

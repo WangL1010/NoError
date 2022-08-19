@@ -60,17 +60,14 @@ public class ListFragment extends Fragment {
             public Fragment createFragment(int position) {
                 switch (position) {
                     case 0:
-                        return new ListDetailFragment<>(1,
-                                MovieAdapter.getInstance(),
-                                ListData.MOVIE_TYPE);
+                        return new ListDetailFragment<>(ListData.MOVIE_TYPE,
+                                MovieAdapter.getInstance());
                     case 1:
-                        return new ListDetailFragment<>(2,
-                                TeleplayAdapter.getInstance(),
-                                ListData.TELEPLAY_TYPE);
+                        return new ListDetailFragment<>(ListData.TELEPLAY_TYPE,
+                                TeleplayAdapter.getInstance());
                     default:
-                        return new ListDetailFragment<>(3,
-                                VarietyAdapter.getInstance(),
-                                ListData.VARIETY_TYPE);
+                        return new ListDetailFragment<>(ListData.VARIETY_TYPE,
+                                VarietyAdapter.getInstance());
                 }
             }
 

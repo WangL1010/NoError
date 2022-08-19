@@ -10,6 +10,7 @@ import com.qxy.NoError.MyApplication;
 
 import java.io.IOException;
 import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONObject;
@@ -56,7 +57,7 @@ public class NetUtils {
 
         //给请求添加请求头
         OkHttpClient okHttpClient = getOkHttpClient(MyApplication.ACCESS_TOKEN
-                , accessToken == null ? "lt.cf2d50517f6d954d50f78b06d77fec1a8zmYD2RKBP0Uvlfl9zHSRVRApRYd" : accessToken
+                , accessToken == null ? "clt.06897111909db6c7e6f4c37259bfb3e4IUHndZEXta2fY8PcuLYNMO2kI8xn" : accessToken
         );
 
         Retrofit build = new Retrofit.Builder()
@@ -89,13 +90,16 @@ public class NetUtils {
             return builder.build();
         }
         return builder.addInterceptor(chain -> {
-            Request.Builder builder1 = chain.request().newBuilder();
-            for (int i = 0; i < heads.length - 1; i += 2) {
-                builder1.addHeader(heads[i], heads[i + 1]);
-            }
-            Request request = builder1.build();
-            return chain.proceed(request);
-        }).build();
+                    Request.Builder builder1 = chain.request().newBuilder();
+                    for (int i = 0; i < heads.length - 1; i += 2) {
+                        builder1.addHeader(heads[i], heads[i + 1]);
+                    }
+                    Request request = builder1.build();
+                    return chain.proceed(request);
+                })
+                //5秒超时
+                .connectTimeout(5000, TimeUnit.MILLISECONDS)
+                .build();
     }
 
     /**

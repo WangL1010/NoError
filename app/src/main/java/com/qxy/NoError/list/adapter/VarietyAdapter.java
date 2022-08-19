@@ -1,5 +1,6 @@
 package com.qxy.NoError.list.adapter;
 
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import androidx.room.util.StringUtil;
 import com.bumptech.glide.Glide;
 import com.qxy.NoError.R;
 import com.qxy.NoError.list.bean.ListData;
+import com.qxy.NoError.list.fragment.VersionFragment;
 import com.qxy.NoError.utils.StrUtil;
 
 /**
@@ -55,7 +57,10 @@ public class VarietyAdapter extends MyListAdapter<VarietyAdapter.MovieViewHolder
             holder.tvVersion.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Navigation.findNavController(v).navigate(R.id.versionFragment);
+                    //跳转到版本选择弹窗
+                    Bundle bundle = new Bundle();
+                    bundle.putInt(VersionFragment.VERSION_TYPE, ListData.VARIETY_TYPE);
+                    Navigation.findNavController(v).navigate(R.id.versionFragment, bundle);
                 }
             });
         } else {
