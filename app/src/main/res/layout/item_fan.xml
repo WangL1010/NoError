@@ -55,6 +55,7 @@
 
                 <ImageView
                     android:layout_width="30dp"
+                    android:id="@+id/gender"
                     android:layout_height="30dp"
                     app:srcCompat="@drawable/female"/>
             </androidx.cardview.widget.CardView>

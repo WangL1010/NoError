@@ -1,4 +1,6 @@
 package com.qxy.NoError.user.fragment;
 
-public class FollowListFragment {
+import androidx.fragment.app.Fragment;
+
+public class FollowListFragment extends Fragment {
 }

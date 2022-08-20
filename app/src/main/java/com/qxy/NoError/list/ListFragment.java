@@ -1,6 +1,7 @@
 package com.qxy.NoError.list;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +28,7 @@ import com.qxy.NoError.list.fragment.ListDetailFragment;
  */
 public class ListFragment extends Fragment {
 
+    private static final String TAG = "ListFragment";
     TabLayout tabLayout;
     ViewPager2 viewPager2;
 
@@ -60,6 +62,7 @@ public class ListFragment extends Fragment {
             public Fragment createFragment(int position) {
                 switch (position) {
                     case 0:
+                        Log.d(TAG, "createFragment: ");
                         return new ListDetailFragment<>(ListData.MOVIE_TYPE,
                                 MovieAdapter.getInstance());
                     case 1:

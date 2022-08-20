@@ -1,4 +1,6 @@
 package com.qxy.NoError.user.fragment;
 
-public class VideoListFragment {
+import androidx.fragment.app.Fragment;
+
+public class VideoListFragment extends Fragment {
 }

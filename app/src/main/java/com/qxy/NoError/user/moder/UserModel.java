@@ -65,7 +65,9 @@ public class UserModel<T> {
 
                     @Override
                     public void onNext(@NonNull ListResponseData<FanListData> fanListDataListResponseData) {
-                        Log.d(TAG, "getFanListData:onNext: "+fanListDataListResponseData.data.list);
+                        Log.d(TAG, "getFanListData:onNext: "+fanListDataListResponseData.data.error_code);
+                        Log.d(TAG, "getFanListData:onNext: "+fanListDataListResponseData.data.description);
+
                         callback.success(fanListDataListResponseData.data.list);
                     }
 
@@ -138,7 +140,7 @@ public class UserModel<T> {
 
                     @Override
                     public void onNext(@NonNull ListResponseData<VideoListData> videoListDataListResponseData) {
-                        Log.d(TAG, "getVideoListData:onNext: "+videoListDataListResponseData.data.list);
+                        Log.d(TAG, "getVideoListData:onNext: "+videoListDataListResponseData.data.error_code);
                         callback.success(videoListDataListResponseData.data.list);
                     }
 
