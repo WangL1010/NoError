@@ -6,10 +6,9 @@
     android:layout_height="match_parent">
 
 
-
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="150dp"
         android:background="@drawable/bg"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -21,11 +20,11 @@
     <!--个人页面头像-->
     <androidx.cardview.widget.CardView
         android:id="@+id/Cv_user_avatar"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="140dp"
-        app:cardCornerRadius="60dp"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="110dp"
+        app:cardCornerRadius="40dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -39,11 +38,11 @@
 
     <!--性别图片-->
     <androidx.cardview.widget.CardView
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_marginStart="104dp"
-        android:layout_marginTop="230dp"
-        app:cardCornerRadius="15dp"
+        android:layout_width="26dp"
+        android:layout_height="26dp"
+        android:layout_marginStart="86dp"
+        android:layout_marginTop="166dp"
+        app:cardCornerRadius="13dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -57,41 +56,41 @@
         android:id="@+id/user_nickname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginStart="40dp"
         android:text="昵称"
-        android:textColor="#000000"
+        android:textColor="#ffffff"
         android:textSize="24sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/Cv_user_avatar" />
+        app:layout_constraintStart_toEndOf="@id/Cv_user_avatar"
+        app:layout_constraintTop_toTopOf="@id/Cv_user_avatar" />
 
     <TextView
         android:id="@+id/user_location"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="10dp"
-        android:text="国家 | 省份 | 城市"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="20dp"
+        android:text="中国 | 广东 | 广州"
         android:textSize="14sp"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@id/Cv_user_avatar"
         app:layout_constraintTop_toBottomOf="@id/user_nickname" />
 
     <View
+        android:id="@+id/line"
         android:layout_width="match_parent"
         android:layout_height="10dp"
         android:layout_marginTop="30dp"
         android:background="#EFEFEF"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/user_location" />
+        app:layout_constraintTop_toBottomOf="@id/Cv_user_avatar" />
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/userTlList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="10dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/user_location">
+        app:layout_constraintTop_toBottomOf="@id/line">
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
