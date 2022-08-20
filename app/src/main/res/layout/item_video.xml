@@ -19,6 +19,7 @@
     <androidx.cardview.widget.CardView
         android:layout_width="40dp"
         android:layout_height="20dp"
+        android:id="@+id/isTop"
         app:cardCornerRadius="5dp"
         android:background="@android:color/holo_orange_light"
         app:layout_constraintStart_toStartOf="@id/cover_video"

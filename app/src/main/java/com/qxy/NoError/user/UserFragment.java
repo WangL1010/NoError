@@ -57,7 +57,7 @@ public class UserFragment extends Fragment {
         mViewModel = new ViewModelProvider(this).get(UserViewModel.class);
         //请求用户数据
         mViewModel.getUserOpenInfo();
-
+        mViewModel.getVideoListData(0,10);
         List<Fragment> fragments=new ArrayList<>();
         fragments.add(0,new VideoListFragment());
         fragments.add(1,new FollowListFragment());

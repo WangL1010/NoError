@@ -29,19 +29,20 @@ public class UserModel<T> {
     private static final String TAG = "UserModel";
 
 
-    public void getFanListData(Integer cursor,Integer count,CallBack2DealData callback){
+    public void getFanListData(Integer cursor,Integer count,CallBack2DealData<FanListData> callback){
         String openId= MyApplication.getInstance().get(MyApplication.OPEN_ID);
         getFanListData(openId,cursor,count,callback);
     }
 
-    public void getFollowListData(Integer cursor,Integer count,CallBack2DealData callback){
+    public void getFollowListData(Integer cursor,Integer count,CallBack2DealData<FollowListData> callback){
         String openId= MyApplication.getInstance().get(MyApplication.OPEN_ID);
         Log.d(TAG, "getFollowListData: openId:"+openId);
         getFollowListData(openId,cursor,count,callback);
     }
 
-    public void getVideoListData(Integer cursor,Integer count,CallBack2DealData callback){
+    public void getVideoListData(Integer cursor,Integer count,CallBack2DealData<VideoListData> callback){
         String openId= MyApplication.getInstance().get(MyApplication.OPEN_ID);
+        Log.d(TAG, "getVideoListData: openId:"+openId);
         getVideoListData(openId,cursor,count,callback);
     }
 
@@ -135,23 +136,24 @@ public class UserModel<T> {
                 .subscribe(new Observer<ListResponseData<VideoListData>>() {
                     @Override
                     public void onSubscribe(@NonNull Disposable d) {
-                        Log.d(TAG, "onSubscribe: ");
+                        Log.d(TAG, "getVideoListData:onSubscribe: "+d.toString());
                     }
 
                     @Override
                     public void onNext(@NonNull ListResponseData<VideoListData> videoListDataListResponseData) {
                         Log.d(TAG, "getVideoListData:onNext: "+videoListDataListResponseData.data.error_code);
+                        Log.d(TAG, "getVideoListData:onNext: "+videoListDataListResponseData.data.list.toString());
                         callback.success(videoListDataListResponseData.data.list);
                     }
 
                     @Override
                     public void onError(@NonNull Throwable e) {
-                        Log.d(TAG, "onError: ");
+                        Log.d(TAG, "getVideoListData:onError: "+e.toString());
                     }
 
                     @Override
                     public void onComplete() {
-                        Log.d(TAG, "onComplete: ");
+                        Log.d(TAG, "getVideoListData:onComplete: ");
                     }
                 });
     }

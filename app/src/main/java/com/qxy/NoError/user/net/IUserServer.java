@@ -57,7 +57,10 @@ public interface IUserServer {
     Observable<ListResponseData<FollowListData>> getFollowListData(@Query("open_id") String openId,
                                                                    @Query("cursor") Integer cursor,
                                                                    @Query("count") Integer count);
-
+    @GET("/video/list/")
+    @Headers({
+            "Content-Type: application/json"
+    })
     Observable<ListResponseData<VideoListData>> getVideoListData(@Query("open_id") String openId,
                                                                  @Query("cursor") Integer cursor,
                                                                  @Query("count") Integer count);

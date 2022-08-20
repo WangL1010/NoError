@@ -1,8 +1,11 @@
 package com.qxy.NoError.user.bean;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 /**
  * 授权账号视频列表
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class VideoListData {
 
     private String title;
@@ -16,6 +19,22 @@ public class VideoListData {
     private String cover;
     private Statistics statistics;
 
+    @Override
+    public String toString() {
+        return "VideoListData{" +
+                "title='" + title + '\'' +
+                ", isTop=" + isTop +
+                ", createTime=" + createTime +
+                ", isReviewed=" + isReviewed +
+                ", videoStatus=" + videoStatus +
+                ", shareUrl='" + shareUrl + '\'' +
+                ", itemId='" + itemId + '\'' +
+                ", mediaType=" + mediaType +
+                ", cover='" + cover + '\'' +
+                ", statistics=" + statistics +
+                '}';
+    }
+
     public String getTitle() {
         return title;
     }
@@ -24,11 +43,11 @@ public class VideoListData {
         this.title = title;
     }
 
-    public Boolean getTop() {
+    public Boolean getIsTop() {
         return isTop;
     }
 
-    public void setTop(Boolean top) {
+    public void setIsTop(Boolean top) {
         isTop = top;
     }
 
@@ -40,11 +59,11 @@ public class VideoListData {
         this.createTime = createTime;
     }
 
-    public Boolean getReviewed() {
+    public Boolean getIsReviewed() {
         return isReviewed;
     }
 
-    public void setReviewed(Boolean reviewed) {
+    public void setIsReviewed(Boolean reviewed) {
         isReviewed = reviewed;
     }
 
@@ -103,6 +122,18 @@ public class VideoListData {
         private Integer downloadCount;
         private Integer playCount;
         private Integer shareCount;
+
+        @Override
+        public String toString() {
+            return "Statistics{" +
+                    "forwardCount=" + forwardCount +
+                    ", commentCount=" + commentCount +
+                    ", diggCount=" + diggCount +
+                    ", downloadCount=" + downloadCount +
+                    ", playCount=" + playCount +
+                    ", shareCount=" + shareCount +
+                    '}';
+        }
 
         public Integer getForwardCount() {
             return forwardCount;

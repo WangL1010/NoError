@@ -19,7 +19,7 @@ public class ListResponseData<T> {
 
         public List<T> list;
         public Integer total;
-        public Integer cursor;
+        public Long cursor;
         public Integer error_code;
         public String description;
         public Boolean has_more;
