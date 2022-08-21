@@ -7,7 +7,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,7 +17,6 @@ import android.view.ViewGroup;
 import com.bumptech.glide.Glide;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.qxy.NoError.databinding.FragmentUserBinding;
-import com.qxy.NoError.list.fragment.VersionFragment;
 import com.qxy.NoError.user.adapter.ListFragmentAdapter;
 import com.qxy.NoError.user.fragment.FansListFragment;
 import com.qxy.NoError.user.fragment.FollowListFragment;
@@ -81,6 +79,7 @@ public class UserFragment extends Fragment {
 
         mViewModel.getUserOpenInfoLiveData().observe(getViewLifecycleOwner(),userOpenInfo -> {
             binding.userNickname.setText(userOpenInfo.nickname);
+            //国籍位置信息由于没有返回，这里不做设置
             Glide.with(binding.CvUserAvatar).load(userOpenInfo.avatar).into(binding.userAvatar);
         });
     }

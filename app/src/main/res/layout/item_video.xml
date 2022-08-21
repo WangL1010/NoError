@@ -3,17 +3,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="match_parent">
 
     <ImageView
         android:id="@+id/cover_video"
         android:layout_width="120dp"
         android:layout_height="180dp"
         app:srcCompat="@drawable/ic_pic"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="10dp"
         android:layout_marginStart="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         />
 
     <androidx.cardview.widget.CardView
@@ -21,11 +21,11 @@
         android:layout_height="20dp"
         android:id="@+id/isTop"
         app:cardCornerRadius="5dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
         android:background="@android:color/holo_orange_light"
         app:layout_constraintStart_toStartOf="@id/cover_video"
         app:layout_constraintTop_toTopOf="@+id/cover_video"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
         >
         <View
             android:layout_width="match_parent"
@@ -47,11 +47,10 @@
         android:layout_width="20dp"
         android:layout_height="20dp"
         app:srcCompat="@drawable/play"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="140dp"
         android:layout_marginStart="20dp"
-
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         />
 
     <TextView
@@ -60,33 +59,32 @@
         android:layout_height="wrap_content"
         android:text="11"
         android:textColor="#ffffff"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="140dp"
         android:layout_marginStart="40dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         />
 
     <ImageView
         android:layout_width="15dp"
         android:layout_height="15dp"
         app:srcCompat="@drawable/comment"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="170dp"
         android:layout_marginStart="24dp"
-
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         />
 
     <TextView
         android:id="@+id/comment_number_videolist"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="166dp"
+        android:layout_marginStart="44dp"
         android:text="3"
         android:textColor="#ffffff"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="166dp"
-        android:layout_marginStart="44dp"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

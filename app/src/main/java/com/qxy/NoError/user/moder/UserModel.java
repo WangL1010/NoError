@@ -92,8 +92,10 @@ public class UserModel<T> {
      * @param callback 回调接口
      */
     public void getFollowListData(String openId,Integer cursor,Integer count,CallBack2DealData<FollowListData> callback){
+
         IUserServer iUserServer= NetUtils.createRetrofit(IUserServer.class,MyApplication.ACCESS_TOKEN);
         Observable<ListResponseData<FollowListData>> followListData = iUserServer.getFollowListData(openId, cursor, count);
+
         followListData.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<ListResponseData<FollowListData>>() {
@@ -142,8 +144,10 @@ public class UserModel<T> {
                     @Override
                     public void onNext(@NonNull ListResponseData<VideoListData> videoListDataListResponseData) {
                         Log.d(TAG, "getVideoListData:onNext: "+videoListDataListResponseData.data.error_code);
-                        Log.d(TAG, "getVideoListData:onNext: "+videoListDataListResponseData.data.list.toString());
+
+                        Log.d(TAG, "getVideoListData:onNext: "+videoListDataListResponseData.data.list);
                         callback.success(videoListDataListResponseData.data.list);
+
                     }
 
                     @Override
@@ -189,7 +193,7 @@ public class UserModel<T> {
 
                     @Override
                     public void onComplete() {
-                        Log.d(TAG, "onComplete: ");
+                        Log.d(TAG, "UserOpenInfoOnComplete: ");
                     }
                 });
     }

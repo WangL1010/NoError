@@ -49,6 +49,8 @@ public class MainActivity extends AppCompatActivity {
             getAuthCode();
         }
 
+        System.out.println("");
+
         ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 

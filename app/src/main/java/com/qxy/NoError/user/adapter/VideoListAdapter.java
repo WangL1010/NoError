@@ -1,5 +1,6 @@
 package com.qxy.NoError.user.adapter;
 
+import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,7 +30,7 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.Inne
     }
 
     @Override
-    public void onBindViewHolder(@NonNull InnerHolder holder, int position) {
+    public void onBindViewHolder(@NonNull InnerHolder holder, @SuppressLint("RecyclerView") int position) {
         VideoListData data = this.videoListData.get(position);
         holder.setData(data);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -50,7 +51,9 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.Inne
 
     public void setData(List<VideoListData> data) {
         videoListData.clear();
-        videoListData.addAll(data);
+        if(data != null && data.size() == 0){
+            videoListData.addAll(data);
+        }
     }
 
     public class InnerHolder extends RecyclerView.ViewHolder {

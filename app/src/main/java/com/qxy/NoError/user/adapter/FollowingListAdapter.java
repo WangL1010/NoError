@@ -63,7 +63,15 @@ public class FollowingListAdapter extends RecyclerView.Adapter<FollowingListAdap
                 gender.setImageResource(R.drawable.female);
             }
             nickName.setText(fanListData.getNickname());
-            String location=fanListData.getCountry()+" | "+fanListData.getProvince()+" | "+fanListData.getCity();
+
+            String location;
+            if(fanListData.getCountry().length() == 0){
+                location = "中国";
+            }else if(fanListData.getProvince().length() == 0){
+                location = fanListData.getCountry()+" | "+fanListData.getCity();
+            }else{
+                location = fanListData.getCountry()+" | "+fanListData.getProvince()+" | "+fanListData.getCity();
+            }
             fanLocation.setText(location);
         }
     }
