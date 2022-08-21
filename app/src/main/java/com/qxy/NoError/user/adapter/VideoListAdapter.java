@@ -51,9 +51,8 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.Inne
 
     public void setData(List<VideoListData> data) {
         videoListData.clear();
-        if(data != null && data.size() != 0){
-            videoListData.addAll(data);
-        }
+        videoListData.addAll(data);
+
     }
 
     public class InnerHolder extends RecyclerView.ViewHolder {
@@ -69,7 +68,7 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.Inne
         }
 
         public void setData(VideoListData data) {
-            Glide.with(itemView.getContext()).load(data.getCover()).into(coverVideo);
+            Glide.with(itemView.getContext()).load(data.getCover()).centerCrop().into(coverVideo);
             playNumber.setText(""+data.getStatistics().getPlayCount());
             commentNumber.setText(""+data.getStatistics().getCommentCount());
             if (data.getIsTop()){
