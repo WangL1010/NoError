@@ -1,5 +1,6 @@
 package com.qxy.NoError.user.adapter;
 
+import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,7 +30,7 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.Inne
     }
 
     @Override
-    public void onBindViewHolder(@NonNull InnerHolder holder, int position) {
+    public void onBindViewHolder(@NonNull InnerHolder holder, @SuppressLint("RecyclerView") int position) {
         VideoListData data = this.videoListData.get(position);
         holder.setData(data);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -51,6 +52,7 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.Inne
     public void setData(List<VideoListData> data) {
         videoListData.clear();
         videoListData.addAll(data);
+
     }
 
     public class InnerHolder extends RecyclerView.ViewHolder {
@@ -66,7 +68,7 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.Inne
         }
 
         public void setData(VideoListData data) {
-            Glide.with(itemView.getContext()).load(data.getCover()).into(coverVideo);
+            Glide.with(itemView.getContext()).load(data.getCover()).centerCrop().into(coverVideo);
             playNumber.setText(""+data.getStatistics().getPlayCount());
             commentNumber.setText(""+data.getStatistics().getCommentCount());
             if (data.getIsTop()){

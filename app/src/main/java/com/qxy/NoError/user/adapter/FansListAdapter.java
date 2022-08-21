@@ -66,7 +66,15 @@ public class FansListAdapter extends RecyclerView.Adapter<FansListAdapter.InnerH
                 gender.setImageResource(R.drawable.female);
             }
             nickName.setText(fansData.getNickname());
-            String location=fansData.getCountry()+" | "+fansData.getProvince()+" | "+fansData.getCity();
+
+            String location;
+            if(fansData.getCountry().length() == 0){
+                location = "中国";
+            }else if(fansData.getProvince().length() == 0){
+                location = fansData.getCountry()+" | "+fansData.getCity();
+            }else{
+                location = fansData.getCountry()+" | "+fansData.getProvince()+" | "+fansData.getCity();
+            }
             fanLocation.setText(location);
         }
     }

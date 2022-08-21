@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <queries>
         <!--允许查询抖音和抖音极速版的信息-->
@@ -29,15 +30,21 @@
             android:taskAffinity="com.qxy.noerror" />
 
 
-        <activity android:name=".TestActivity"
-            android:exported="false"/>
+        <activity
+            android:name=".TestActivity"
+            android:exported="false" />
 
+        <activity
+            android:name=".VideoDetailActivity"
+            android:configChanges="orientation|screenSize"
+            android:hardwareAccelerated="true" />
 
-        <activity android:name=".MainActivity"
+        <activity
+            android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
     </application>

@@ -92,4 +92,7 @@ dependencies {
     //view model和live data
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.5.1'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1'
+    //agentWeb
+    implementation 'com.github.Justson.AgentWeb:agentweb-core:v5.0.0-alpha.1-androidx'
+    implementation 'com.github.Justson.AgentWeb:agentweb-core:v5.0.0-alpha'
 }

@@ -1,5 +1,6 @@
 package com.qxy.NoError.user.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,6 +15,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.qxy.NoError.VideoDetailActivity;
 import com.qxy.NoError.databinding.FragmentListDetailBinding;
 
 import com.qxy.NoError.user.adapter.VideoListAdapter;
@@ -54,5 +56,11 @@ public class VideoListFragment extends Fragment implements VideoListAdapter.OnLi
     public void onItemClick(VideoListData videoData) {
         //跳转到视频详情页面
         Log.d(TAG, "onItemClick: ");
+        String shareUrl = videoData.getShareUrl();
+        Intent intent=new Intent(requireContext(), VideoDetailActivity.class);
+        intent.putExtra("videoUrl",shareUrl);
+        startActivity(intent);
+
     }
+
 }
