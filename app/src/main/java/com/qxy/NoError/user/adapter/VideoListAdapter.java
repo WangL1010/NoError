@@ -51,7 +51,7 @@ public class VideoListAdapter extends RecyclerView.Adapter<VideoListAdapter.Inne
 
     public void setData(List<VideoListData> data) {
         videoListData.clear();
-        if(data != null && data.size() == 0){
+        if(data != null && data.size() != 0){
             videoListData.addAll(data);
         }
     }
