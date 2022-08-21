@@ -34,5 +34,6 @@ public class ListResponseData<T> {
         public Long now;
         public String subDescription;
         public Long subErrorCode;
+
     }
 }

@@ -177,7 +177,7 @@ public class NetUtils {
         builder.add("client_secret", Constants.CLIENT_SECRET);
         builder.add("code",MyApplication.getInstance().get(MyApplication.AUTH_CODE));
         builder.add("grant_type","authorization_code");
-        builder.add("client_key","awoivy4o8l4own3v");
+        builder.add("client_key",Constants.CLIENT_KEY);
         RequestBody formBody=builder.build();
 
         Request request = new Request.Builder()

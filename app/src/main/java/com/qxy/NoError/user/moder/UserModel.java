@@ -142,7 +142,7 @@ public class UserModel<T> {
                     @Override
                     public void onNext(@NonNull ListResponseData<VideoListData> videoListDataListResponseData) {
                         Log.d(TAG, "getVideoListData:onNext: "+videoListDataListResponseData.data.error_code);
-                        Log.d(TAG, "getVideoListData:onNext: "+videoListDataListResponseData.data.list.toString());
+                        Log.d(TAG, "getVideoListData:onNext: "+videoListDataListResponseData.data.description);
                         callback.success(videoListDataListResponseData.data.list);
                     }
 
