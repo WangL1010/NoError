@@ -56,10 +56,18 @@ public class VideoListFragment extends Fragment implements VideoListAdapter.OnLi
     public void onItemClick(VideoListData videoData) {
         //跳转到视频详情页面
         Log.d(TAG, "onItemClick: ");
-        String shareUrl = videoData.getShareUrl();
-        Intent intent=new Intent(requireContext(), VideoDetailActivity.class);
-        intent.putExtra("videoUrl",shareUrl);
-        startActivity(intent);
+        if (videoData!=null){
+
+            String shareUrl = videoData.getShareUrl();
+            Intent intent=new Intent(requireContext(), VideoDetailActivity.class);
+            intent.putExtra("videoUrl",shareUrl);
+            intent.putExtra("create_time",""+videoData.getCreateTime());
+            intent.putExtra("play_count",""+videoData.getStatistics().getPlayCount());
+            intent.putExtra("share_count",""+videoData.getStatistics().getShareCount());
+            intent.putExtra("forward_count",""+videoData.getStatistics().getForwardCount());
+            intent.putExtra("download_count",""+videoData.getStatistics().getDownloadCount());
+            startActivity(intent);
+        }
 
     }
 

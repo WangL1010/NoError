@@ -5,186 +5,134 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
+    <!--        &lt;!&ndash;作者名&ndash;&gt;-->
+    <!--        <TextView-->
+    <!--            android:id="@+id/author_video"-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:text=" @作者名"-->
+    <!--            android:textStyle="bold"-->
+    <!--            android:textSize="20sp"-->
+    <!--            android:textColor="#ffffff"-->
+    <!--            app:layout_constraintStart_toStartOf="parent"-->
+    <!--            app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--            android:layout_marginStart="30dp"-->
+    <!--            android:layout_marginBottom="100dp"-->
+    <!--            />-->
+
+    <!--发布日期-->
     <LinearLayout
         android:id="@+id/layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/black"
         android:orientation="vertical">
 
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/time_video"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginBottom="40dp"
+        android:text="2022-08-19"
+        android:textColor="#ffffff"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
-<!--        &lt;!&ndash;作者名&ndash;&gt;-->
-<!--        <TextView-->
-<!--            android:id="@+id/author_video"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text=" @作者名"-->
-<!--            android:textStyle="bold"-->
-<!--            android:textSize="20sp"-->
-<!--            android:textColor="#ffffff"-->
-<!--            app:layout_constraintStart_toStartOf="parent"-->
-<!--            app:layout_constraintBottom_toBottomOf="parent"-->
-<!--            android:layout_marginStart="30dp"-->
-<!--            android:layout_marginBottom="100dp"-->
-<!--            />-->
+    <!--播放量-->
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/time_video"
+        app:srcCompat="@drawable/play" />
 
-<!--        &lt;!&ndash;发布日期&ndash;&gt;-->
-<!--        <TextView-->
-<!--            android:id="@+id/time_video"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="2022-08-19"-->
-<!--            android:textSize="16sp"-->
-<!--            android:textColor="#ffffff"-->
-<!--            app:layout_constraintStart_toStartOf="parent"-->
-<!--            app:layout_constraintTop_toBottomOf="@id/author_video"-->
-<!--            android:layout_marginStart="35dp"-->
-<!--            android:layout_marginTop="10dp"-->
-<!--            />-->
-
-<!--        &lt;!&ndash;播放量&ndash;&gt;-->
-<!--        <ImageView-->
-<!--            android:layout_width="20dp"-->
-<!--            android:layout_height="20dp"-->
-<!--            app:srcCompat="@drawable/play"-->
-<!--            app:layout_constraintTop_toBottomOf="@id/time_video"-->
-<!--            app:layout_constraintStart_toStartOf="parent"-->
-<!--            android:layout_marginTop="10dp"-->
-<!--            android:layout_marginStart="35dp"-->
-<!--            />-->
-
-<!--        <TextView-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="11万"-->
-<!--            android:textColor="#ffffff"-->
-<!--            app:layout_constraintStart_toStartOf="parent"-->
-<!--            app:layout_constraintTop_toBottomOf="@id/time_video"-->
-<!--            android:layout_marginTop="10dp"-->
-<!--            android:layout_marginStart="60dp"-->
-<!--            />-->
-
-<!--        &lt;!&ndash;点赞&ndash;&gt;-->
-<!--        <ImageView-->
-<!--            android:id="@+id/digg"-->
-<!--            android:layout_width="60dp"-->
-<!--            android:layout_height="60dp"-->
-<!--            app:srcCompat="@drawable/digg"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            app:layout_constraintBottom_toBottomOf="parent"-->
-<!--            android:layout_marginBottom="400dp"-->
-<!--            android:layout_marginEnd="10dp"-->
-<!--            />-->
-
-<!--        <TextView-->
-<!--            android:id="@+id/number_digg"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="11"-->
-<!--            android:textSize="16sp"-->
-<!--            android:textColor="#ffffff"-->
-<!--            app:layout_constraintTop_toBottomOf="@id/digg"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            android:layout_marginEnd="30dp"-->
-<!--            />-->
+    <TextView
+        android:id="@+id/play_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="10dp"
+        android:text="11万"
+        android:textColor="#ffffff"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/time_video" />
 
 
-<!--        &lt;!&ndash;评论&ndash;&gt;-->
-<!--        <ImageView-->
-<!--            android:id="@+id/comment"-->
-<!--            android:layout_width="50dp"-->
-<!--            android:layout_height="50dp"-->
-<!--            app:srcCompat="@drawable/comment"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            app:layout_constraintTop_toBottomOf="@id/digg"-->
-<!--            android:layout_marginTop="40dp"-->
-<!--            android:layout_marginEnd="15dp"-->
-<!--            />-->
+    <!--转发-->
+    <ImageView
+        android:id="@+id/forward"
+        android:layout_width="51dp"
+        android:layout_height="52dp"
+        android:layout_marginStart="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
 
-<!--        <TextView-->
-<!--            android:id="@+id/number_comment"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="11"-->
-<!--            android:textSize="16sp"-->
-<!--            android:textColor="#ffffff"-->
-<!--            app:layout_constraintTop_toBottomOf="@id/comment"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            android:layout_marginEnd="30dp"-->
-<!--            />-->
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.31"
+        app:srcCompat="@drawable/forward" />
 
-<!--        &lt;!&ndash;转发&ndash;&gt;-->
-<!--        <ImageView-->
-<!--            android:id="@+id/forward"-->
-<!--            android:layout_width="50dp"-->
-<!--            android:layout_height="50dp"-->
-<!--            app:srcCompat="@drawable/forward"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            app:layout_constraintTop_toBottomOf="@id/comment"-->
-<!--            android:layout_marginTop="40dp"-->
-<!--            android:layout_marginEnd="15dp"-->
-<!--            />-->
+    <TextView
+        android:id="@+id/forward_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:text="11"
+        android:textColor="#ffffff"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/forward" />
 
-<!--        <TextView-->
-<!--            android:id="@+id/number_forward"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="11"-->
-<!--            android:textSize="16sp"-->
-<!--            android:textColor="#ffffff"-->
-<!--            app:layout_constraintTop_toBottomOf="@id/forward"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            android:layout_marginEnd="30dp"-->
-<!--            />-->
+    <!--分享-->
+    <ImageView
+        android:id="@+id/share"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="40dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/forward"
+        app:srcCompat="@drawable/share" />
 
-<!--        &lt;!&ndash;分享&ndash;&gt;-->
-<!--        <ImageView-->
-<!--            android:id="@+id/share"-->
-<!--            android:layout_width="50dp"-->
-<!--            android:layout_height="50dp"-->
-<!--            app:srcCompat="@drawable/share"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            app:layout_constraintTop_toBottomOf="@id/forward"-->
-<!--            android:layout_marginTop="40dp"-->
-<!--            android:layout_marginEnd="15dp"-->
-<!--            />-->
+    <TextView
+        android:id="@+id/share_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:text="11"
+        android:textColor="#ffffff"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/share" />
 
-<!--        <TextView-->
-<!--            android:id="@+id/number_share"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="11"-->
-<!--            android:textSize="16sp"-->
-<!--            android:textColor="#ffffff"-->
-<!--            app:layout_constraintTop_toBottomOf="@id/share"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            android:layout_marginEnd="30dp"-->
-<!--            />-->
+    <!--下载-->
+    <ImageView
+        android:id="@+id/download"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="40dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/share"
+        app:srcCompat="@drawable/download" />
 
-<!--        &lt;!&ndash;下载&ndash;&gt;-->
-<!--        <ImageView-->
-<!--            android:id="@+id/download"-->
-<!--            android:layout_width="50dp"-->
-<!--            android:layout_height="50dp"-->
-<!--            app:srcCompat="@drawable/download"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            app:layout_constraintTop_toBottomOf="@id/share"-->
-<!--            android:layout_marginTop="40dp"-->
-<!--            android:layout_marginEnd="15dp"-->
-<!--            />-->
-
-<!--        <TextView-->
-<!--            android:id="@+id/number_download"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="11"-->
-<!--            android:textSize="16sp"-->
-<!--            android:textColor="#ffffff"-->
-<!--            app:layout_constraintTop_toBottomOf="@id/download"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            android:layout_marginEnd="30dp"-->
-<!--            />-->
+    <TextView
+        android:id="@+id/download_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:text="11"
+        android:textColor="#ffffff"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/download" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
