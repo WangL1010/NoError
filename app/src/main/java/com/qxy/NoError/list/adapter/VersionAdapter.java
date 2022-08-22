@@ -68,7 +68,7 @@ public class VersionAdapter extends ListAdapter<Version, VersionAdapter.VersionV
         Version version;
         if (position == 0) {
             version = new Version();
-            version.type = getItem(0).type;
+            version.type = mViewModel.getSelectVersion().getValue().type;
             version.version = 0;
             holder.tvVersion.setText("最新榜单");
         } else {

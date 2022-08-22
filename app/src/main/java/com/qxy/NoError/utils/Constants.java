@@ -11,8 +11,8 @@ public class Constants {
      */
     public static final String BASE_URL = "https://open.douyin.com/";
 
-    public static final String CLIENT_KEY = "awvi6la2xf7rn09z";
-    public static final String CLIENT_SECRET = "54def73f177f5cc169ce04b3ba7edad3";
+    public static final String CLIENT_KEY = "aw3my56yi8846i45";
+    public static final String CLIENT_SECRET = "429be2b0c095b10510082139859d53c2";
 
     public static final String ACCESS_TOKEN = "act.efce4e714f94cc3727f351ddcc345eb5hg5Kk6PmPf7394g5JZ4tF1NFeg6X";
     public static final String CONTENT_TYPE_URLENCODED ="application/x-www-form-urlencoded";

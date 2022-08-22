@@ -65,6 +65,9 @@ public class NetUtils {
             accessToken  = instance.get(MyApplication.ACCESS_TOKEN);
         }else if (token.equals(MyApplication.CLIENT_TOKEN)){
             accessToken=instance.get(MyApplication.CLIENT_TOKEN);
+            if(accessToken == null){
+                accessToken = "clt:";
+            }
         }
         Log.d(TAG, "createRetrofit: "+accessToken);
         //给请求添加请求头
