@@ -3,7 +3,12 @@ package com.qxy.NoError;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.HandlerThread;
+import android.os.Looper;
 import android.util.Log;
+import android.util.Printer;
+import android.view.View;
 
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,6 +20,7 @@ import androidx.navigation.fragment.NavHostFragment;
 import com.bytedance.sdk.open.aweme.authorize.model.Authorization;
 import com.bytedance.sdk.open.douyin.DouYinOpenApiFactory;
 import com.bytedance.sdk.open.douyin.api.DouYinOpenApi;
+import com.qxy.NoError.Monitor.ANR;
 import com.qxy.NoError.databinding.ActivityMainBinding;
 
 import com.qxy.NoError.utils.Constants;
@@ -34,11 +40,15 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
     private final HashMap<Integer, MotionLayout> map = new HashMap<>();
     private DouYinOpenApi douYinOpenApi;
+    private ANR anr;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         douYinOpenApi = DouYinOpenApiFactory.create(this);
+        anr = new ANR();
+
+
         /**
          * 从SharedPreferences文件中读取数据
          * 判断authCode如果为空去获取
@@ -108,5 +118,4 @@ public class MainActivity extends AppCompatActivity {
         request.state = "ww";                                   // 用于保持请求和回调的状态，授权请求后原样带回给第三方。
         douYinOpenApi.authorize(request);               // 优先使用抖音app进行授权，如果抖音app因版本或者其他原因无法授权，则使用wap页授权
     }
-
 }
